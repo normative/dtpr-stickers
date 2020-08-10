@@ -19,7 +19,7 @@ class Places extends Component<any, any> {
   render() {
     return (
       <Switch>
-        <Route exact path='/' component={PlaceList} />} />
+        <Route exact path='/' component={PlaceList} />
         <Route path='/places/new' component={CreatePlaceView} />
         <Route path='/places/:placeId/edit' component={EditPlaceView} />
         <Route path='/places/:placeId' component={PlaceView} />

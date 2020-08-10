@@ -21,7 +21,7 @@ class StaticMap extends Component<Props, any> {
     const { markerLocation, center } = this.props;
     return (
       <Map
-        style={"mapbox://styles/lope/cjws7757q0ase1cn2blgpu7hy"}
+        style={"mapbox://styles/mapbox/streets-v11"}
         containerStyle={{
           width: "100%",
           height: "100%",
