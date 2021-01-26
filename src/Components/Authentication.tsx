@@ -3,27 +3,19 @@ import { Redirect } from "react-router-dom";
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import * as firebaseui from 'firebaseui'
 
 import firebase from '../libs/firebase';
 
+// Configure FirebaseUI.
 const uiConfig = {
+  // Popup signin flow rather than redirect flow.
   signInFlow: 'popup',
-  signInSuccessUrl: '/',
+  // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
+  signInSuccessUrl: '/places',
+  // We will display Google and Facebook as auth providers.
   signInOptions: [
-    {
-      provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      customParameters: {
-        // TODO: implement whitelist
-        // restrict to display of swl emails only
-        // hd: 'sidewalklabs.com',
-        // Forces account selection even when one account
-        // is available.
-        prompt: 'select_account',
-      }
-    },
-  ],
-  credentialHelper: firebaseui.auth.CredentialHelper.NONE
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID
+  ]
 };
 
 const styles = (theme: Theme) => createStyles({

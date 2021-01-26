@@ -1,7 +1,7 @@
 import Airtable from 'airtable'
 // @ts-ignore
-const airtable = new Airtable({ apiKey: 'keyqsnK4Q2V9wFk6q' })
-const base = airtable.base('appjycbdxoV3Nsovw');
+const airtable = new Airtable({ apiKey: process.env.REACT_APP_AIRTABLE_API_KEY })
+const base = airtable.base(process.env.REACT_APP_AIRTABLE_DATABASE_ID);
 
 // The table names in airtable
 export type TableName =
