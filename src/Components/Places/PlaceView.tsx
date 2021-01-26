@@ -14,23 +14,25 @@ import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import firebase from '../../firebase.js';
-import { AirtableData, getAirtableData } from '../../utils/airtable'
+
 import StaticMap from '../StaticMap';
-import { PlaceData } from '../Places'
-import { SensorData } from '../Sensors'
-import CreateSensorForm from '../Sensors/CreateSensorForm'
+import { PlaceData } from '../Places';
+import { SensorData } from '../Sensors';
+import CreateSensorForm from '../Sensors/CreateSensorForm';
+
+import { AirtableData, getAirtableData } from '../../libs/airtable';
+import firebase from '../../libs/firebase';
 
 const styles = (theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
       margin: "auto",
-      padding: theme.spacing.unit * 2,
+      padding: theme.spacing(2),
       [theme.breakpoints.up("md")]: {
         maxWidth: theme.breakpoints.values.md,
-        paddingLeft: theme.spacing.unit * 4,
-        paddingRight: theme.spacing.unit * 4
+        paddingLeft: theme.spacing(4),
+        paddingRight: theme.spacing(4)
       }
     },
     headerRow: {
@@ -49,10 +51,10 @@ const styles = (theme: Theme) =>
       transform: 'translate(-50%, -30%)'
     },
     addIcon: {
-      marginRight: theme.spacing.unit,
+      marginRight: theme.spacing(),
     },
     staticMap: {
-      marginBottom: theme.spacing.unit * 2,
+      marginBottom: theme.spacing(2),
       width: '100%',
       height: '100px',
       [theme.breakpoints.up('md')]: {
@@ -79,10 +81,10 @@ const styles = (theme: Theme) =>
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      padding: theme.spacing.unit * 2
+      padding: theme.spacing(2)
     },
     cardIcon: {
-      marginBottom: theme.spacing.unit,
+      marginBottom: theme.spacing(),
       width: "56px",
       height: "56px",
       opacity: 0.7
@@ -174,8 +176,8 @@ class PlaceView extends Component<any, PlaceViewState> {
 
     }
     if (this.state.displayForm) {
-      // TODO: we should move this to its own route, 
-      // but for now we want to make sure we only associate sensors 
+      // TODO: we should move this to its own route,
+      // but for now we want to make sure we only associate sensors
       // with valid places
       return <Grid item xs={12}>
         <Card className={classes.card}>

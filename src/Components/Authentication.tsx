@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import firebase from '../firebase.js';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import firebaseui from 'firebaseui'
+import { Redirect } from "react-router-dom";
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { Redirect } from "react-router-dom";
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import * as firebaseui from 'firebaseui'
+
+import firebase from '../libs/firebase';
 
 const uiConfig = {
   signInFlow: 'popup',
@@ -29,11 +30,11 @@ const styles = (theme: Theme) => createStyles({
   root: {
     flexGrow: 1,
     margin: 'auto',
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     [theme.breakpoints.up('sm')]: {
       maxWidth: 'calc(100% - 167px)',
-      paddingLeft: theme.spacing.unit * 4,
-      paddingRight: theme.spacing.unit * 4,
+      paddingLeft: theme.spacing(4),
+      paddingRight: theme.spacing(4),
     },
   },
 });

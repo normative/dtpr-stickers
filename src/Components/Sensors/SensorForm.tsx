@@ -1,4 +1,5 @@
 import React from "react";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import {
@@ -11,18 +12,15 @@ import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import MenuItem from "@material-ui/core/MenuItem";
 import LinearProgress from "@material-ui/core/LinearProgress";
-
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
-import { AirtableData, getAirtableData } from "../../utils/airtable";
-
 import { SensorData } from "./index";
 
-import { RouteComponentProps, withRouter } from "react-router-dom";
-import firebase from "../../firebase.js";
+import { AirtableData, getAirtableData } from "../../libs/airtable";
+import firebase from "../../libs/firebase";
 
 interface Props extends WithStyles<typeof styles>, RouteComponentProps {
   sensorId: string;
@@ -89,7 +87,7 @@ class SensorForm extends React.Component<Props, State> {
     }
   }
 
-  handleSensorDataChange(key: string, value: number | string) {
+  handleSensorDataChange(key: string, value: any) {
     this.setState(state => ({
       sensorData: { ...state.sensorData, [key]: value }
     }));
@@ -500,7 +498,7 @@ const styles = (theme: Theme) =>
       marginBottom: "16px"
     },
     stepperContent: {
-      padding: theme.spacing.unit * 3,
+      padding: theme.spacing(3),
       paddingTop: 0
     },
     fabSave: {
@@ -511,14 +509,14 @@ const styles = (theme: Theme) =>
       left: "50%"
     },
     button: {
-      marginTop: theme.spacing.unit,
-      marginRight: theme.spacing.unit
+      marginTop: theme.spacing(),
+      marginRight: theme.spacing(),
     },
     actionsContainer: {
-      marginBottom: theme.spacing.unit * 2
+      marginBottom: theme.spacing(2)
     },
     resetContainer: {
-      padding: theme.spacing.unit * 3
+      padding: theme.spacing(3)
     },
     formField: {
       width: "100%",
@@ -536,7 +534,7 @@ const styles = (theme: Theme) =>
       display: "none"
     },
     leftIcon: {
-      marginRight: theme.spacing.unit
+      marginRight: theme.spacing()
     }
   });
 

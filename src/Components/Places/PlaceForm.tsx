@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import LocationPicker from '../LocationPicker';
 import * as MapboxGL from 'mapbox-gl';
 
-import firebase from '../../firebase.js';
+import firebase from '../../libs/firebase';
 import { PlaceData } from '../Places'
 
 interface PlaceFormProps extends PlaceData, WithStyles<typeof styles> {
@@ -81,16 +81,16 @@ const styles = (theme: Theme) => createStyles({
     flexDirection: 'column',
     flexGrow: 1,
     margin: 'auto',
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     [theme.breakpoints.up('sm')]: {
       maxWidth: 'calc(100% - 167px)',
-      paddingLeft: theme.spacing.unit * 4,
-      paddingRight: theme.spacing.unit * 4,
+      paddingLeft: theme.spacing(4),
+      paddingRight: theme.spacing(4),
     },
   },
   locationPicker: {
-    marginTop: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
+    marginTop: theme.spacing(),
+    marginBottom: theme.spacing(),
     width: '100%',
     height: '500px'
   }

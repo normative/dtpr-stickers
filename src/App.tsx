@@ -3,21 +3,22 @@ import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import blue from "@material-ui/core/colors/blue";
 import pink from "@material-ui/core/colors/pink";
 import common from "@material-ui/core/colors/common";
-import HomeView from "./Components/HomeView";
-import Places from "./Components/Places";
-import Sensors from "./Components/Sensors";
+import CssBaseline from '@material-ui/core/CssBaseline';
 import {
   BrowserRouter as Router,
   Switch,
   Redirect,
   Route
 } from "react-router-dom";
-import firebase from "./firebase.js";
 
+import HomeView from "./Components/HomeView";
+import Places from "./Components/Places";
+import Sensors from "./Components/Sensors";
 import Authentication from './Components/Authentication';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
-import CssBaseline from '@material-ui/core/CssBaseline';
+
+import firebase from "./libs/firebase";
 
 import ReactGA from "react-ga";
 ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_KEY || "");
@@ -32,7 +33,6 @@ const theme = createMuiTheme({
     }
   },
   typography: {
-    useNextVariants: true,
     fontFamily: ["Google Sans", "Roboto", "-apple-system"].join(",")
   }
 });

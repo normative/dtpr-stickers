@@ -9,11 +9,11 @@ const styles = (theme: Theme) => createStyles({
   root: {
     flexGrow: 1,
     margin: 'auto',
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     [theme.breakpoints.up('sm')]: {
       maxWidth: 'calc(100% - 167px)',
-      paddingLeft: theme.spacing.unit * 4,
-      paddingRight: theme.spacing.unit * 4,
+      paddingLeft: theme.spacing(4),
+      paddingRight: theme.spacing(4),
     },
   },
 });

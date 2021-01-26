@@ -20,8 +20,8 @@ class Footer extends Component<any, any> {
 const styles = (theme: Theme) => createStyles({
   root: {
     backgroundColor: theme.palette.background.default,
-    marginTop: theme.spacing.unit * 2,
-    padding: theme.spacing.unit * 2,
+    marginTop: theme.spacing(2),
+    padding: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',

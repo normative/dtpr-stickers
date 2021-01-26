@@ -11,7 +11,6 @@ const ACCESS_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN || '';
 
 const Map = ReactMapboxGl({
   accessToken: ACCESS_TOKEN,
-  injectCSS: false,
 });
 
 interface Props {
@@ -57,9 +56,8 @@ class LocationPicker extends Component<Props, any> {
 
 const styles = (theme: Theme) => createStyles({
   geocoderContainer: {
-    position: 'absolute',
-    top: theme.spacing.unit * 2,
-    left: theme.spacing.unit * 2,
+    top: theme.spacing(2),
+    left: theme.spacing(2),
   },
 });
 

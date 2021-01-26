@@ -4,8 +4,6 @@ import PlaceIcon from "@material-ui/icons/Place";
 
 const Map = ReactMapboxGl({
   accessToken: process.env.REACT_APP_MAPBOX_ACCESS_TOKEN || "",
-  injectCSS: false,
-  interactive: false
 });
 
 interface Props {
@@ -21,7 +19,7 @@ class StaticMap extends Component<Props, any> {
     const { markerLocation, center } = this.props;
     return (
       <Map
-        style={"mapbox://styles/mapbox/streets-v11"}
+        style="mapbox://styles/mapbox/streets-v11"
         containerStyle={{
           width: "100%",
           height: "100%",

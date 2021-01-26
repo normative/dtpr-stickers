@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
-import firebase from '../../firebase.js';
+import QRCode from 'qrcode'
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { Typography } from '@material-ui/core';
-import { AirtableData, getAirtableData, Option } from '../../utils/airtable'
-import QRCode from 'qrcode'
-import { SensorData } from './index'
 import LinearProgress from '@material-ui/core/LinearProgress';
-
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+
+import { SensorData } from './index';
+
+import { AirtableData, getAirtableData } from '../../libs/airtable';
+import firebase from '../../libs/firebase';
 
 const WHITE_HEX_URL = '/images/hexes/white.svg'
 const OUTLINED_HEX_URL = '/images/hexes/white.svg'
@@ -27,10 +28,10 @@ const styles = (theme: Theme) => createStyles({
     padding: 0,
     [theme.breakpoints.up('sm')]: {
       margin: 'auto',
-      padding: theme.spacing.unit * 2,
+      padding: theme.spacing(2),
       maxWidth: 'calc(100% - 167px)',
-      paddingLeft: theme.spacing.unit * 4,
-      paddingRight: theme.spacing.unit * 4,
+      paddingLeft: theme.spacing(4),
+      paddingRight: theme.spacing(4),
     },
     '@media print': {
       margin: 0,
@@ -39,7 +40,7 @@ const styles = (theme: Theme) => createStyles({
     },
   },
   header: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     [theme.breakpoints.up('sm')]: {
       padding: 0,
     },
@@ -62,8 +63,8 @@ const styles = (theme: Theme) => createStyles({
   },
   badgeContainer: {
     background: theme.palette.grey["200"],
-    marginTop: theme.spacing.unit * 2,
-    padding: theme.spacing.unit,
+    marginTop: theme.spacing(2),
+    padding: theme.spacing(),
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -83,7 +84,7 @@ const styles = (theme: Theme) => createStyles({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
-    margin: theme.spacing.unit * 2,
+    margin: theme.spacing(2),
     pageBreakInside: 'avoid',
     transition: 'all 0.8s ease-out',
 
@@ -289,7 +290,7 @@ class SensorPrintView extends Component<any, SensorPrintViewState> {
             <InputLabel htmlFor="select-multiple">Size</InputLabel>
             <Select
               value={badgeSize}
-              onChange={(e) => { this.setState({ badgeSize: parseFloat(e.target.value) }) }}
+              onChange={(e) => { this.setState({ badgeSize: parseFloat(e.target.value as string) }) }}
               input={<Input id="select" />}
             >
               <MenuItem value={2} >2 inches</MenuItem>

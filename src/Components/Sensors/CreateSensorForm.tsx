@@ -1,5 +1,6 @@
 import React from 'react';
-import shortid from "shortid";
+import { nanoid } from "nanoid";
+
 import SensorForm from './SensorForm'
 
 interface CreateSensorFormProps {
@@ -20,12 +21,12 @@ class CreateSensorForm extends React.Component<CreateSensorFormProps, CreateSens
   }
 
   componentDidMount() {
-    let sensorId = shortid.generate()
+    let sensorId = nanoid()
 
     // 307 is a reserved preface we used for an intial set of hard-coded human-readable sensor ids
     // disallow future ids that begin with 307 in order to avoid collisions
     while (sensorId.indexOf('307') === 0) {
-      sensorId = shortid.generate()
+      sensorId = nanoid()
     }
     this.setState({ sensorId })
   }

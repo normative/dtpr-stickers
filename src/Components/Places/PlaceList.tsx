@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import firebase from '../../firebase.js';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -8,18 +7,20 @@ import Grid from '@material-ui/core/Grid';
 import { Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import LinearProgress from '@material-ui/core/LinearProgress';
+
 import { PlaceData } from '../Places'
 
+import firebase from '../../libs/firebase';
 
 const styles = (theme: Theme) => createStyles({
   root: {
     flexGrow: 1,
     margin: 'auto',
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     [theme.breakpoints.up('sm')]: {
       maxWidth: 'calc(100% - 167px)',
-      paddingLeft: theme.spacing.unit * 4,
-      paddingRight: theme.spacing.unit * 4,
+      paddingLeft: theme.spacing(4),
+      paddingRight: theme.spacing(4),
     },
   },
   cardActionArea: {
@@ -89,7 +90,7 @@ class PlaceList extends Component<any, PlaceListState> {
     return (
       <div className={classes.root}>
         <Typography gutterBottom variant="h5" component="h2">My Places Dashboard</Typography>
-        <Grid container spacing={24}>
+        <Grid container spacing={4}>
           <Grid item xs={12} sm={6} md={4} lg={3}>
             <Card className={classes.card}>
               <CardActionArea className={classes.cardActionArea} href="/places/new">

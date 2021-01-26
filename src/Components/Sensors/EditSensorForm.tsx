@@ -1,12 +1,14 @@
 import React from "react";
-import firebase from "../../firebase.js";
-import SensorForm from "./SensorForm";
+import Typography from "@material-ui/core/Typography";
+import LinearProgress from "@material-ui/core/LinearProgress";
 import { createStyles, Theme, withStyles } from "@material-ui/core/styles";
 import { Redirect, withRouter } from "react-router-dom";
-import { SensorData } from "./index";
+
 import { PlaceData } from "../Places";
-import LinearProgress from "@material-ui/core/LinearProgress";
-import Typography from "@material-ui/core/Typography";
+import SensorForm from "./SensorForm";
+import { SensorData } from "./index";
+
+import firebase from "../../libs/firebase";
 
 interface State {
   allowAccess: boolean;
@@ -126,11 +128,11 @@ const styles = (theme: Theme) =>
     root: {
       flexGrow: 1,
       margin: "auto",
-      padding: theme.spacing.unit * 2,
+      padding: theme.spacing(2),
       [theme.breakpoints.up("md")]: {
         maxWidth: theme.breakpoints.values.md,
-        paddingLeft: theme.spacing.unit * 4,
-        paddingRight: theme.spacing.unit * 4
+        paddingLeft: theme.spacing(4),
+        paddingRight: theme.spacing(4)
       }
     }
   });

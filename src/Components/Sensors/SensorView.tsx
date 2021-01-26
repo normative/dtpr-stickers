@@ -1,24 +1,26 @@
 import React, { Component } from "react";
-import firebase from "../../firebase.js";
 import { createStyles, withStyles, Theme } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
-import { SensorData } from "./index";
-import { AirtableData, getAirtableData, Option } from "../../utils/airtable";
 import Button from "@material-ui/core/Button";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Toolbar from "@material-ui/core/Toolbar";
 import BackIcon from "@material-ui/icons/ArrowBack";
+
 import Accordian from "./Accordian";
+import { SensorData } from "./index";
 import FeedbackFooter from "../FeedbackFooter";
 import { PlaceData } from "../Places";
+
+import { AirtableData, getAirtableData, Option } from "../../libs/airtable";
+import firebase from "../../libs/firebase";
 
 const styles = (theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
       margin: "auto",
-      paddingTop: theme.spacing.unit * 2,
+      paddingTop: theme.spacing(2),
       [theme.breakpoints.up("md")]: {
         maxWidth: theme.breakpoints.values.md
       }
@@ -47,26 +49,26 @@ const styles = (theme: Theme) =>
       height: "32px"
     },
     backButtonIcon: {
-      marginRight: theme.spacing.unit
+      marginRight: theme.spacing()
     },
     backButtonText: {
       marginBottom: "-2px"
     },
     header: {
-      padding: theme.spacing.unit * 3,
+      padding: theme.spacing(3),
       textAlign: "center"
     },
     content: {
-      padding: theme.spacing.unit * 2
+      padding: theme.spacing(2)
     },
     footer: {
       background: theme.palette.grey["200"],
-      marginTop: theme.spacing.unit * 3,
-      padding: theme.spacing.unit * 3
+      marginTop: theme.spacing(3),
+      padding: theme.spacing(3)
     },
     summaryWrapper: {
       display: "flex",
-      padding: theme.spacing.unit * 2
+      padding: theme.spacing(2)
     },
     summaryCell: {
       flex: 1,
@@ -76,23 +78,23 @@ const styles = (theme: Theme) =>
       height: "48px",
       marginLeft: "auto",
       marginRight: "auto",
-      marginBottom: theme.spacing.unit
+      marginBottom: theme.spacing()
     },
     heading: {
       flex: 1,
       alignSelf: "center",
-      marginLeft: theme.spacing.unit
+      marginLeft: theme.spacing()
     },
     label: {
       alignSelf: "center",
-      marginLeft: theme.spacing.unit
+      marginLeft: theme.spacing()
     },
     sensorImage: {
       width: "100%",
       maxWidth: "100%",
       maxHeight: "300px",
       margin: "auto",
-      marginBottom: theme.spacing.unit * 2
+      marginBottom: theme.spacing(2)
     }
   });
 
@@ -185,7 +187,7 @@ class SensorView extends Component<any, State> {
               .then(sensorImageSrc => {
                 this.setState({ sensorImageSrc });
               })
-              .catch(function (error) {
+              .catch(error => {
                 console.log(error);
               });
           }
@@ -198,7 +200,7 @@ class SensorView extends Component<any, State> {
               .then(logoSrc => {
                 this.setState({ logoSrc });
               })
-              .catch(function (error) {
+              .catch(error => {
                 console.log(error);
               });
           }
@@ -257,10 +259,7 @@ class SensorView extends Component<any, State> {
       dataProcess,
       access,
       storage,
-      phone,
-      chat,
       email,
-      onsiteStaff
     } = sensorData;
 
     let purposeBadgeOption: Option | undefined = undefined;

@@ -76,20 +76,20 @@ const styles = (theme: Theme) =>
     },
     expansionPanelDetailsRoot: {
       borderLeft: "2px solid #000",
-      marginLeft: theme.spacing.unit * 4 + 1,
-      paddingLeft: theme.spacing.unit * 3,
+      marginLeft: theme.spacing(4 + 1),
+      paddingLeft: theme.spacing(3),
       paddingTop: 0,
-      paddingRight: theme.spacing.unit * 3,
-      paddingBottom: theme.spacing.unit * 2
+      paddingRight: theme.spacing(3),
+      paddingBottom: theme.spacing(2)
     },
     heading: {
       flex: 1,
       alignSelf: "center",
-      marginLeft: theme.spacing.unit
+      marginLeft: theme.spacing(),
     },
     label: {
       alignSelf: "center",
-      marginLeft: theme.spacing.unit,
+      marginLeft: theme.spacing(),
       marginRight: "32px"
     }
   });

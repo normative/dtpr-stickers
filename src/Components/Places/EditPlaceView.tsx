@@ -1,12 +1,13 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import PlaceForm from './PlaceForm'
 import LinearProgress from '@material-ui/core/LinearProgress';
-
-import { Redirect, withRouter } from 'react-router-dom'
-import firebase from '../../firebase.js';
 import { LngLat } from 'mapbox-gl';
+import { Redirect, withRouter } from 'react-router-dom'
+
+import PlaceForm from './PlaceForm'
 import { PlaceData } from '.';
+
+import firebase from '../../libs/firebase';
 
 interface EditPlaceViewState extends PlaceData {
   isLoading: boolean;
@@ -64,6 +65,8 @@ class EditPlaceView extends React.Component<any, EditPlaceViewState> {
       name={name}
       lngLat={lngLat}
       sensors={sensors}
+      address=""
+      admins={{}}
       onSave={(id: string) => this.props.history.push(`/places/${placeId}`)} />
   }
 }
