@@ -16,6 +16,7 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-router-dom": "^5.1.7",
     "airtable": "^0.10.1",
+    "express": "^4.17.1",
     "firebase": "^8.2.4",
     "firebaseui": "^4.7.1",
     "mapbox-gl": "^2.0.1",
@@ -35,6 +36,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "serve": "node server.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
