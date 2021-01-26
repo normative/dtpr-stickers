@@ -7,10 +7,8 @@ import { createStyles, Theme, withStyles } from '@material-ui/core/styles';
 
 import Geocoder, { MapboxQueryFeature } from './Geocoder';
 
-const ACCESS_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN || '';
-
 const Map = ReactMapboxGl({
-  accessToken: ACCESS_TOKEN,
+  accessToken: process.env.REACT_APP_MAPBOX_ACCESS_TOKEN,
 });
 
 interface Props {

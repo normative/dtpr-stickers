@@ -3,7 +3,7 @@ import ReactMapboxGl, { Marker } from "react-mapbox-gl";
 import PlaceIcon from "@material-ui/icons/Place";
 
 const Map = ReactMapboxGl({
-  accessToken: process.env.REACT_APP_MAPBOX_ACCESS_TOKEN || "",
+  accessToken: process.env.REACT_APP_MAPBOX_ACCESS_TOKEN,
 });
 
 interface Props {
