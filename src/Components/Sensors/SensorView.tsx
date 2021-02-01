@@ -1,24 +1,16 @@
 import React, { Component } from "react";
-import { LngLat } from "mapbox-gl";
-import { Typography, Divider, Button, LinearProgress, Toolbar } from "@material-ui/core";
-import BackIcon from "@material-ui/icons/ArrowBack";
+import { Typography, Divider, Button, LinearProgress, Toolbar, ArrowBackIcon } from "../../libs/mui";
+
 import { createStyles, withStyles, Theme } from "@material-ui/core/styles";
 
 import Accordian from "./Accordian";
-import { SensorData } from "./index";
 import FeedbackFooter from "../FeedbackFooter";
 
 import { AirtableData, getAirtableData, Option } from "../../libs/airtable";
 import firebase from "../../libs/firebase";
 
-export interface PlaceData {
-  name: string,
-  lngLat: LngLat,
-  address: string, // mapbox place_name
-  sensors: { [sensorId: string]: boolean }
-  admins: { [uid: string]: boolean },
-}
-
+import { SensorData } from "./index";
+import { PlaceData } from "../Places";
 interface State {
   sensorData?: SensorData;
   parentPlaceName?: string;
@@ -152,7 +144,6 @@ class SensorView extends Component<any, State> {
   }
 
   render() {
-    debugger
     const { classes } = this.props;
     const {
       isLoading,
@@ -214,7 +205,7 @@ class SensorView extends Component<any, State> {
               variant="outlined"
               size="small"
             >
-              <BackIcon className={classes.backButtonIcon} fontSize="small" />
+              <ArrowBackIcon className={classes.backButtonIcon} fontSize="small" />
               <div className={classes.backButtonText}>{parentPlaceName}</div>
             </Button>
           )}
@@ -257,6 +248,7 @@ class SensorView extends Component<any, State> {
               <img
                 className={classes.summaryBadge}
                 src={`/images/${purposeBadgeOption.iconShortname}.svg`}
+                alt="purpose badge icon"
               />
               <Typography variant="subtitle2">
                 {purposeBadgeOption.name}
@@ -268,6 +260,7 @@ class SensorView extends Component<any, State> {
               <img
                 className={classes.summaryBadge}
                 src={`/images/${techTypeBadgeOption.iconShortname}.svg`}
+                alt="tech badge icon"
               />
               <Typography variant="subtitle2">
                 {techTypeBadgeOption.name}
@@ -282,6 +275,7 @@ class SensorView extends Component<any, State> {
                   logoSrc ||
                   `/images/${accountableBadgeOption.iconShortname}.svg`
                 }
+                alt="accountable badge icon"
               />
               <Typography variant="subtitle2">{accountable}</Typography>
             </div>
@@ -290,7 +284,11 @@ class SensorView extends Component<any, State> {
         <Divider variant="fullWidth" />
         <div className={classes.content}>
           {sensorImageSrc && (
-            <img className={classes.sensorImage} src={sensorImageSrc} />
+            <img
+              className={classes.sensorImage}
+              src={sensorImageSrc}
+              alt="sensor icon"
+            />
           )}
           {description && <Typography paragraph>{description}</Typography>}
         </div>
@@ -407,55 +405,6 @@ class SensorView extends Component<any, State> {
           technology={sensorData.name}
           email={email || 'dtpr-hello@sidewalklabs.com'}
         />
-        {/* {hasfooter && (
-          <div className={classes.footer}>
-            <Typography gutterBottom variant="h6">
-              Want to know more?
-            </Typography>
-            {email && (
-              <div>
-                <Typography variant="subtitle2" inline>
-                  Email:&nbsp;
-                </Typography>
-                <Typography gutterBottom variant="body2" inline>
-                  <a href={`mailto:${email}`}>{email}</a>
-                </Typography>
-              </div>
-            )}
-            {phone && (
-              <div>
-                <Typography variant="subtitle2" inline>
-                  Call:&nbsp;
-                </Typography>
-                <Typography gutterBottom variant="body2" inline>
-                  {phone}
-                </Typography>
-              </div>
-            )}
-            {chat && (
-              <div>
-                <Typography variant="subtitle2" inline>
-                  Chat:&nbsp;
-                </Typography>
-                <Typography gutterBottom variant="body2" inline>
-                  <a href={chat} target="_blank">
-                    {chat}
-                  </a>
-                </Typography>
-              </div>
-            )}
-            {onsiteStaff && (
-              <div>
-                <Typography variant="subtitle2" inline>
-                  Visit:&nbsp;
-                </Typography>
-                <Typography gutterBottom variant="body2" inline>
-                  Chat with our on-site staff
-                </Typography>
-              </div>
-            )}
-          </div>
-        )} */}
       </div>
     );
   }

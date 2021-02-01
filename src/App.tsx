@@ -13,6 +13,7 @@ import {
 import HomeView from "./Components/HomeView";
 import Sensors from "./Components/Sensors";
 import Footer from './Components/Footer';
+import Places from "./Components/Places";
 
 ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_KEY || "");
 ReactGA.set({ anonymizeIp: true });
@@ -25,6 +26,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={HomeView} />
             <Route path="/sensors" component={Sensors} />
+            <Route path='/places' component={Places} />
             <Redirect to="/" />
           </Switch>
         </Router>

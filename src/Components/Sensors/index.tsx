@@ -27,7 +27,7 @@ export interface SensorData {
 function Sensors() {
 
   const match = useRouteMatch();
-  debugger;
+
   return (
     <Switch>
       <Route exact path={`${match.path}/:sensorId/print`} component={SensorPrintView} />
