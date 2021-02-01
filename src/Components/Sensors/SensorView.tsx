@@ -1,102 +1,23 @@
 import React, { Component } from "react";
-import { createStyles, withStyles, Theme } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
-import Divider from "@material-ui/core/Divider";
-import Button from "@material-ui/core/Button";
-import LinearProgress from "@material-ui/core/LinearProgress";
-import Toolbar from "@material-ui/core/Toolbar";
+import { LngLat } from "mapbox-gl";
+import { Typography, Divider, Button, LinearProgress, Toolbar } from "@material-ui/core";
 import BackIcon from "@material-ui/icons/ArrowBack";
+import { createStyles, withStyles, Theme } from "@material-ui/core/styles";
 
 import Accordian from "./Accordian";
 import { SensorData } from "./index";
 import FeedbackFooter from "../FeedbackFooter";
-import { PlaceData } from "../Places";
 
 import { AirtableData, getAirtableData, Option } from "../../libs/airtable";
 import firebase from "../../libs/firebase";
 
-const styles = (theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-      margin: "auto",
-      paddingTop: theme.spacing(2),
-      [theme.breakpoints.up("md")]: {
-        maxWidth: theme.breakpoints.values.md
-      }
-    },
-    toolbar: {
-      flexWrap: "wrap",
-      [theme.breakpoints.down("xs")]: {
-        flexDirection: "column",
-        alignItems: "start"
-      },
-      borderBottom: "0.5px solid rgba(0,0,0,.2)",
-      minHeight: "48px"
-    },
-    toolbarRight: {
-      flex: 1,
-      display: "flex",
-      justifyContent: "flex-end",
-      flexWrap: "wrap"
-    },
-    backButton: {
-      borderRadius: "16px",
-      fontWeight: 700,
-      textTransform: "none",
-      flexShrink: 0,
-      padding: "0 16px 0 8px",
-      height: "32px"
-    },
-    backButtonIcon: {
-      marginRight: theme.spacing()
-    },
-    backButtonText: {
-      marginBottom: "-2px"
-    },
-    header: {
-      padding: theme.spacing(3),
-      textAlign: "center"
-    },
-    content: {
-      padding: theme.spacing(2)
-    },
-    footer: {
-      background: theme.palette.grey["200"],
-      marginTop: theme.spacing(3),
-      padding: theme.spacing(3)
-    },
-    summaryWrapper: {
-      display: "flex",
-      padding: theme.spacing(2)
-    },
-    summaryCell: {
-      flex: 1,
-      textAlign: "center"
-    },
-    summaryBadge: {
-      height: "48px",
-      marginLeft: "auto",
-      marginRight: "auto",
-      marginBottom: theme.spacing()
-    },
-    heading: {
-      flex: 1,
-      alignSelf: "center",
-      marginLeft: theme.spacing()
-    },
-    label: {
-      alignSelf: "center",
-      marginLeft: theme.spacing()
-    },
-    sensorImage: {
-      width: "100%",
-      maxWidth: "100%",
-      maxHeight: "300px",
-      margin: "auto",
-      marginBottom: theme.spacing(2)
-    }
-  });
+export interface PlaceData {
+  name: string,
+  lngLat: LngLat,
+  address: string, // mapbox place_name
+  sensors: { [sensorId: string]: boolean }
+  admins: { [uid: string]: boolean },
+}
 
 interface State {
   sensorData?: SensorData;
@@ -231,6 +152,7 @@ class SensorView extends Component<any, State> {
   }
 
   render() {
+    debugger
     const { classes } = this.props;
     const {
       isLoading,
@@ -538,5 +460,88 @@ class SensorView extends Component<any, State> {
     );
   }
 }
+
+const styles = (theme: Theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+      margin: "auto",
+      paddingTop: theme.spacing(2),
+      [theme.breakpoints.up("md")]: {
+        maxWidth: theme.breakpoints.values.md
+      }
+    },
+    toolbar: {
+      flexWrap: "wrap",
+      [theme.breakpoints.down("xs")]: {
+        flexDirection: "column",
+        alignItems: "start"
+      },
+      borderBottom: "0.5px solid rgba(0,0,0,.2)",
+      minHeight: "48px"
+    },
+    toolbarRight: {
+      flex: 1,
+      display: "flex",
+      justifyContent: "flex-end",
+      flexWrap: "wrap"
+    },
+    backButton: {
+      borderRadius: "16px",
+      fontWeight: 700,
+      textTransform: "none",
+      flexShrink: 0,
+      padding: "0 16px 0 8px",
+      height: "32px"
+    },
+    backButtonIcon: {
+      marginRight: theme.spacing()
+    },
+    backButtonText: {
+      marginBottom: "-2px"
+    },
+    header: {
+      padding: theme.spacing(3),
+      textAlign: "center"
+    },
+    content: {
+      padding: theme.spacing(2)
+    },
+    footer: {
+      background: theme.palette.grey["200"],
+      marginTop: theme.spacing(3),
+      padding: theme.spacing(3)
+    },
+    summaryWrapper: {
+      display: "flex",
+      padding: theme.spacing(2)
+    },
+    summaryCell: {
+      flex: 1,
+      textAlign: "center"
+    },
+    summaryBadge: {
+      height: "48px",
+      marginLeft: "auto",
+      marginRight: "auto",
+      marginBottom: theme.spacing()
+    },
+    heading: {
+      flex: 1,
+      alignSelf: "center",
+      marginLeft: theme.spacing()
+    },
+    label: {
+      alignSelf: "center",
+      marginLeft: theme.spacing()
+    },
+    sensorImage: {
+      width: "100%",
+      maxWidth: "100%",
+      maxHeight: "300px",
+      margin: "auto",
+      marginBottom: theme.spacing(2)
+    }
+  });
 
 export default withStyles(styles)(SensorView);

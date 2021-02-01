@@ -1,9 +1,7 @@
-import React, { Component } from 'react';
-import EditSensorForm from './EditSensorForm';
+import React from 'react';
 import SensorPrintView from './SensorPrintView';
 import SensorView from './SensorView';
-import { Route, Switch } from "react-router-dom";
-import { withRouter } from 'react-router-dom'
+import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 
 export interface SensorData {
   placeId: string,
@@ -26,16 +24,17 @@ export interface SensorData {
   sensorImageRef: string,
 }
 
-class Sensors extends Component<any, any> {
-  render() {
-    return (
-      <Switch>
-        <Route path={`/sensors/:sensorId/print`} component={SensorPrintView} />
-        <Route path={`/sensors/:sensorId/edit`} component={EditSensorForm} />
-        <Route path={`/sensors/:sensorId`} component={SensorView} />
-      </Switch>
-    );
-  }
+function Sensors() {
+
+  const match = useRouteMatch();
+  debugger;
+  return (
+    <Switch>
+      <Route exact path={`${match.path}/:sensorId/print`} component={SensorPrintView} />
+      <Route exact path={`${match.path}/:sensorId`} component={SensorView} />
+      <Redirect to="/" />
+    </Switch>
+  );
 }
 
-export default withRouter(Sensors);
+export default Sensors;
