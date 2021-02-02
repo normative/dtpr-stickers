@@ -21,6 +21,7 @@ class StaticMap extends Component<Props, any> {
     const { markerLocation, center } = this.props;
     return (
       <Map
+        // eslint-disable-next-line react/style-prop-object
         style="mapbox://styles/mapbox/streets-v11"
         containerStyle={{
           width: '100%',

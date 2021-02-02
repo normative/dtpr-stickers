@@ -1,3 +1,4 @@
+/* eslint-disable */
 import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
 import List from '@material-ui/core/List';
@@ -55,12 +56,11 @@ interface MapboxResponse {
 }
 
 async function search(query: string, callback: (locations: MapboxQueryFeature[]) => void) {
-  const uri =
-    'https://api.tiles.mapbox.com/geocoding/v5/mapbox.places/' +
-    encodeURIComponent(query) +
-    '.json' +
-    '?access_token=' +
-    process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
+  const uri = `https://api.tiles.mapbox.com/geocoding/v5/mapbox.places/${
+    encodeURIComponent(query)
+  }.json`
+    + `?access_token=${
+      process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}`;
 
   const response = await fetch(uri);
   const json: MapboxResponse = await response.json();
@@ -99,8 +99,8 @@ const Geocoder: React.FC<Props> = ({ onSelectFeature, classes }) => {
 
   const onSelect = (feature: MapboxQueryFeature) => {
     setResults([]);
-    onSelectFeature(feature)
-  }
+    onSelectFeature(feature);
+  };
 
   return (
     <Paper className={classes.root}>
@@ -110,15 +110,14 @@ const Geocoder: React.FC<Props> = ({ onSelectFeature, classes }) => {
           placeholder="Search"
           inputProps={{ 'aria-label': 'Search' }}
           value={value}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
-            setValue(e.target.value)
-          }
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => setValue(e.target.value)}
         />
         {!results.length && (
           <IconButton
             className={classes.iconButton}
             onClick={() => value && search(value, setResults)}
-            aria-label="Search">
+            aria-label="Search"
+          >
             <SearchIcon />
           </IconButton>
         )}
@@ -126,7 +125,8 @@ const Geocoder: React.FC<Props> = ({ onSelectFeature, classes }) => {
           <IconButton
             className={classes.iconButton}
             onClick={() => setResults([])}
-            aria-label="Close">
+            aria-label="Close"
+          >
             <CloseIcon />
           </IconButton>
         )}
@@ -135,15 +135,14 @@ const Geocoder: React.FC<Props> = ({ onSelectFeature, classes }) => {
         <div ref={ref}>
           {!!results.length && (
             <List>
-              {results.map(feature => {
+              {results.map((feature) => {
                 const address = (feature.properties && feature.properties.address) || undefined;
                 return (
                   <ListItem
                     key={feature.id}
                     button
-                    onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
-                      onSelect(feature)
-                    }>
+                    onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => onSelect(feature)}
+                  >
                     <ListItemIcon>{address ? <PlaceIcon /> : <SearchIcon />}</ListItemIcon>
                     <ListItemText primary={feature.place_name} secondary={address} />
                   </ListItem>

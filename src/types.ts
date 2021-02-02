@@ -1,20 +1,22 @@
-import { LngLat } from "mapbox-gl";
+import { LngLat } from 'mapbox-gl';
 
 export interface ReducerStateType {
   isFetching: Boolean,
   didInvalidate: Boolean,
-  error?: ExceptionInformation,
-};
+  error?: Error,
+}
 
 export interface PlaceData {
+  id: string,
   name: string,
   lngLat: LngLat,
   address: string, // mapbox place_name
   sensors: { [sensorId: string]: boolean }
   admins: { [uid: string]: boolean },
-};
+}
 
 export interface SensorData {
+  id: string,
   placeId: string,
   name: string,
   headline: string,
@@ -32,8 +34,10 @@ export interface SensorData {
   email: string,
   onsiteStaff: boolean,
   logoRef: string,
+  logoSrc?: string,
   sensorImageRef: string,
-};
+  sensorImageSrc?: string,
+}
 
 // The table names in airtable
 export type TableName =

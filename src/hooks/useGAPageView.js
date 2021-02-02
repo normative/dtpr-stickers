@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import ReactGA from "react-ga";
+import ReactGA from 'react-ga';
 
-function useGAPageView(props) {
+function useGAPageView() {
   useEffect(() => {
     ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);

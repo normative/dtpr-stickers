@@ -7,25 +7,20 @@ import airtableReducer, {
 import placeReducer, {
   fetchPlaceFailed, placeInitialState, fetchPlaceRequested, fetchPlaceSuccessed,
 } from 'reducers/place';
-import sensorsReducer, {
-  fetchSensorsFailed, fetchSensorsRequested, fetchSensorsSuccessed, sensorsInitialState,
-} from 'reducers/sensors';
-import { getPlace, getSensors } from 'sideEffects/firebase';
+import { getPlace, getSensor } from 'sideEffects/firebase';
 import { getAirtableData } from 'sideEffects/airtable';
-import PlaceView from 'Components/Places/PlaceView';
+import sensorReducer, {
+  sensorInitialState, fetchSensorRequested, fetchSensorSuccessed, fetchSensorFailed,
+} from 'reducers/sensor';
 
-function Place() {
+import SensorView from 'Components/Sensors/SensorView';
+
+function Sensor() {
   const [place, dispatchPlace] = useReducer(placeReducer, placeInitialState);
-  const [sensors, dispatchSensors] = useReducer(
-    sensorsReducer,
-    sensorsInitialState,
-  );
-  const [airtable, dispatchAirtable] = useReducer(
-    airtableReducer,
-    getAirtableDataInitialState(),
-  );
+  const [sensor, dispatchSensor] = useReducer(sensorReducer, sensorInitialState);
+  const [airtable, dispatchAirtable] = useReducer(airtableReducer, getAirtableDataInitialState());
 
-  const { placeId }: { placeId: string } = useParams();
+  const { sensorId }: { sensorId: string } = useParams();
 
   const handlePlaceOnSuccess = useCallback((placeData) => {
     dispatchPlace(fetchPlaceSuccessed(placeData));
@@ -35,12 +30,12 @@ function Place() {
     dispatchPlace(fetchPlaceFailed(e));
   }, []);
 
-  const handleSensorsOnSuccess = useCallback((sensorsData) => {
-    dispatchSensors(fetchSensorsSuccessed(sensorsData));
+  const handleSensorOnSuccess = useCallback((sensorsData) => {
+    dispatchSensor(fetchSensorSuccessed(sensorsData));
   }, []);
 
-  const handleSensorsOnError = useCallback((e) => {
-    dispatchSensors(fetchSensorsFailed(e));
+  const handleSensorOnError = useCallback((e) => {
+    dispatchSensor(fetchSensorFailed(e));
   }, []);
 
   const handleAirtableOnSuccess = useCallback((airtableData) => {
@@ -63,20 +58,24 @@ function Place() {
   }, [airtable.data]);
 
   useEffect(() => {
-    dispatchPlace(fetchPlaceRequested());
-    getPlace(placeId, handlePlaceOnSuccess, handlePlaceOnError);
-  }, [placeId]);
+    dispatchSensor(fetchSensorRequested());
+    getSensor(sensorId, handleSensorOnSuccess, handleSensorOnError);
+  }, [sensorId]);
 
   useEffect(() => {
-    if (place.data) {
-      dispatchSensors(fetchSensorsRequested());
-      getSensors(place.data, handleSensorsOnSuccess, handleSensorsOnError);
+    if (sensor.data) {
+      dispatchPlace(fetchPlaceRequested());
+      getPlace(sensor.data.placeId, handlePlaceOnSuccess, handlePlaceOnError);
     }
-  }, [place.data]);
+  }, [sensor.data]);
 
   return (
-    <PlaceView place={place} airtable={airtable} sensors={sensors} />
+    <SensorView
+      place={place}
+      airtable={airtable}
+      sensor={sensor}
+    />
   );
 }
 
-export default Place;
+export default Sensor;

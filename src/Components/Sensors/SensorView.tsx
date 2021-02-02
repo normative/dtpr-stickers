@@ -1,409 +1,259 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import {
   Typography, Divider, Button, LinearProgress, Toolbar, ArrowBackIcon,
-} from '../../libs/mui';
+} from 'libs/mui';
+import { Option } from 'types';
 
-import Accordian from './Accordian';
+import { PlaceStateType } from 'reducers/place';
+import { SensorStateType } from 'reducers/sensor';
+import { AirtableStateType } from 'reducers/airtable';
+
 import FeedbackFooter from '../FeedbackFooter';
+import Accordian from './Accordian';
 
-import { AirtableData, getAirtableData, Option } from '../../libs/airtable';
-import firebase from '../../libs/firebase';
-
-import { PlaceData, SensorData } from '../../types';
-
-interface State {
-  sensorData?: SensorData;
-  parentPlaceName?: string;
-  isLoading: boolean;
-  logoSrc?: string;
-  sensorImageSrc?: string;
-  airtableData?: AirtableData;
-  isAdmin: boolean;
+interface Props {
+  place: PlaceStateType;
+  sensor: SensorStateType;
+  airtable: AirtableStateType;
+  classes: any;
 }
 
-class SensorView extends Component<any, State> {
-  constructor(props: any) {
-    super(props);
+function SensorView({
+  classes, airtable, place, sensor,
+}: Props) {
+  const isLoading = place.isFetching || sensor.isFetching || airtable.isFetching;
 
-    this.state = {
-      sensorData: undefined,
-      isLoading: true,
-      parentPlaceName: undefined,
-      logoSrc: undefined,
-      sensorImageSrc: undefined,
-      airtableData: undefined,
-      isAdmin: false,
-    };
+  if (isLoading) return <LinearProgress color="secondary" />;
+  if (!sensor.data) return <Typography>Hmm can`t find that sensor :/</Typography>;
+
+  const {
+    headline,
+    description,
+    accountable,
+    accountableDescription,
+    purpose,
+    techType,
+    dataType,
+    dataProcess,
+    access,
+    storage,
+    email,
+    logoSrc,
+    sensorImageSrc,
+  } = sensor.data;
+
+  let purposeBadgeOption: Option | undefined;
+  let techTypeBadgeOption: Option | undefined;
+  let accountableBadgeOption: Option | undefined;
+
+  if (airtable.data) {
+    purposeBadgeOption = (purpose
+        && purpose[0]
+        && airtable.data.purpose.find((option) => option.name === purpose[0]))
+      || undefined;
+    techTypeBadgeOption = (techType
+        && techType[0]
+        && airtable.data.techType.find((option) => option.name === techType[0]))
+      || undefined;
+    accountableBadgeOption = (accountable && airtable.data.accountable[0]) || undefined;
   }
 
-  async componentDidMount() {
-    const airtableData = await getAirtableData();
-    this.setState({ airtableData });
-    const { sensorId } = this.props.match.params;
-    const sensorRef = firebase.database().ref(`sensors/${sensorId}`);
-    sensorRef.on('value', (snapshot) => {
-      if (snapshot) {
-        const sensorData: SensorData | null = snapshot.val();
-        if (!sensorData) {
-          this.setState({ isLoading: false });
-        } else {
-          // Some of these fields may not exist for that object, so set a default val
-          const {
-            name = '',
-            placeId = '',
-            headline = '',
-            description = '',
-            accountable = '',
-            accountableDescription = '',
-            purpose = [],
-            techType = [],
-            dataType = [],
-            dataProcess = [],
-            access = [],
-            storage = [],
-            phone = '',
-            chat = '',
-            email = '',
-            onsiteStaff = false,
-            logoRef = '',
-            sensorImageRef = '',
-          } = sensorData;
-          this.setState({
-            sensorData: {
-              name,
-              placeId,
-              headline,
-              description,
-              accountable,
-              accountableDescription,
-              purpose,
-              techType,
-              dataType,
-              dataProcess,
-              access,
-              storage,
-              phone,
-              chat,
-              email,
-              onsiteStaff,
-              logoRef,
-              sensorImageRef,
-            },
-            isLoading: false,
-          });
-
-          if (sensorImageRef) {
-            const storageRef = firebase.storage().ref();
-            storageRef
-              .child(sensorImageRef)
-              .getDownloadURL()
-              .then((sensorImageSrc) => {
-                this.setState({ sensorImageSrc });
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          }
-
-          if (logoRef) {
-            const storageRef = firebase.storage().ref();
-            storageRef
-              .child(logoRef)
-              .getDownloadURL()
-              .then((logoSrc) => {
-                this.setState({ logoSrc });
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          }
-
-          if (placeId) {
-            firebase
-              .database()
-              .ref(`places/${placeId}`)
-              .once('value', (snapshot) => {
-                if (snapshot) {
-                  const place: PlaceData | null = snapshot.val();
-                  if (place) {
-                    this.setState({ parentPlaceName: place.name });
-                    const user = firebase.auth().currentUser;
-                    if (user) {
-                      const { uid } = user;
-                      const isAdmin = (uid && place.admins && place.admins[uid]) || false;
-                      this.setState({ isAdmin });
-                    }
-                  }
-                }
-              });
-          }
-        }
-      }
-    });
-  }
-
-  render() {
-    const { classes } = this.props;
-    const {
-      isLoading,
-      isAdmin,
-      parentPlaceName,
-      sensorData,
-      logoSrc,
-      sensorImageSrc,
-      airtableData,
-    } = this.state;
-    const { sensorId } = this.props.match.params;
-
-    if (isLoading) return <LinearProgress color="secondary" />;
-    if (!sensorData) { return <Typography>Hmm can't find that sensor :/</Typography>; }
-
-    const {
-      placeId,
-      headline,
-      description,
-      accountable,
-      accountableDescription,
-      purpose,
-      techType,
-      dataType,
-      dataProcess,
-      access,
-      storage,
-      email,
-    } = sensorData;
-
-    let purposeBadgeOption: Option | undefined;
-    let techTypeBadgeOption: Option | undefined;
-    let accountableBadgeOption: Option | undefined;
-    if (airtableData) {
-      purposeBadgeOption = (purpose
-          && purpose[0]
-          && airtableData.purpose.find((option) => option.name === purpose[0]))
-        || undefined;
-      techTypeBadgeOption = (techType
-          && techType[0]
-          && airtableData.techType.find((option) => option.name === techType[0]))
-        || undefined;
-      accountableBadgeOption = (accountable && airtableData.accountable[0]) || undefined;
-    }
-
-    // const hasfooter = phone || chat || email || onsiteStaff;
-    return (
-      <div className={classes.root}>
-        <Toolbar className={classes.toolbar}>
-          {placeId && parentPlaceName && (
-            <Button
-              className={classes.backButton}
-              href={`/places/${placeId}`}
-              color="primary"
-              variant="outlined"
-              size="small"
-            >
-              <ArrowBackIcon className={classes.backButtonIcon} fontSize="small" />
-              <div className={classes.backButtonText}>{parentPlaceName}</div>
-            </Button>
-          )}
-          {isAdmin && (
-            <div className={classes.toolbarRight}>
-              <Button
-                href={`/sensors/${sensorId}/print`}
-                color="primary"
-                size="small"
-              >
-                Try the Sticker Maker
-              </Button>
-              <Button
-                href={`/sensors/${sensorId}/edit`}
-                color="primary"
-                variant="contained"
-                size="small"
-              >
-                Edit
-              </Button>
-            </div>
-          )}
-        </Toolbar>
-        <div className={classes.header}>
-          {headline && (
-            <Typography
-              gutterBottom
-              variant="h6"
-              align="center"
-              style={{ wordBreak: 'break-word', fontWeight: 'bold' }}
-            >
-              {headline}
-            </Typography>
-          )}
-        </div>
-        <Divider variant="fullWidth" />
-        <div className={classes.summaryWrapper}>
-          {purposeBadgeOption && (
-            <div className={classes.summaryCell}>
-              <img
-                className={classes.summaryBadge}
-                src={`/images/${purposeBadgeOption.iconShortname}.svg`}
-                alt="purpose badge icon"
-              />
-              <Typography variant="subtitle2">
-                {purposeBadgeOption.name}
-              </Typography>
-            </div>
-          )}
-          {techTypeBadgeOption && (
-            <div className={classes.summaryCell}>
-              <img
-                className={classes.summaryBadge}
-                src={`/images/${techTypeBadgeOption.iconShortname}.svg`}
-                alt="tech badge icon"
-              />
-              <Typography variant="subtitle2">
-                {techTypeBadgeOption.name}
-              </Typography>
-            </div>
-          )}
-          {accountableBadgeOption && (
-            <div className={classes.summaryCell}>
-              <img
-                className={classes.summaryBadge}
-                src={
-                  logoSrc
-                  || `/images/${accountableBadgeOption.iconShortname}.svg`
-                }
-                alt="accountable badge icon"
-              />
-              <Typography variant="subtitle2">{accountable}</Typography>
-            </div>
-          )}
-        </div>
-        <Divider variant="fullWidth" />
-        <div className={classes.content}>
-          {sensorImageSrc && (
+  // const hasfooter = phone || chat || email || onsiteStaff;
+  return (
+    <div className={classes.root}>
+      <Toolbar className={classes.toolbar}>
+        {place.data && (
+          <Button
+            className={classes.backButton}
+            href={`/places/${sensor.data.placeId}`}
+            color="primary"
+            variant="outlined"
+            size="small"
+          >
+            <ArrowBackIcon className={classes.backButtonIcon} fontSize="small" />
+            <div className={classes.backButtonText}>{place.data.name}</div>
+          </Button>
+        )}
+      </Toolbar>
+      <div className={classes.header}>
+        {headline && (
+          <Typography
+            gutterBottom
+            variant="h6"
+            align="center"
+            style={{ wordBreak: 'break-word', fontWeight: 'bold' }}
+          >
+            {headline}
+          </Typography>
+        )}
+      </div>
+      <Divider variant="fullWidth" />
+      <div className={classes.summaryWrapper}>
+        {purposeBadgeOption && (
+          <div className={classes.summaryCell}>
             <img
-              className={classes.sensorImage}
-              src={sensorImageSrc}
-              alt="sensor icon"
+              className={classes.summaryBadge}
+              src={`/images/${purposeBadgeOption.iconShortname}.svg`}
+              alt="purpose badge icon"
             />
-          )}
-          {description && <Typography paragraph>{description}</Typography>}
-        </div>
-        {airtableData && (
-          <div>
-            {accountableBadgeOption && accountableDescription && (
-              <Accordian
-                icon={`/images/${accountableBadgeOption.iconShortname}.svg`}
-                title={accountable}
-                label="Accountability"
-                body={accountableDescription}
-              />
-            )}
-            {purpose
-              && purpose.map((name) => {
-                const option = airtableData.purpose.find(
-                  (airtableOption) => airtableOption.name === name,
-                );
-                if (!option) return null;
-                return (
-                  <Accordian
-                    key={option.name}
-                    icon={`/images/${option.iconShortname}.svg`}
-                    title={option.name}
-                    label="Purpose"
-                    body={option.description}
-                  />
-                );
-              })}
-            {techType
-              && techType.map((name) => {
-                const option = airtableData.techType.find(
-                  (airtableOption) => airtableOption.name === name,
-                );
-                if (!option) return null;
-                return (
-                  <Accordian
-                    key={option.name}
-                    icon={`/images/${option.iconShortname}.svg`}
-                    title={option.name}
-                    label="Technology Type"
-                    body={option.description}
-                  />
-                );
-              })}
-            {dataType
-              && dataType.map((name) => {
-                const option = airtableData.dataType.find(
-                  (airtableOption) => airtableOption.name === name,
-                );
-                if (!option) return null;
-                return (
-                  <Accordian
-                    key={option.name}
-                    icon={`/images/${option.iconShortname}.svg`}
-                    title={option.name}
-                    label="Data Type"
-                    body={option.description}
-                  />
-                );
-              })}
-            {dataProcess
-              && dataProcess.map((name) => {
-                const option = airtableData.dataType.find(
-                  (airtableOption) => airtableOption.name === name,
-                );
-                if (!option) return null;
-                return (
-                  <Accordian
-                    key={option.name}
-                    icon={`/images/${option.iconShortname}.svg`}
-                    title={option.name}
-                    label="Data Processing"
-                    body={option.description}
-                  />
-                );
-              })}
-            {access
-              && access.map((name) => {
-                const option = airtableData.access.find(
-                  (airtableOption) => airtableOption.name === name,
-                );
-                if (!option) return null;
-                return (
-                  <Accordian
-                    key={option.name}
-                    icon={`/images/${option.iconShortname}.svg`}
-                    title={option.name}
-                    label="Access"
-                    body={option.description}
-                  />
-                );
-              })}
-            {storage
-              && storage.map((name) => {
-                const option = airtableData.storage.find(
-                  (airtableOption) => airtableOption.name === name,
-                );
-                if (!option) return null;
-                return (
-                  <Accordian
-                    key={option.name}
-                    icon={`/images/${option.iconShortname}.svg`}
-                    title={option.name}
-                    label="Storage"
-                    body={option.description}
-                  />
-                );
-              })}
+            <Typography variant="subtitle2">
+              {purposeBadgeOption.name}
+            </Typography>
           </div>
         )}
-        <FeedbackFooter
-          placeName={this.state.parentPlaceName}
-          technology={sensorData.name}
-          email={email || 'dtpr-hello@sidewalklabs.com'}
-        />
+        {techTypeBadgeOption && (
+          <div className={classes.summaryCell}>
+            <img
+              className={classes.summaryBadge}
+              src={`/images/${techTypeBadgeOption.iconShortname}.svg`}
+              alt="tech badge icon"
+            />
+            <Typography variant="subtitle2">
+              {techTypeBadgeOption.name}
+            </Typography>
+          </div>
+        )}
+        {accountableBadgeOption && (
+          <div className={classes.summaryCell}>
+            <img
+              className={classes.summaryBadge}
+              src={
+                logoSrc
+                || `/images/${accountableBadgeOption.iconShortname}.svg`
+              }
+              alt="accountable badge icon"
+            />
+            <Typography variant="subtitle2">{accountable}</Typography>
+          </div>
+        )}
       </div>
-    );
-  }
+      <Divider variant="fullWidth" />
+      <div className={classes.content}>
+        {sensorImageSrc && (
+          <img
+            className={classes.sensorImage}
+            src={sensorImageSrc}
+            alt="sensor icon"
+          />
+        )}
+        {description && <Typography paragraph>{description}</Typography>}
+      </div>
+      {airtable.data && (
+        <div>
+          {accountableBadgeOption && accountableDescription && (
+            <Accordian
+              icon={`/images/${accountableBadgeOption.iconShortname}.svg`}
+              title={accountable}
+              label="Accountability"
+              body={accountableDescription}
+            />
+          )}
+          {purpose
+            && purpose.map((name) => {
+              const option = airtable.data.purpose.find(
+                (airtableOption) => airtableOption.name === name,
+              );
+              if (!option) return null;
+              return (
+                <Accordian
+                  key={option.name}
+                  icon={`/images/${option.iconShortname}.svg`}
+                  title={option.name}
+                  label="Purpose"
+                  body={option.description}
+                />
+              );
+            })}
+          {techType
+            && techType.map((name) => {
+              const option = airtable.data.techType.find(
+                (airtableOption) => airtableOption.name === name,
+              );
+              if (!option) return null;
+              return (
+                <Accordian
+                  key={option.name}
+                  icon={`/images/${option.iconShortname}.svg`}
+                  title={option.name}
+                  label="Technology Type"
+                  body={option.description}
+                />
+              );
+            })}
+          {dataType
+            && dataType.map((name) => {
+              const option = airtable.data.dataType.find(
+                (airtableOption) => airtableOption.name === name,
+              );
+              if (!option) return null;
+              return (
+                <Accordian
+                  key={option.name}
+                  icon={`/images/${option.iconShortname}.svg`}
+                  title={option.name}
+                  label="Data Type"
+                  body={option.description}
+                />
+              );
+            })}
+          {dataProcess
+            && dataProcess.map((name) => {
+              const option = airtable.data.dataType.find(
+                (airtableOption) => airtableOption.name === name,
+              );
+              if (!option) return null;
+              return (
+                <Accordian
+                  key={option.name}
+                  icon={`/images/${option.iconShortname}.svg`}
+                  title={option.name}
+                  label="Data Processing"
+                  body={option.description}
+                />
+              );
+            })}
+          {access
+            && access.map((name) => {
+              const option = airtable.data.access.find(
+                (airtableOption) => airtableOption.name === name,
+              );
+              if (!option) return null;
+              return (
+                <Accordian
+                  key={option.name}
+                  icon={`/images/${option.iconShortname}.svg`}
+                  title={option.name}
+                  label="Access"
+                  body={option.description}
+                />
+              );
+            })}
+          {storage
+            && storage.map((name) => {
+              const option = airtable.data.storage.find(
+                (airtableOption) => airtableOption.name === name,
+              );
+              if (!option) return null;
+              return (
+                <Accordian
+                  key={option.name}
+                  icon={`/images/${option.iconShortname}.svg`}
+                  title={option.name}
+                  label="Storage"
+                  body={option.description}
+                />
+              );
+            })}
+        </div>
+      )}
+      <FeedbackFooter
+        placeName={place.data ? place.data.name : 'Loading...'}
+        technology={sensor.data.name}
+        email={email || 'dtpr-hello@sidewalklabs.com'}
+      />
+    </div>
+  );
 }
 
 const styles = (theme: Theme) => createStyles({

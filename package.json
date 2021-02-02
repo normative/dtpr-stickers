@@ -19,6 +19,7 @@
     "express": "^4.17.1",
     "firebase": "^8.2.4",
     "firebaseui": "^4.7.1",
+    "geojson": "^0.5.0",
     "mapbox-gl": "1.13.0",
     "nanoid": "^3.1.20",
     "qrcode": "^1.4.4",
@@ -38,7 +39,9 @@
     "build": "react-scripts build",
     "serve": "node server.js",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
+    "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx ./src"
   },
   "browserslist": {
     "production": [

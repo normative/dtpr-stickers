@@ -1,23 +1,24 @@
-import React, { Component } from "react";
-import { createStyles, withStyles, Theme } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import showdown from "showdown";
+/* eslint-disable */
+import React, { Component } from 'react';
+import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
+import { Typography } from '@material-ui/core';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import showdown from 'showdown';
 
-import ReactGA from "react-ga";
-ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_KEY || "");
+import ReactGA from 'react-ga';
+
+ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_KEY || '');
 ReactGA.set({ anonymizeIp: true });
 
 const paragraphTagFilter = {
-  type: "output",
-  filter: function (text: string, converter: any) {
-    var re = /<\/?p[^>]*>/gi;
-    text = text.replace(re, "");
-    return text;
-  }
+  type: 'output',
+  filter(text: string) {
+    const re = /<\/?p[^>]*>/gi;
+    return text.replace(re, '');
+  },
 };
 
 // @ts-ignore
@@ -26,73 +27,72 @@ const markdownConverter = new showdown.Converter({
   simpleLineBreaks: true,
   openLinksInNewWindow: true,
   emoji: true,
-  extensions: [paragraphTagFilter]
+  extensions: [paragraphTagFilter],
 });
 
-const styles = (theme: Theme) =>
-  createStyles({
-    expansionPanelRoot: {
-      backgroundImage: "url(/images/chain/middle.svg)",
-      backgroundRepeat: "no-repeat",
-      backgroundPosition: "16px 0",
-      boxShadow: "none",
-      "&:first-of-type": {
-        backgroundImage: "url(/images/chain/top.svg)"
-      },
-      "&:last-of-type": {
-        backgroundImage: "url(/images/chain/bottom.svg)"
-      },
-      "&:not(:last-child)": {
-        borderBottom: 0
-      },
-      "&:before": {
-        display: "none"
-      }
+const styles = (theme: Theme) => createStyles({
+  expansionPanelRoot: {
+    backgroundImage: 'url(/images/chain/middle.svg)',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: '16px 0',
+    boxShadow: 'none',
+    '&:first-of-type': {
+      backgroundImage: 'url(/images/chain/top.svg)',
     },
-    expansionPanelExpanded: {
-      margin: "0"
+    '&:last-of-type': {
+      backgroundImage: 'url(/images/chain/bottom.svg)',
     },
-    expansionPanelSummaryRoot: {
-      margin: "0",
-      minHeight: "56px",
-      padding: "0 16px 0 16px",
-      "&$expansionPanelSummaryExpanded": {
-        margin: 0,
-        minHeight: "56px"
-      }
+    '&:not(:last-child)': {
+      borderBottom: 0,
     },
-    expansionPanelSummaryContent: {
-      margin: "0",
-      "&>:last-child": {
-        paddingRight: 0
-      },
-      "&$expansionPanelSummaryExpanded": {
-        margin: 0
-      }
+    '&:before': {
+      display: 'none',
     },
-    expansionPanelSummaryExpanded: {
-      // class used for expanded key
-      // needed for nested reference
+  },
+  expansionPanelExpanded: {
+    margin: '0',
+  },
+  expansionPanelSummaryRoot: {
+    margin: '0',
+    minHeight: '56px',
+    padding: '0 16px 0 16px',
+    '&$expansionPanelSummaryExpanded': {
+      margin: 0,
+      minHeight: '56px',
     },
-    expansionPanelDetailsRoot: {
-      borderLeft: "2px solid #000",
-      marginLeft: theme.spacing(4 + 1),
-      paddingLeft: theme.spacing(3),
-      paddingTop: 0,
-      paddingRight: theme.spacing(3),
-      paddingBottom: theme.spacing(2)
+  },
+  expansionPanelSummaryContent: {
+    margin: '0',
+    '&>:last-child': {
+      paddingRight: 0,
     },
-    heading: {
-      flex: 1,
-      alignSelf: "center",
-      marginLeft: theme.spacing(),
+    '&$expansionPanelSummaryExpanded': {
+      margin: 0,
     },
-    label: {
-      alignSelf: "center",
-      marginLeft: theme.spacing(),
-      marginRight: "32px"
-    }
-  });
+  },
+  expansionPanelSummaryExpanded: {
+    // class used for expanded key
+    // needed for nested reference
+  },
+  expansionPanelDetailsRoot: {
+    borderLeft: '2px solid #000',
+    marginLeft: theme.spacing(4 + 1),
+    paddingLeft: theme.spacing(3),
+    paddingTop: 0,
+    paddingRight: theme.spacing(3),
+    paddingBottom: theme.spacing(2),
+  },
+  heading: {
+    flex: 1,
+    alignSelf: 'center',
+    marginLeft: theme.spacing(),
+  },
+  label: {
+    alignSelf: 'center',
+    marginLeft: theme.spacing(),
+    marginRight: '32px',
+  },
+});
 
 interface Props {
   readonly classes: any;
@@ -104,14 +104,16 @@ interface Props {
 
 class SensorView extends Component<Props, any> {
   render() {
-    const { classes, icon, title, label, body } = this.props;
+    const {
+      classes, icon, title, label, body,
+    } = this.props;
     const parsedBody = markdownConverter.makeHtml(body);
 
     return (
       <ExpansionPanel
         classes={{
           root: classes.expansionPanelRoot,
-          expanded: classes.expansionPanelExpanded
+          expanded: classes.expansionPanelExpanded,
         }}
         onChange={(event, expanded) => {
           ReactGA.event({
@@ -124,7 +126,7 @@ class SensorView extends Component<Props, any> {
           classes={{
             root: classes.expansionPanelSummaryRoot,
             content: classes.expansionPanelSummaryContent,
-            expanded: classes.expansionPanelSummaryExpanded
+            expanded: classes.expansionPanelSummaryExpanded,
           }}
           expandIcon={<ExpandMoreIcon />}
         >

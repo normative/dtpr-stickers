@@ -21,9 +21,10 @@ function PlaceView({
 }: Props) {
   const isLoading = place.isFetching || sensors.isFetching || airtable.isFetching;
 
+  if (!place.data) return <div />;
   if (isLoading) return <LinearProgress color="secondary" />;
 
-  const { name, lngLat = {}, address = '' } = place.data;
+  const { name: placeName, lngLat = {}, address = '' } = place.data;
   const markerLocation = lngLat
     ? (Object.values(lngLat).reverse() as [number, number])
     : undefined;
@@ -32,7 +33,7 @@ function PlaceView({
     <div className={classes.root}>
       <div className={classes.headerRow}>
         <Typography className={classes.title}>
-          {name}
+          {placeName}
         </Typography>
         <Typography className={classes.subtitle}>
           {address}

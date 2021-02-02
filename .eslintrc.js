@@ -31,6 +31,7 @@ module.exports = {
     'react-hooks/exhaustive-deps': ['off'],
     'no-use-before-define': ['off'],
     '@typescript-eslint/no-use-before-define': ['error'],
+    'no-debugger': ['warn'],
   },
   overrides: [
     {

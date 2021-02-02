@@ -1,4 +1,4 @@
-import { AirtableData, ReducerStateType } from "../types";
+import { AirtableData, ReducerStateType } from '../types';
 
 export const FETCH_AIRTABLE_REQUESTED = 'FETCH_AIRTABLE_REQUESTED';
 export function fetchAirtableRequested(): AirtableActionType {
@@ -29,7 +29,7 @@ export const airtableInitialState: AirtableStateType = {
 };
 
 export function getAirtableDataInitialState() {
-  const airtableData = sessionStorage.getItem('airtabledata')
+  const airtableData = sessionStorage.getItem('airtabledata');
   const initialState = { ...airtableInitialState };
   if (airtableData) {
     initialState.data = JSON.parse(airtableData) as AirtableData;
@@ -40,13 +40,13 @@ export function getAirtableDataInitialState() {
 
 interface AirtablePayloadType {
   airtable?: AirtableData;
-  error?: ExceptionInformation;
+  error?: Error;
 }
 
 interface AirtableActionType {
   type: string;
   payload?: AirtablePayloadType;
-};
+}
 
 function airtableReducer(state, { type, payload }: AirtableActionType) {
   switch (type) {

@@ -1,4 +1,4 @@
-import { PlaceData, ReducerStateType } from "../types";
+import { PlaceData, ReducerStateType } from '../types';
 
 export const FETCH_PLACE_REQUESTED = 'FETCH_PLACE_REQUESTED';
 export function fetchPlaceRequested(): PlaceActionType {
@@ -28,13 +28,13 @@ export const placeInitialState: PlaceStateType = {
 
 interface PlacePayloadType {
   place?: PlaceData | {};
-  error?: ExceptionInformation;
+  error?: Error;
 }
 
 interface PlaceActionType {
   type: string;
   payload?: PlacePayloadType;
-};
+}
 
 function placeReducer(state, { type, payload }: PlaceActionType) {
   switch (type) {

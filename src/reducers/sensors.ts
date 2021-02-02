@@ -1,4 +1,4 @@
-import { ReducerStateType, SensorData } from "../types";
+import { ReducerStateType, SensorData } from '../types';
 
 export const FETCH_SENSORS_REQUESTED = 'FETCH_SENSORS_REQUESTED';
 export function fetchSensorsRequested(): SensorsActionType {
@@ -32,13 +32,13 @@ export const sensorsInitialState: SensorsStateType = {
 
 interface SensorsPayloadType {
   sensors?: Array<SensorData> | [];
-  error?: ExceptionInformation;
+  error?: Error;
 }
 
 interface SensorsActionType {
   type: string;
   payload?: SensorsPayloadType;
-};
+}
 
 function sensorsReducer(state, { type, payload }: SensorsActionType) {
   switch (type) {
