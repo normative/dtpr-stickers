@@ -1,16 +1,17 @@
-import React, { Component } from "react";
-import { Typography, Divider, Button, LinearProgress, Toolbar, ArrowBackIcon } from "../../libs/mui";
+import React, { Component } from 'react';
+import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
+import {
+  Typography, Divider, Button, LinearProgress, Toolbar, ArrowBackIcon,
+} from '../../libs/mui';
 
-import { createStyles, withStyles, Theme } from "@material-ui/core/styles";
+import Accordian from './Accordian';
+import FeedbackFooter from '../FeedbackFooter';
 
-import Accordian from "./Accordian";
-import FeedbackFooter from "../FeedbackFooter";
+import { AirtableData, getAirtableData, Option } from '../../libs/airtable';
+import firebase from '../../libs/firebase';
 
-import { AirtableData, getAirtableData, Option } from "../../libs/airtable";
-import firebase from "../../libs/firebase";
+import { PlaceData, SensorData } from '../../types';
 
-import { SensorData } from "./index";
-import { PlaceData } from "../Places";
 interface State {
   sensorData?: SensorData;
   parentPlaceName?: string;
@@ -32,7 +33,7 @@ class SensorView extends Component<any, State> {
       logoSrc: undefined,
       sensorImageSrc: undefined,
       airtableData: undefined,
-      isAdmin: false
+      isAdmin: false,
     };
   }
 
@@ -41,7 +42,7 @@ class SensorView extends Component<any, State> {
     this.setState({ airtableData });
     const { sensorId } = this.props.match.params;
     const sensorRef = firebase.database().ref(`sensors/${sensorId}`);
-    sensorRef.on("value", snapshot => {
+    sensorRef.on('value', (snapshot) => {
       if (snapshot) {
         const sensorData: SensorData | null = snapshot.val();
         if (!sensorData) {
@@ -49,24 +50,24 @@ class SensorView extends Component<any, State> {
         } else {
           // Some of these fields may not exist for that object, so set a default val
           const {
-            name = "",
-            placeId = "",
-            headline = "",
-            description = "",
-            accountable = "",
-            accountableDescription = "",
+            name = '',
+            placeId = '',
+            headline = '',
+            description = '',
+            accountable = '',
+            accountableDescription = '',
             purpose = [],
             techType = [],
             dataType = [],
             dataProcess = [],
             access = [],
             storage = [],
-            phone = "",
-            chat = "",
-            email = "",
+            phone = '',
+            chat = '',
+            email = '',
             onsiteStaff = false,
-            logoRef = "",
-            sensorImageRef = ""
+            logoRef = '',
+            sensorImageRef = '',
           } = sensorData;
           this.setState({
             sensorData: {
@@ -87,9 +88,9 @@ class SensorView extends Component<any, State> {
               email,
               onsiteStaff,
               logoRef,
-              sensorImageRef
+              sensorImageRef,
             },
-            isLoading: false
+            isLoading: false,
           });
 
           if (sensorImageRef) {
@@ -97,10 +98,10 @@ class SensorView extends Component<any, State> {
             storageRef
               .child(sensorImageRef)
               .getDownloadURL()
-              .then(sensorImageSrc => {
+              .then((sensorImageSrc) => {
                 this.setState({ sensorImageSrc });
               })
-              .catch(error => {
+              .catch((error) => {
                 console.log(error);
               });
           }
@@ -110,10 +111,10 @@ class SensorView extends Component<any, State> {
             storageRef
               .child(logoRef)
               .getDownloadURL()
-              .then(logoSrc => {
+              .then((logoSrc) => {
                 this.setState({ logoSrc });
               })
-              .catch(error => {
+              .catch((error) => {
                 console.log(error);
               });
           }
@@ -122,7 +123,7 @@ class SensorView extends Component<any, State> {
             firebase
               .database()
               .ref(`places/${placeId}`)
-              .once("value", snapshot => {
+              .once('value', (snapshot) => {
                 if (snapshot) {
                   const place: PlaceData | null = snapshot.val();
                   if (place) {
@@ -130,8 +131,7 @@ class SensorView extends Component<any, State> {
                     const user = firebase.auth().currentUser;
                     if (user) {
                       const { uid } = user;
-                      const isAdmin =
-                        (uid && place.admins && place.admins[uid]) || false;
+                      const isAdmin = (uid && place.admins && place.admins[uid]) || false;
                       this.setState({ isAdmin });
                     }
                   }
@@ -152,13 +152,12 @@ class SensorView extends Component<any, State> {
       sensorData,
       logoSrc,
       sensorImageSrc,
-      airtableData
+      airtableData,
     } = this.state;
     const { sensorId } = this.props.match.params;
 
     if (isLoading) return <LinearProgress color="secondary" />;
-    if (!sensorData)
-      return <Typography>Hmm can't find that sensor :/</Typography>;
+    if (!sensorData) { return <Typography>Hmm can't find that sensor :/</Typography>; }
 
     const {
       placeId,
@@ -175,22 +174,19 @@ class SensorView extends Component<any, State> {
       email,
     } = sensorData;
 
-    let purposeBadgeOption: Option | undefined = undefined;
-    let techTypeBadgeOption: Option | undefined = undefined;
-    let accountableBadgeOption: Option | undefined = undefined;
+    let purposeBadgeOption: Option | undefined;
+    let techTypeBadgeOption: Option | undefined;
+    let accountableBadgeOption: Option | undefined;
     if (airtableData) {
-      purposeBadgeOption =
-        (purpose &&
-          purpose[0] &&
-          airtableData.purpose.find(option => option.name === purpose[0])) ||
-        undefined;
-      techTypeBadgeOption =
-        (techType &&
-          techType[0] &&
-          airtableData.techType.find(option => option.name === techType[0])) ||
-        undefined;
-      accountableBadgeOption =
-        (accountable && airtableData.accountable[0]) || undefined;
+      purposeBadgeOption = (purpose
+          && purpose[0]
+          && airtableData.purpose.find((option) => option.name === purpose[0]))
+        || undefined;
+      techTypeBadgeOption = (techType
+          && techType[0]
+          && airtableData.techType.find((option) => option.name === techType[0]))
+        || undefined;
+      accountableBadgeOption = (accountable && airtableData.accountable[0]) || undefined;
     }
 
     // const hasfooter = phone || chat || email || onsiteStaff;
@@ -235,7 +231,7 @@ class SensorView extends Component<any, State> {
               gutterBottom
               variant="h6"
               align="center"
-              style={{ wordBreak: "break-word", fontWeight: "bold" }}
+              style={{ wordBreak: 'break-word', fontWeight: 'bold' }}
             >
               {headline}
             </Typography>
@@ -272,8 +268,8 @@ class SensorView extends Component<any, State> {
               <img
                 className={classes.summaryBadge}
                 src={
-                  logoSrc ||
-                  `/images/${accountableBadgeOption.iconShortname}.svg`
+                  logoSrc
+                  || `/images/${accountableBadgeOption.iconShortname}.svg`
                 }
                 alt="accountable badge icon"
               />
@@ -302,10 +298,10 @@ class SensorView extends Component<any, State> {
                 body={accountableDescription}
               />
             )}
-            {purpose &&
-              purpose.map(name => {
+            {purpose
+              && purpose.map((name) => {
                 const option = airtableData.purpose.find(
-                  airtableOption => airtableOption.name === name
+                  (airtableOption) => airtableOption.name === name,
                 );
                 if (!option) return null;
                 return (
@@ -318,10 +314,10 @@ class SensorView extends Component<any, State> {
                   />
                 );
               })}
-            {techType &&
-              techType.map(name => {
+            {techType
+              && techType.map((name) => {
                 const option = airtableData.techType.find(
-                  airtableOption => airtableOption.name === name
+                  (airtableOption) => airtableOption.name === name,
                 );
                 if (!option) return null;
                 return (
@@ -334,10 +330,10 @@ class SensorView extends Component<any, State> {
                   />
                 );
               })}
-            {dataType &&
-              dataType.map(name => {
+            {dataType
+              && dataType.map((name) => {
                 const option = airtableData.dataType.find(
-                  airtableOption => airtableOption.name === name
+                  (airtableOption) => airtableOption.name === name,
                 );
                 if (!option) return null;
                 return (
@@ -350,10 +346,10 @@ class SensorView extends Component<any, State> {
                   />
                 );
               })}
-            {dataProcess &&
-              dataProcess.map(name => {
+            {dataProcess
+              && dataProcess.map((name) => {
                 const option = airtableData.dataType.find(
-                  airtableOption => airtableOption.name === name
+                  (airtableOption) => airtableOption.name === name,
                 );
                 if (!option) return null;
                 return (
@@ -366,10 +362,10 @@ class SensorView extends Component<any, State> {
                   />
                 );
               })}
-            {access &&
-              access.map(name => {
+            {access
+              && access.map((name) => {
                 const option = airtableData.access.find(
-                  airtableOption => airtableOption.name === name
+                  (airtableOption) => airtableOption.name === name,
                 );
                 if (!option) return null;
                 return (
@@ -382,10 +378,10 @@ class SensorView extends Component<any, State> {
                   />
                 );
               })}
-            {storage &&
-              storage.map(name => {
+            {storage
+              && storage.map((name) => {
                 const option = airtableData.storage.find(
-                  airtableOption => airtableOption.name === name
+                  (airtableOption) => airtableOption.name === name,
                 );
                 if (!option) return null;
                 return (
@@ -410,87 +406,86 @@ class SensorView extends Component<any, State> {
   }
 }
 
-const styles = (theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-      margin: "auto",
-      paddingTop: theme.spacing(2),
-      [theme.breakpoints.up("md")]: {
-        maxWidth: theme.breakpoints.values.md
-      }
+const styles = (theme: Theme) => createStyles({
+  root: {
+    flexGrow: 1,
+    margin: 'auto',
+    paddingTop: theme.spacing(2),
+    [theme.breakpoints.up('md')]: {
+      maxWidth: theme.breakpoints.values.md,
     },
-    toolbar: {
-      flexWrap: "wrap",
-      [theme.breakpoints.down("xs")]: {
-        flexDirection: "column",
-        alignItems: "start"
-      },
-      borderBottom: "0.5px solid rgba(0,0,0,.2)",
-      minHeight: "48px"
+  },
+  toolbar: {
+    flexWrap: 'wrap',
+    [theme.breakpoints.down('xs')]: {
+      flexDirection: 'column',
+      alignItems: 'start',
     },
-    toolbarRight: {
-      flex: 1,
-      display: "flex",
-      justifyContent: "flex-end",
-      flexWrap: "wrap"
-    },
-    backButton: {
-      borderRadius: "16px",
-      fontWeight: 700,
-      textTransform: "none",
-      flexShrink: 0,
-      padding: "0 16px 0 8px",
-      height: "32px"
-    },
-    backButtonIcon: {
-      marginRight: theme.spacing()
-    },
-    backButtonText: {
-      marginBottom: "-2px"
-    },
-    header: {
-      padding: theme.spacing(3),
-      textAlign: "center"
-    },
-    content: {
-      padding: theme.spacing(2)
-    },
-    footer: {
-      background: theme.palette.grey["200"],
-      marginTop: theme.spacing(3),
-      padding: theme.spacing(3)
-    },
-    summaryWrapper: {
-      display: "flex",
-      padding: theme.spacing(2)
-    },
-    summaryCell: {
-      flex: 1,
-      textAlign: "center"
-    },
-    summaryBadge: {
-      height: "48px",
-      marginLeft: "auto",
-      marginRight: "auto",
-      marginBottom: theme.spacing()
-    },
-    heading: {
-      flex: 1,
-      alignSelf: "center",
-      marginLeft: theme.spacing()
-    },
-    label: {
-      alignSelf: "center",
-      marginLeft: theme.spacing()
-    },
-    sensorImage: {
-      width: "100%",
-      maxWidth: "100%",
-      maxHeight: "300px",
-      margin: "auto",
-      marginBottom: theme.spacing(2)
-    }
-  });
+    borderBottom: '0.5px solid rgba(0,0,0,.2)',
+    minHeight: '48px',
+  },
+  toolbarRight: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'flex-end',
+    flexWrap: 'wrap',
+  },
+  backButton: {
+    borderRadius: '16px',
+    fontWeight: 700,
+    textTransform: 'none',
+    flexShrink: 0,
+    padding: '0 16px 0 8px',
+    height: '32px',
+  },
+  backButtonIcon: {
+    marginRight: theme.spacing(),
+  },
+  backButtonText: {
+    marginBottom: '-2px',
+  },
+  header: {
+    padding: theme.spacing(3),
+    textAlign: 'center',
+  },
+  content: {
+    padding: theme.spacing(2),
+  },
+  footer: {
+    background: theme.palette.grey['200'],
+    marginTop: theme.spacing(3),
+    padding: theme.spacing(3),
+  },
+  summaryWrapper: {
+    display: 'flex',
+    padding: theme.spacing(2),
+  },
+  summaryCell: {
+    flex: 1,
+    textAlign: 'center',
+  },
+  summaryBadge: {
+    height: '48px',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginBottom: theme.spacing(),
+  },
+  heading: {
+    flex: 1,
+    alignSelf: 'center',
+    marginLeft: theme.spacing(),
+  },
+  label: {
+    alignSelf: 'center',
+    marginLeft: theme.spacing(),
+  },
+  sensorImage: {
+    width: '100%',
+    maxWidth: '100%',
+    maxHeight: '300px',
+    margin: 'auto',
+    marginBottom: theme.spacing(2),
+  },
+});
 
 export default withStyles(styles)(SensorView);

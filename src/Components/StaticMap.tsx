@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import ReactMapboxGl, { Marker } from "react-mapbox-gl";
-import PlaceIcon from "@material-ui/icons/Place";
+import React, { Component } from 'react';
+import ReactMapboxGl, { Marker } from 'react-mapbox-gl';
+import PlaceIcon from '@material-ui/icons/Place';
 
 const Map = ReactMapboxGl({
-  accessToken: process.env.REACT_APP_MAPBOX_ACCESS_TOKEN || "",
-  interactive: false
+  accessToken: process.env.REACT_APP_MAPBOX_ACCESS_TOKEN || '',
+  interactive: false,
 });
 
 interface Props {
@@ -14,24 +14,25 @@ interface Props {
 
 class StaticMap extends Component<Props, any> {
   map: any;
+
   mapContainer: any;
 
   render() {
     const { markerLocation, center } = this.props;
     return (
       <Map
-        style={"mapbox://styles/mapbox/streets-v11"}
+        style="mapbox://styles/mapbox/streets-v11"
         containerStyle={{
-          width: "100%",
-          height: "100%",
-          border: "1px solid rgba(0,0,0,0.12)",
-          borderRadius: "8px"
+          width: '100%',
+          height: '100%',
+          border: '1px solid rgba(0,0,0,0.12)',
+          borderRadius: '8px',
         }}
         center={center}
         zoom={[13]}
       >
         {markerLocation && (
-          <Marker coordinates={markerLocation} style={{ marginTop: "16px" }}>
+          <Marker coordinates={markerLocation} style={{ marginTop: '16px' }}>
             <PlaceIcon color="primary" fontSize="large" />
           </Marker>
         )}

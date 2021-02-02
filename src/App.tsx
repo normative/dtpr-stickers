@@ -13,7 +13,7 @@ import {
 import HomeView from "./Components/HomeView";
 import Sensors from "./Components/Sensors";
 import Footer from './Components/Footer';
-import Places from "./Components/Places";
+import Places from "./containers/Places";
 
 ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_KEY || "");
 ReactGA.set({ anonymizeIp: true });
