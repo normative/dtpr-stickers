@@ -12,6 +12,7 @@ import airtableReducer, {
   getAirtableDataInitialState,
 } from 'reducers/airtable';
 import { getAirtableData } from 'sideEffects/airtable';
+import { sessionKeys } from '../constants';
 
 const initialState = getAirtableDataInitialState();
 export const AirtableContext = React.createContext(initialState);
@@ -34,6 +35,12 @@ export function AirtableProvider({ children }: { children: ReactNode }) {
     if (!airtable.data) {
       dispatchAirtable(fetchAirtableRequested());
       getAirtableData(handleAirtableOnSuccess, handleAirtableOnError);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (airtable.data && !sessionStorage.getItem(sessionKeys.AIRTABLE)) {
+      sessionStorage.setItem(sessionKeys.AIRTABLE, JSON.stringify(airtable.data));
     }
   }, [airtable.data]);
 

@@ -1,3 +1,4 @@
+import { sessionKeys } from '../constants';
 import { AirtableData, ReducerStateType } from '../types';
 
 export const FETCH_AIRTABLE_REQUESTED = 'FETCH_AIRTABLE_REQUESTED';
@@ -29,7 +30,7 @@ export const airtableInitialState: AirtableStateType = {
 };
 
 export function getAirtableDataInitialState() {
-  const airtableData = sessionStorage.getItem('airtabledata');
+  const airtableData = sessionStorage.getItem(sessionKeys.AIRTABLE);
   const initialState = { ...airtableInitialState };
   if (airtableData) {
     initialState.data = JSON.parse(airtableData) as AirtableData;
