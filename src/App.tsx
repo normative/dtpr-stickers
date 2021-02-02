@@ -15,6 +15,7 @@ import Sensors from 'containers/Sensors';
 
 import HomeView from 'components/HomeView';
 import Footer from 'components/Footer';
+import { AirtableProvider } from 'context/airtable';
 
 ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_KEY || '');
 ReactGA.set({ anonymizeIp: true });
@@ -36,15 +37,17 @@ function App() {
   return (
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
-      <Router>
-        <Switch>
-          <Route exact path="/" component={HomeView} />
-          <Route path="/sensors" component={Sensors} />
-          <Route path="/places" component={Places} />
-          <Redirect to="/" />
-        </Switch>
-      </Router>
-      <Footer />
+      <AirtableProvider>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={HomeView} />
+            <Route path="/sensors" component={Sensors} />
+            <Route path="/places" component={Places} />
+            <Redirect to="/" />
+          </Switch>
+        </Router>
+        <Footer />
+      </AirtableProvider>
     </MuiThemeProvider>
   );
 }

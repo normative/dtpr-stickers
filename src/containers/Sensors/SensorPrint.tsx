@@ -1,60 +1,41 @@
 import React, {
-  useCallback,
+  useContext,
   useEffect,
-  useReducer,
   useState,
 } from 'react';
 import { useParams } from 'react-router-dom';
 import QRCode from 'qrcode';
-import airtableReducer, {
-  fetchAirtableFailed, fetchAirtableRequested, fetchAirtableSuccessed, getAirtableDataInitialState,
-} from 'reducers/airtable';
+
 import sensorReducer, {
-  sensorInitialState, fetchSensorRequested, fetchSensorSuccessed, fetchSensorFailed,
+  sensorInitialState,
+  fetchSensorRequested,
+  fetchSensorSuccessed,
+  fetchSensorFailed,
+  SensorStateType,
 } from 'reducers/sensor';
 import { getSensor } from 'sideEffects/firebase';
-import { getAirtableData } from 'sideEffects/airtable';
 
 import SensorPrintView from 'components/Sensors/SensorPrintView';
+import { AirtableContext } from 'context/airtable';
+import useReducerState from 'hooks/useReducerState';
+import { AirtableStateType } from 'reducers/airtable';
 
 function SensorPrint() {
-  const [sensor, dispatchSensor] = useReducer(sensorReducer, sensorInitialState);
-  const [airtable, dispatchAirtable] = useReducer(airtableReducer, getAirtableDataInitialState());
+  const [sensor, sensorActions] = useReducerState(
+    sensorReducer,
+    sensorInitialState,
+    fetchSensorRequested,
+    fetchSensorSuccessed,
+    fetchSensorFailed,
+  );
+  const airtable = useContext(AirtableContext);
   const [sensorUrl, setSensorUrl] = useState('');
   const [qrCodeSrc, setQRCodeSrc] = useState('');
-
   const { sensorId }: { sensorId: string } = useParams();
 
-  const handleSensorOnSuccess = useCallback((sensorsData) => {
-    dispatchSensor(fetchSensorSuccessed(sensorsData));
-  }, []);
-
-  const handleSensorOnError = useCallback((e) => {
-    dispatchSensor(fetchSensorFailed(e));
-  }, []);
-
-  const handleAirtableOnSuccess = useCallback((airtableData) => {
-    dispatchAirtable(fetchAirtableSuccessed(airtableData));
-  }, []);
-
-  const handleAirtableOnError = useCallback((e) => {
-    dispatchAirtable(fetchAirtableFailed(e));
-  }, []);
-
   useEffect(() => {
-    dispatchAirtable(fetchAirtableRequested());
-    getAirtableData(handleAirtableOnSuccess, handleAirtableOnError);
-  }, []);
-
-  useEffect(() => {
-    if (!airtable.loadedFromSession) {
-      sessionStorage.setItem('airtabledata', JSON.stringify(airtable.data));
-    }
-  }, [airtable.data]);
-
-  useEffect(() => {
-    dispatchSensor(fetchSensorRequested());
-    getSensor(sensorId, handleSensorOnSuccess, handleSensorOnError);
+    sensorActions.onRequest();
+    getSensor(sensorId, sensorActions.onSuccess, sensorActions.onError);
   }, [sensorId]);
 
   useEffect(() => {
@@ -77,8 +58,8 @@ function SensorPrint() {
     <SensorPrintView
       sensorUrl={sensorUrl}
       qrCodeSrc={qrCodeSrc}
-      airtable={airtable}
-      sensor={sensor}
+      airtable={airtable as AirtableStateType}
+      sensor={sensor as SensorStateType}
     />
   );
 }
