@@ -7,11 +7,8 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import showdown from 'showdown';
-
 import ReactGA from 'react-ga';
 
-ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_KEY || '');
-ReactGA.set({ anonymizeIp: true });
 
 const paragraphTagFilter = {
   type: 'output',

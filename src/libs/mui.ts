@@ -27,3 +27,4 @@ export { default as Divider } from '@material-ui/core/Divider';
 export { default as AddIcon } from '@material-ui/icons/Add';
 export { default as EditIcon } from '@material-ui/icons/Edit';
 export { default as ArrowBackIcon } from '@material-ui/icons/ArrowBack';
+export { default as SendIcon } from '@material-ui/icons/Send';

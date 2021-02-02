@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
 import {
   createStyles,
   withStyles,
   WithStyles,
 } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import SendIcon from '@material-ui/icons/Send';
-
 import ReactGA from 'react-ga';
 
-ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_KEY || '');
-ReactGA.set({ anonymizeIp: true });
+import { Button, Typography, SendIcon } from 'libs/mui';
 
 const COLOR_POSITIVE = '#E5F6D2';
 const COLOR_CRITICAL = '#F5CCDD';
@@ -28,58 +23,6 @@ interface Props extends WithStyles<typeof styles> {
 interface State {
   activeFeedbackButton: FeedbackType | ''
 }
-
-const styles = () => createStyles({
-  dtprFeedbackContainer: {
-    padding: '16px',
-  },
-  dtprFeedbackBox: {
-    background: '#FAFAFA',
-    border: '1px solid rgba(0, 0, 0, 0.15)',
-    borderRadius: '8px',
-    textAlign: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  feedbackTitle: {
-    fontSize: '14px',
-    fontWeight: 'bold',
-    margin: '16px 0',
-  },
-  dtprFeedbackButtons: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    padding: '20px',
-  },
-  dtprFeedbackButton: {
-    border: '1px solid rgba(0, 0, 0, 0.1)',
-    borderRadius: '24px',
-    '&:hover': {
-      border: '1px solid rgba(0, 0, 0, 0.1)',
-    },
-  },
-  feedbackSendButton: {
-    backgroundColor: '#ffffff',
-    border: '1px solid rgba(0, 0, 0, 0.15)',
-    borderRadius: '28px',
-    height: '48px',
-    lineHeight: '36px',
-    textTransform: 'none',
-    textAlign: 'left',
-    padding: '0 16px 0 20px',
-    fontSize: '14px',
-    color: 'rgba(0,0,0,.7)',
-    textIndent: 0,
-    margin: '20px 20px',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  sendButtonIcon: {
-    height: '20px',
-    width: '20px',
-  },
-});
 
 class FeedbackFooter extends Component<Props, State> {
   constructor(props: Props) {
@@ -172,5 +115,57 @@ class FeedbackFooter extends Component<Props, State> {
     );
   }
 }
+
+const styles = () => createStyles({
+  dtprFeedbackContainer: {
+    padding: '16px',
+  },
+  dtprFeedbackBox: {
+    background: '#FAFAFA',
+    border: '1px solid rgba(0, 0, 0, 0.15)',
+    borderRadius: '8px',
+    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  feedbackTitle: {
+    fontSize: '14px',
+    fontWeight: 'bold',
+    margin: '16px 0',
+  },
+  dtprFeedbackButtons: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: '20px',
+  },
+  dtprFeedbackButton: {
+    border: '1px solid rgba(0, 0, 0, 0.1)',
+    borderRadius: '24px',
+    '&:hover': {
+      border: '1px solid rgba(0, 0, 0, 0.1)',
+    },
+  },
+  feedbackSendButton: {
+    backgroundColor: '#ffffff',
+    border: '1px solid rgba(0, 0, 0, 0.15)',
+    borderRadius: '28px',
+    height: '48px',
+    lineHeight: '36px',
+    textTransform: 'none',
+    textAlign: 'left',
+    padding: '0 16px 0 20px',
+    fontSize: '14px',
+    color: 'rgba(0,0,0,.7)',
+    textIndent: 0,
+    margin: '20px 20px',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  sendButtonIcon: {
+    height: '20px',
+    width: '20px',
+  },
+});
 
 export default withStyles(styles)(FeedbackFooter);
