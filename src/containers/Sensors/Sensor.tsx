@@ -13,7 +13,7 @@ import sensorReducer, {
   sensorInitialState, fetchSensorRequested, fetchSensorSuccessed, fetchSensorFailed,
 } from 'reducers/sensor';
 
-import SensorView from 'Components/Sensors/SensorView';
+import SensorView from 'components/Sensors/SensorView';
 
 function Sensor() {
   const [place, dispatchPlace] = useReducer(placeReducer, placeInitialState);

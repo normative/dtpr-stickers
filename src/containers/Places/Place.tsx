@@ -12,7 +12,7 @@ import sensorsReducer, {
 } from 'reducers/sensors';
 import { getPlace, getSensors } from 'sideEffects/firebase';
 import { getAirtableData } from 'sideEffects/airtable';
-import PlaceView from 'Components/Places/PlaceView';
+import PlaceView from 'components/Places/PlaceView';
 
 function Place() {
   const [place, dispatchPlace] = useReducer(placeReducer, placeInitialState);

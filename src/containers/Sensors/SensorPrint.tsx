@@ -15,7 +15,7 @@ import sensorReducer, {
 import { getSensor } from 'sideEffects/firebase';
 import { getAirtableData } from 'sideEffects/airtable';
 
-import SensorPrintView from 'Components/Sensors/SensorPrintView';
+import SensorPrintView from 'components/Sensors/SensorPrintView';
 
 function SensorPrint() {
   const [sensor, dispatchSensor] = useReducer(sensorReducer, sensorInitialState);
