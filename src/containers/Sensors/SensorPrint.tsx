@@ -20,6 +20,7 @@ import { AirtableContext } from 'context/airtable';
 import useReducerState from 'hooks/useReducerState';
 import { AirtableStateType } from 'reducers/airtable';
 import { getSensorPath } from 'common/helpers';
+import { getQRCodeSrc } from 'sideEffects/qrCode';
 
 function SensorPrint() {
   const [sensor, sensorActions] = useReducerState(
@@ -41,18 +42,14 @@ function SensorPrint() {
 
   useEffect(() => {
     const sUrl = `${window.location.origin}${getSensorPath(sensorId)}`;
-    const qrUrl = `${sUrl}?utm_source=307&utm_medium=qr&utm_campaign=qr_scan`;
+    const qrCodeUrl = `${sUrl}?utm_source=307&utm_medium=qr&utm_campaign=qr_scan`;
     setSensorUrl(sUrl);
-    QRCode.toDataURL(qrUrl)
-      .then((qrSrc) => {
-        setQRCodeSrc(qrSrc);
-      })
-      .catch((e) => {
-        // eslint-disable-next-line no-alert
-        alert('Something went wrong to generate QR Code URL');
-        // eslint-disable-next-line no-console
-        console.error(e);
-      });
+    getQRCodeSrc(qrCodeUrl, setQRCodeSrc, (e) => {
+      // eslint-disable-next-line no-alert
+      alert('Something went wrong to generate QR Code URL');
+      // eslint-disable-next-line no-console
+      console.error(e);
+    });
   }, []);
 
   return (
