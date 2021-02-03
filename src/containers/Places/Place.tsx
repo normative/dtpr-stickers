@@ -1,9 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import placeReducer, {
-  fetchPlaceFailed, placeInitialState, fetchPlaceRequested, fetchPlaceSuccessed, PlaceStateType,
-} from 'reducers/place';
+import { PlaceStateType } from 'reducers/place';
 import sensorsReducer, {
   fetchSensorsFailed,
   fetchSensorsRequested,
@@ -11,16 +9,14 @@ import sensorsReducer, {
   sensorsInitialState,
   SensorsStateType,
 } from 'reducers/sensors';
-import { getPlace, getSensors } from 'sideEffects/firebase';
+import { getSensors } from 'sideEffects/firebase';
 import PlaceView from 'components/Places/PlaceView';
 import { AirtableContext } from 'context/airtable';
 import useReducerState from 'hooks/useReducerState';
 import { AirtableStateType } from 'reducers/airtable';
+import { PlaceContext } from 'context/place';
 
 function Place() {
-  const [place, placeActions] = useReducerState(
-    placeReducer, placeInitialState, fetchPlaceRequested, fetchPlaceSuccessed, fetchPlaceFailed,
-  );
   const [sensors, sensorsActions] = useReducerState(
     sensorsReducer,
     sensorsInitialState,
@@ -28,13 +24,13 @@ function Place() {
     fetchSensorsSuccessed,
     fetchSensorsFailed,
   );
+  const [place, placeActions] = useContext(PlaceContext);
   const airtable = useContext(AirtableContext);
   const { placeId }: { placeId: string } = useParams();
 
   useEffect(() => {
-    placeActions.onRequest();
-    getPlace(placeId, placeActions.onSuccess, placeActions.onError);
-  }, [placeId]);
+    placeActions.onRequest(placeId);
+  }, []);
 
   useEffect(() => {
     if (place.data) {

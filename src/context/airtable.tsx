@@ -1,11 +1,11 @@
+import useReducerState from 'hooks/useReducerState';
 import React, {
   ReactNode,
-  useCallback,
   useEffect,
-  useReducer,
 } from 'react';
 
 import airtableReducer, {
+  AirtableStateType,
   fetchAirtableFailed,
   fetchAirtableRequested,
   fetchAirtableSuccessed,
@@ -18,23 +18,18 @@ const initialState = getAirtableDataInitialState();
 export const AirtableContext = React.createContext(initialState);
 
 export function AirtableProvider({ children }: { children: ReactNode }) {
-  const [airtable, dispatchAirtable] = useReducer(
+  const [airtable, actions] = useReducerState(
     airtableReducer,
     getAirtableDataInitialState(),
+    fetchAirtableRequested,
+    fetchAirtableSuccessed,
+    fetchAirtableFailed,
   );
-
-  const handleAirtableOnSuccess = useCallback((airtableData) => {
-    dispatchAirtable(fetchAirtableSuccessed(airtableData));
-  }, []);
-
-  const handleAirtableOnError = useCallback((e) => {
-    dispatchAirtable(fetchAirtableFailed(e));
-  }, []);
 
   useEffect(() => {
     if (!airtable.data) {
-      dispatchAirtable(fetchAirtableRequested());
-      getAirtableData(handleAirtableOnSuccess, handleAirtableOnError);
+      actions.onRequest();
+      getAirtableData(actions.onSuccess, actions.onError);
     }
   }, []);
 
@@ -45,7 +40,7 @@ export function AirtableProvider({ children }: { children: ReactNode }) {
   }, [airtable.data]);
 
   return (
-    <AirtableContext.Provider value={airtable}>
+    <AirtableContext.Provider value={airtable as AirtableStateType}>
       {children}
     </AirtableContext.Provider>
   );

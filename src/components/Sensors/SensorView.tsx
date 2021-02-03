@@ -9,6 +9,7 @@ import { PlaceStateType } from 'reducers/place';
 import { SensorStateType } from 'reducers/sensor';
 import { AirtableStateType } from 'reducers/airtable';
 
+import { Link } from 'react-router-dom';
 import FeedbackFooter from '../FeedbackFooter';
 import Accordian from './Accordian';
 
@@ -64,16 +65,20 @@ function SensorView({
     <div className={classes.root}>
       <Toolbar className={classes.toolbar}>
         {place.data && (
-          <Button
-            className={classes.backButton}
-            href={`/places/${sensor.data.placeId}`}
-            color="primary"
-            variant="outlined"
-            size="small"
+          <Link
+            to={`/places/${sensor.data.placeId}`}
+            style={{ textDecoration: 'none' }}
           >
-            <ArrowBackIcon className={classes.backButtonIcon} fontSize="small" />
-            <div className={classes.backButtonText}>{place.data.name}</div>
-          </Button>
+            <Button
+              className={classes.backButton}
+              color="primary"
+              variant="outlined"
+              size="small"
+            >
+              <ArrowBackIcon className={classes.backButtonIcon} fontSize="small" />
+              <div className={classes.backButtonText}>{place.data.name}</div>
+            </Button>
+          </Link>
         )}
       </Toolbar>
       <div className={classes.header}>

@@ -14,7 +14,7 @@ export function getPlace(placeId, onSuccess, onError) {
         onSuccess();
         return;
       }
-      onSuccess(snapshot.val());
+      onSuccess({ ...snapshot?.val(), id: placeId });
     });
   } catch (e) {
     onError(e);

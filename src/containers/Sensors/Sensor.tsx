@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import placeReducer, {
-  fetchPlaceFailed, placeInitialState, fetchPlaceRequested, fetchPlaceSuccessed, PlaceStateType,
-} from 'reducers/place';
-import { getPlace, getSensor } from 'sideEffects/firebase';
+import { PlaceStateType } from 'reducers/place';
+import { AirtableStateType } from 'reducers/airtable';
+
+import { getSensor } from 'sideEffects/firebase';
 import sensorReducer, {
   sensorInitialState,
   fetchSensorRequested,
@@ -13,15 +13,14 @@ import sensorReducer, {
   SensorStateType,
 } from 'reducers/sensor';
 
-import { AirtableContext } from 'context/airtable';
 import useReducerState from 'hooks/useReducerState';
+
+import { AirtableContext } from 'context/airtable';
+import { PlaceContext } from 'context/place';
+
 import SensorView from 'components/Sensors/SensorView';
-import { AirtableStateType } from 'reducers/airtable';
 
 function Sensor() {
-  const [place, placeActions] = useReducerState(
-    placeReducer, placeInitialState, fetchPlaceRequested, fetchPlaceSuccessed, fetchPlaceFailed,
-  );
   const [sensor, sensorActions] = useReducerState(
     sensorReducer,
     sensorInitialState,
@@ -29,6 +28,7 @@ function Sensor() {
     fetchSensorSuccessed,
     fetchSensorFailed,
   );
+  const [place, placeActions] = useContext(PlaceContext);
   const airtable = useContext(AirtableContext);
   const { sensorId }: { sensorId: string } = useParams();
 
@@ -39,8 +39,7 @@ function Sensor() {
 
   useEffect(() => {
     if (sensor.data) {
-      placeActions.onRequest();
-      getPlace(sensor.data.placeId, placeActions.onSuccess, placeActions.onError);
+      placeActions.onRequest(sensor.data.placeId);
     }
   }, [sensor.data]);
 

@@ -16,6 +16,7 @@ export function fetchPlaceFailed(error): PlaceActionType {
 }
 
 export interface PlaceStateType extends ReducerStateType {
+  id?: string,
   data?: PlaceData;
 }
 
@@ -27,6 +28,7 @@ export const placeInitialState: PlaceStateType = {
 };
 
 interface PlacePayloadType {
+  id?: string;
   place?: PlaceData | {};
   error?: Error;
 }
@@ -49,6 +51,7 @@ function placeReducer(state, { type, payload }: PlaceActionType) {
       return {
         ...state,
         isFetching: false,
+        id: payload.id,
         data: payload.place,
       };
     case FETCH_PLACE_FAILED:
