@@ -1,5 +1,5 @@
 import firebase from '../libs/firebase';
-import { PlaceData, SensorData } from '../types';
+import { PlaceData, SensorData } from '../common/types';
 
 const refs = {
   SENSORS: '/sensors',

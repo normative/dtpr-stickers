@@ -19,6 +19,7 @@ import SensorPrintView from 'components/Sensors/SensorPrintView';
 import { AirtableContext } from 'context/airtable';
 import useReducerState from 'hooks/useReducerState';
 import { AirtableStateType } from 'reducers/airtable';
+import { getSensorPath } from 'common/helpers';
 
 function SensorPrint() {
   const [sensor, sensorActions] = useReducerState(
@@ -39,7 +40,7 @@ function SensorPrint() {
   }, [sensorId]);
 
   useEffect(() => {
-    const sUrl = `${window.location.origin}/sensors/${sensorId}`;
+    const sUrl = `${window.location.origin}${getSensorPath(sensorId)}`;
     const qrUrl = `${sUrl}?utm_source=307&utm_medium=qr&utm_campaign=qr_scan`;
     setSensorUrl(sUrl);
     QRCode.toDataURL(qrUrl)

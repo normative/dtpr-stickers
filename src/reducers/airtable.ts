@@ -1,5 +1,5 @@
-import { sessionKeys } from '../constants';
-import { AirtableData, ReducerStateType } from '../types';
+import { sessionKeys } from 'common/constants';
+import { AirtableData, ReducerStateType } from '../common/types';
 
 export const FETCH_AIRTABLE_REQUESTED = 'FETCH_AIRTABLE_REQUESTED';
 export function fetchAirtableRequested(): AirtableActionType {

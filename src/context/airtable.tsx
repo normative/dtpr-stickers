@@ -12,7 +12,7 @@ import airtableReducer, {
   getAirtableDataInitialState,
 } from 'reducers/airtable';
 import { getAirtableData } from 'sideEffects/airtable';
-import { sessionKeys } from '../constants';
+import { sessionKeys } from 'common/constants';
 
 const initialState = getAirtableDataInitialState();
 export const AirtableContext = React.createContext(initialState);

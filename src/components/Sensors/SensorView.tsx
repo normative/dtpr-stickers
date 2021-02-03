@@ -3,13 +3,14 @@ import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import {
   Typography, Divider, Button, LinearProgress, Toolbar, ArrowBackIcon,
 } from 'libs/mui';
-import { Option } from 'types';
+import { Option } from 'common/types';
 
 import { PlaceStateType } from 'reducers/place';
 import { SensorStateType } from 'reducers/sensor';
 import { AirtableStateType } from 'reducers/airtable';
 
 import { Link } from 'react-router-dom';
+import { getPlacePath } from 'common/helpers';
 import FeedbackFooter from '../FeedbackFooter';
 import Accordian from './Accordian';
 
@@ -66,7 +67,7 @@ function SensorView({
       <Toolbar className={classes.toolbar}>
         {place.data && (
           <Link
-            to={`/places/${sensor.data.placeId}`}
+            to={getPlacePath(sensor.data.placeId)}
             style={{ textDecoration: 'none' }}
           >
             <Button

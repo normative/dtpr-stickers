@@ -1,5 +1,5 @@
 import baseAirtable from '../libs/airtable';
-import { AirtableData, Option, TableName } from '../types';
+import { AirtableData, Option, TableName } from '../common/types';
 
 export async function getAirtableOptionsForTable(tableName: TableName): Promise<Option[]> {
   const options: Array<Option> = [];

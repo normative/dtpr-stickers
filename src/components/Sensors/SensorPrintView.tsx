@@ -12,7 +12,7 @@ import {
 } from 'libs/mui';
 import { SensorStateType } from 'reducers/sensor';
 import { AirtableStateType } from 'reducers/airtable';
-import { AirtableData } from 'types';
+import { AirtableData } from 'common/types';
 
 const WHITE_HEX_URL = '/images/hexes/white.svg';
 const OUTLINED_HEX_URL = '/images/hexes/white.svg';

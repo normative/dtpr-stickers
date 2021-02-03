@@ -1,4 +1,4 @@
-import { ReducerStateType, SensorData } from '../types';
+import { ReducerStateType, SensorData } from 'common/types';
 
 export const FETCH_SENSOR_REQUESTED = 'FETCH_SENSOR_REQUESTED';
 export function fetchSensorRequested(): SensorActionType {

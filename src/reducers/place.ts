@@ -1,4 +1,4 @@
-import { PlaceData, ReducerStateType } from '../types';
+import { PlaceData, ReducerStateType } from '../common/types';
 
 export const FETCH_PLACE_REQUESTED = 'FETCH_PLACE_REQUESTED';
 export function fetchPlaceRequested(): PlaceActionType {

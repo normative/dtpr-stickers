@@ -8,6 +8,7 @@ import { PlaceStateType } from 'reducers/place';
 import { SensorsStateType } from 'reducers/sensors';
 import { AirtableStateType } from 'reducers/airtable';
 import { Link } from 'react-router-dom';
+import { getSensorPath } from 'common/helpers';
 import StaticMap from '../StaticMap';
 
 interface Props {
@@ -64,7 +65,7 @@ function PlaceView({
           return (
             <Grid key={id} item xs={4} sm={3}>
               <Card className={classes.card} elevation={0}>
-                <Link to={`/sensors/${id}`} style={{ textDecoration: 'none' }}>
+                <Link to={getSensorPath(id)} style={{ textDecoration: 'none' }}>
                   <CardActionArea>
                     <CardContent className={classes.cardContent}>
                       {icon && (
