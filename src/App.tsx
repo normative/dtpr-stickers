@@ -47,8 +47,8 @@ function App() {
               <Route path="/places" component={Places} />
               <Redirect to="/" />
             </Switch>
+            <Footer />
           </Router>
-          <Footer />
         </PlaceProvider>
       </AirtableProvider>
     </MuiThemeProvider>

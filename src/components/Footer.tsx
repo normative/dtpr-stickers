@@ -1,9 +1,10 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 import {
   createStyles, Theme, WithStyles, withStyles,
 } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+
+import { Button, Typography } from 'libs/mui';
 
 function Footer({ classes }: WithStyles) {
   return (
@@ -11,7 +12,9 @@ function Footer({ classes }: WithStyles) {
       <Typography align="center">
         This is an open-source prototype from the Digital Transparency in the Public Realm project.
       </Typography>
-      <Button href="/" style={{ backgroundColor: 'transparent' }} color="secondary">Learn more here</Button>
+      <Link to="/" style={{ textDecoration: 'none', width: '100%', textAlign: 'center' }}>
+        <Button style={{ backgroundColor: 'transparent', width: '100%' }} color="secondary">Learn more here</Button>
+      </Link>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   createStyles,
   withStyles,
@@ -19,21 +20,23 @@ function Header({ classes }: Props) {
     <AppBar className={classes.root} position="sticky">
       <Toolbar>
         <div style={{ flexGrow: 1 }}>
-          <Button
-            href="/"
-            color="inherit"
-            disableFocusRipple
-            disableRipple
-            style={{ backgroundColor: 'transparent' }}
-          >
-            <Typography
-              variant="h6"
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <Button
+              href="/"
               color="inherit"
-              style={{ textTransform: 'none' }}
+              disableFocusRipple
+              disableRipple
+              style={{ backgroundColor: 'transparent' }}
             >
-              DTPR
-            </Typography>
-          </Button>
+              <Typography
+                variant="h6"
+                color="inherit"
+                style={{ textTransform: 'none' }}
+              >
+                DTPR
+              </Typography>
+            </Button>
+          </Link>
         </div>
       </Toolbar>
     </AppBar>
