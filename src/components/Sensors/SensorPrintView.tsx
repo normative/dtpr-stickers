@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React, { useRef } from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
+
 import {
   Button,
   Typography,
   LinearProgress,
-  Input,
-  InputLabel,
-  FormControl,
-  Select,
-  MenuItem,
 } from 'libs/mui';
 import { SensorStateType } from 'reducers/sensor';
 import { AirtableStateType } from 'reducers/airtable';
 import { badgeSizeToStyle } from 'common/helpers';
+// import { imagesUrl } from 'common/constants';
 import IconBadge from './IconBadge';
 import HexBadge from './HexBadge';
 
@@ -22,24 +20,27 @@ interface Props {
   sensorUrl?: string;
   qrCodeSrc?: string;
   classes: any;
+  onDownloadClick: any;
+  firstPurpose: string;
+  dentifTechTypes: string[];
 }
 
+const BADGE_SIZE = 2;
+
 function SensorPrintView({
-  classes, airtable, sensor, sensorUrl, qrCodeSrc,
+  classes,
+  airtable,
+  sensor,
+  sensorUrl,
+  qrCodeSrc,
+  onDownloadClick,
+  firstPurpose,
+  dentifTechTypes,
 }: Props) {
   const isLoading = sensor.isFetching || airtable.isFetching;
-  const [badgeSize, setBadgeSize] = useState(2);
 
   if (isLoading) return <LinearProgress color="secondary" />;
   if (!sensor.data) return <Typography>Hmm can`t find that sensor :/</Typography>;
-
-  // Make a badge for anything identifiable or de-indentified
-  const prioritizedTechTypes = (sensor.data && sensor.data.techType)
-    ? sensor.data.techType.filter((type) => type.includes('dentif'))
-    : [];
-
-  // Make a badge for only the first purpose
-  const featuredPurpose = sensor.data ? sensor.data.purpose[0] : undefined;
 
   return (
     <>
@@ -52,44 +53,25 @@ function SensorPrintView({
       </div>
       <div className={classes.root}>
         <Typography className={classes.header} variant="h1">
-          Sticker Marker
+          Download Your Labels
         </Typography>
         <div>
           <Typography className={classes.sensorLabels} gutterBottom variant="h3">
-            Sensor Labels
+            {sensor.data?.name}
           </Typography>
           <Typography paragraph>
             Download or print the labels for use in your own signage.
           </Typography>
-          <FormControl className={classes.print}>
-            <InputLabel htmlFor="select-multiple">Size</InputLabel>
-            <Select
-              value={badgeSize}
-              onChange={(e) => { setBadgeSize(parseFloat(e.target.value as string)); }}
-              input={<Input id="select" />}
-            >
-              <MenuItem value={2}>2 inches</MenuItem>
-              <MenuItem value={3}>3 inches</MenuItem>
-              <MenuItem value={4}>4 inches</MenuItem>
-              <MenuItem value={5}>5 inches</MenuItem>
-              <MenuItem value={6}>6 inches</MenuItem>
-              <MenuItem value={7}>7 inches</MenuItem>
-              <MenuItem value={8}>8 inches</MenuItem>
-            </Select>
-            <Button onClick={() => window.print()} variant="contained" color="primary">
-              Print Labels
-            </Button>
-          </FormControl>
         </div>
         {sensor.data && airtable.data && (
-        <div className={classes.badgeContainer}>
+        <div className={classes.badgeContainer} id="test-2" data-div-as-png>
           {sensor.data.logoSrc && sensor.data.accountable && (
             <HexBadge
               style={{
-                wrapper: badgeSizeToStyle(badgeSize / 2.5, 1),
+                wrapper: badgeSizeToStyle(BADGE_SIZE / 2.5, 1),
               }}
               src={sensor.data.logoSrc}
-              badgeSize={badgeSize}
+              badgeSize={BADGE_SIZE}
             >
               {sensor.data.accountable}
             </HexBadge>
@@ -97,34 +79,37 @@ function SensorPrintView({
           {qrCodeSrc && (
             <HexBadge
               style={{
-                wrapper: badgeSizeToStyle(badgeSize / 2, 1),
+                wrapper: badgeSizeToStyle(BADGE_SIZE / 2, 1),
                 typography: { fontSize: '9px' },
               }}
               src={qrCodeSrc}
-              badgeSize={badgeSize}
+              badgeSize={BADGE_SIZE}
             >
-              {badgeSize >= 2 ? sensorUrl : ''}
+              {sensorUrl}
             </HexBadge>
           )}
-          {!!prioritizedTechTypes.length && prioritizedTechTypes.map((techType) => (
+          {dentifTechTypes.map((techType) => (
             <IconBadge
               key={techType}
               airtableKey="techType"
               badgeName={techType}
               airtableData={airtable.data}
-              badgeSize={badgeSize}
+              badgeSize={BADGE_SIZE}
             />
           ))}
-          {featuredPurpose && (
+          {firstPurpose && (
             <IconBadge
               airtableKey="purpose"
-              badgeName={featuredPurpose}
+              badgeName={firstPurpose}
               airtableData={airtable.data}
-              badgeSize={badgeSize}
+              badgeSize={BADGE_SIZE}
             />
           )}
         </div>
         )}
+        <Button onClick={onDownloadClick}>
+          Download
+        </Button>
       </div>
     </>
   );
@@ -193,7 +178,8 @@ const styles = (theme: Theme) => createStyles({
   },
   badgeContainer: {
     background: theme.palette.grey['200'],
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
     padding: theme.spacing(),
     display: 'flex',
     justifyContent: 'center',

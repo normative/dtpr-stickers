@@ -47,11 +47,11 @@ function IconBadge(props: IconBadgeProps) {
     fontColor = 'white';
   }
   return (
-    <div key={name} className={classes.badge} style={style}>
+    <div key={name} className={classes.badge} style={style} data-div-as-png>
       <img className={classes.hex} src={hexUrl} height="100%" width="100%" alt="" />
       <div className={classes.stickerContent} style={{ color: fontColor }}>
         <div style={{ ...iconWrapperStyle, transition: 'all 0.8s ease-out' }}>
-          <img src={`/images/${iconPath}.svg`} height="100%" width="100%" alt="" />
+          <img src={`/images/${iconPath}.svg`} height="100%" width="100%" alt="" data-export data-export-type="svg" />
         </div>
         <Typography className={classes.stickerText} variant="subtitle2" color="inherit">
           {name}

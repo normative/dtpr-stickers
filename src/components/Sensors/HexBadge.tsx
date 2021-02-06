@@ -21,9 +21,8 @@ function HexBadge({
 }: Props) {
   const badgeStyle = badgeSizeToStyle(badgeSize);
   return (
-    <div className={classes.badge} style={badgeStyle}>
+    <div className={classes.badge} style={badgeStyle} data-div-as-png>
       <img className={`${classes.hex} ${classes.noPrint}`} src={imagesUrl.WHITE_HEX_URL} height="100%" width="100%" alt="" />
-      <img className={`${classes.hex} ${classes.printOnly}`} src={imagesUrl.OUTLINED_HEX_URL} height="100%" width="100%" alt="" />
       <div className={classes.stickerContent}>
         <div style={{ ...style.wrapper, transition: 'all 0.8s ease-out' }}>
           <img src={src} height="100%" width="100%" alt="" />
@@ -43,14 +42,6 @@ const styles = (theme: Theme) => createStyles({
     },
     '@media print': {
       display: 'none',
-    },
-  },
-  printOnly: {
-    '@media all': {
-      display: 'none',
-    },
-    '@media print': {
-      display: 'block',
     },
   },
   badge: {
@@ -77,7 +68,6 @@ const styles = (theme: Theme) => createStyles({
   },
   stickerContent: {
     flex: 1,
-    height: '100%',
     position: 'relative',
     display: 'flex',
     margin: '30px',
@@ -86,6 +76,7 @@ const styles = (theme: Theme) => createStyles({
     alignItems: 'center',
     textAlign: 'center',
     pageBreakInside: 'avoid',
+    wordBreak: 'break-word',
   },
 });
 
