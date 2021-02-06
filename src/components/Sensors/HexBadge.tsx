@@ -23,9 +23,9 @@ function HexBadge({
   return (
     <div className={classes.badge} style={badgeStyle} data-div-as-png>
       <img className={`${classes.hex} ${classes.noPrint}`} src={imagesUrl.WHITE_HEX_URL} height="100%" width="100%" alt="" />
-      <div className={classes.stickerContent}>
+      <div className={classes.stickerContent} data-div-as-png>
         <div style={{ ...style.wrapper, transition: 'all 0.8s ease-out' }}>
-          <img src={src} height="100%" width="100%" alt="" />
+          <img src={src} height="100%" width="100%" alt="" data-img-as-png />
         </div>
         <Typography variant="subtitle2" style={style.typography}>
           {children}

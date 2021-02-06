@@ -75,7 +75,7 @@ function SensorPrint() {
       airtable={airtable as AirtableStateType}
       sensor={sensor as SensorStateType}
       onDownloadClick={(element) => {
-        exportStickerAssets(airtable.data, qrCodeSrc, dentifTechTypes, firstPurpose);
+        exportStickerAssets(airtable.data, dentifTechTypes, firstPurpose);
       }}
       dentifTechTypes={dentifTechTypes}
       firstPurpose={firstPurpose}
@@ -110,109 +110,55 @@ const getIconPath = (airtableData, airtableKey, badgeName) => {
   return iconShortname.replace(/\/(?=[^/]*$)/, '/ic_black/');
 };
 
-async function exportStickerAssets(airtable, qrCodeSrc, dentifTechTypes, firstPurpose) {
-  // // hexagons svg url
-  // let urls = Object.keys(imagesUrl).map((key) => imagesUrl[key]);
-  // // Tech Type svg urls
-  // if (dentifTechTypes.length) urls = urls.concat(dentifTechTypes.map((techType) => `/${getIconPath(airtable, 'techType', techType)}`));
-  // // First Purpose svg url
-  // if (firstPurpose) urls = urls.concat(`/${getIconPath(airtable, 'purpose', firstPurpose)}`);
+async function exportStickerAssets(airtable, dentifTechTypes, firstPurpose) {
+  // Hexagons svg url
+  let urls = Object.keys(imagesUrl).map((key) => imagesUrl[key]);
+  // Tech Type svg urls
+  if (dentifTechTypes.length) urls = urls.concat(dentifTechTypes.map((techType) => `/images/${getIconPath(airtable, 'techType', techType)}.svg`));
+  // First Purpose svg url
+  if (firstPurpose) urls = urls.concat(`/images/${getIconPath(airtable, 'purpose', firstPurpose)}.svg`);
 
-  // const svgBlobs = urls.map((url) => download(url));
+  const svgBlobs = urls.map((url) => download(url));
   const zip = JsZip();
 
-  // svgBlobs.forEach((blob, i) => {
-  //   zip.file(`svg-${i}.svg`, blob);
-  // });
+  svgBlobs.forEach((blob, i) => {
+    zip.file(`svg-${i}.svg`, blob);
+  });
 
-  // zip.file('qrcode.png', qrCodeSrc);
-
-  // Badge PNG screenshot
-  // const screenshots = await Promise.all(
-  //   Array.from(document.querySelectorAll('[data-div-as-png]').entries())
-  //     .map(([, div]: [number, HTMLElement]) => html2canvas(div, {
-  //       backgroundColor: 'transparent',
-  //     })),
-  // );
-
-  // const el = document.querySelector('[data-div-as-png]') as HTMLElement;
-  const screenshots = await Promise.all(
-    Array.from(document.querySelectorAll('[data-div-as-png]'))
-      .map((el: HTMLElement, i) => html2canvas(el, {
-        backgroundColor: 'transparent',
-        allowTaint: true,
-        removeContainer: true,
-        // scrollX: -window.scrollX,
-        scrollY: -window.scrollY,
-        // windowWidth: document.documentElement.offsetWidth,
-        // windowHeight: document.documentElement.offsetHeight,
-        onclone: (doc) => {
-          const ele = doc.querySelectorAll('[data-div-as-png]')[i] as HTMLElement;
-          ele.style['background-color'] = 'transparent';
-        },
-      }).then((canvas) => {
-        debugger;
-        canvas.toBlob((blob) => {
-          debugger;
-
-          Promise.resolve(blob);
-        }, 'image/png', 0.95);
-      })),
+  const imgs = await Promise.all(
+    Array.from(document.querySelectorAll('[data-img-as-png]'))
+      .map((img: HTMLImageElement, i) => convertImgToBlob(img)),
   );
 
-  debugger;
-  // debugger;
-  // blobs.forEach((blob: Blob, i) => {
-  //   zip.file(`png-${i}.png`, blob);
-  // });
-
-  // domToImage.toBlob(document.getElementById('test'), {
-  //   width: 204,
-  //   height: 219,
-  //   style: {
-  //     position: 'absolute',
-  //     left: '-10px',
-  //     top: '0',
-  //     backgroundColor: 'red',
-  //     margin: '10px',
-  //   },
-  // })
-  //   .then((blob) => {
-  //     saveAs(blob, 'my-node.png');
-  //   });
-  // html2canvas(el, {
-  //   backgroundColor: 'transparent',
-  //   allowTaint: true,
-  //   removeContainer: true,
-  //   // scrollX: -window.scrollX,
-  //   scrollY: -window.scrollY,
-  //   // windowWidth: document.documentElement.offsetWidth,
-  //   // windowHeight: document.documentElement.offsetHeight,
-  //   // onclone: (doc) => {
-  //   //   const rect = document.getElementById('test').getBoundingClientRect();
-  //   //   debugger;
-  //   //   const ele = doc.getElementById('test') as HTMLElement;
-  //   //   ele.style.position = 'fixed';
-  //   //   ele.style.left = '0';
-  //   //   ele.style.right = '0';
-  //   //   ele.style.top = '0';
-  //   //   ele.style.bottom = '0';
-  //   //   ele.style['z-index'] = '10';
-  //   //   ele.style.margin = '0';
-  //   //   ele.style.width = `${rect.width}px`;
-  //   //   ele.style.height = `${rect.height}px`;
-  //   // },
-  // }).then((canvas) => {
-  //   const imageData = canvas.toDataURL('image/png');
-  //   const newData = imageData.replace(/^data:image\/png/, 'data:application/octet-stream');
-  //   saveAs(newData, 'blob.png');
-  // });
+  imgs.forEach((blob, i) => {
+    zip.file(`images-${i}.png`, blob);
+  });
 
   zip.generateAsync({ type: 'blob' }).then((zipFile) => {
     const currentDate = new Date().getTime();
     const fileName = `stickers-${currentDate}.zip`;
     return saveAs(zipFile, fileName);
   });
+}
+
+async function convertImgToBlob(img) {
+  // take any image
+  const canvas = document.createElement('canvas');
+  canvas.width = img.clientWidth * 2;
+  canvas.height = img.clientHeight * 2;
+
+  const context = canvas.getContext('2d');
+
+  // copy image to it (this method allows to cut image)
+  context.drawImage(img, 0, 0);
+  // we can context.rotate(), and do many other things on canvas
+
+  // toBlob is async opereation, callback is called when done
+  const blobImg = await new Promise((resolve) => {
+    canvas.toBlob((blob) => resolve(blob), 'image/png');
+  });
+
+  return blobImg as Blob;
 }
 
 export default SensorPrint;

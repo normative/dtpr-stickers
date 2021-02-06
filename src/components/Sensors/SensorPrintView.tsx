@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useRef } from 'react';
+import React from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 
 import {
@@ -43,7 +43,7 @@ function SensorPrintView({
   if (!sensor.data) return <Typography>Hmm can`t find that sensor :/</Typography>;
 
   return (
-    <>
+    <div className={classes.root}>
       <div className={classes.navBar}>
         <a href="https://dtpr.helpfulplaces.com/" className={classes.navBarLink}>
           <Typography className={classes.navBarTypography}>
@@ -51,67 +51,69 @@ function SensorPrintView({
           </Typography>
         </a>
       </div>
-      <div className={classes.root}>
-        <Typography className={classes.header} variant="h1">
-          Download Your Labels
-        </Typography>
-        <div>
-          <Typography className={classes.sensorLabels} gutterBottom variant="h3">
-            {sensor.data?.name}
+      <div className={classes.outerPanel}>
+        <div className={classes.panel}>
+          <Typography className={classes.header} variant="h1">
+            Download Your Labels
           </Typography>
-          <Typography paragraph>
-            Download or print the labels for use in your own signage.
-          </Typography>
+          <div>
+            <Typography className={classes.sensorLabels} gutterBottom variant="h3">
+              {sensor.data?.name}
+            </Typography>
+            <Typography paragraph>
+              Download or print the labels for use in your own signage.
+            </Typography>
+          </div>
+          {sensor.data && airtable.data && (
+          <div className={classes.badgeContainer} id="test-2" data-div-as-png>
+            {sensor.data.logoSrc && sensor.data.accountable && (
+              <HexBadge
+                style={{
+                  wrapper: badgeSizeToStyle(BADGE_SIZE / 2.5, 1),
+                }}
+                src={sensor.data.logoSrc}
+                badgeSize={BADGE_SIZE}
+              >
+                {sensor.data.accountable}
+              </HexBadge>
+            )}
+            {qrCodeSrc && (
+              <HexBadge
+                style={{
+                  wrapper: badgeSizeToStyle(BADGE_SIZE / 2, 1),
+                  typography: { fontSize: '9px' },
+                }}
+                src={qrCodeSrc}
+                badgeSize={BADGE_SIZE}
+              >
+                {sensorUrl}
+              </HexBadge>
+            )}
+            {dentifTechTypes.map((techType) => (
+              <IconBadge
+                key={techType}
+                airtableKey="techType"
+                badgeName={techType}
+                airtableData={airtable.data}
+                badgeSize={BADGE_SIZE}
+              />
+            ))}
+            {firstPurpose && (
+              <IconBadge
+                airtableKey="purpose"
+                badgeName={firstPurpose}
+                airtableData={airtable.data}
+                badgeSize={BADGE_SIZE}
+              />
+            )}
+          </div>
+          )}
         </div>
-        {sensor.data && airtable.data && (
-        <div className={classes.badgeContainer} id="test-2" data-div-as-png>
-          {sensor.data.logoSrc && sensor.data.accountable && (
-            <HexBadge
-              style={{
-                wrapper: badgeSizeToStyle(BADGE_SIZE / 2.5, 1),
-              }}
-              src={sensor.data.logoSrc}
-              badgeSize={BADGE_SIZE}
-            >
-              {sensor.data.accountable}
-            </HexBadge>
-          )}
-          {qrCodeSrc && (
-            <HexBadge
-              style={{
-                wrapper: badgeSizeToStyle(BADGE_SIZE / 2, 1),
-                typography: { fontSize: '9px' },
-              }}
-              src={qrCodeSrc}
-              badgeSize={BADGE_SIZE}
-            >
-              {sensorUrl}
-            </HexBadge>
-          )}
-          {dentifTechTypes.map((techType) => (
-            <IconBadge
-              key={techType}
-              airtableKey="techType"
-              badgeName={techType}
-              airtableData={airtable.data}
-              badgeSize={BADGE_SIZE}
-            />
-          ))}
-          {firstPurpose && (
-            <IconBadge
-              airtableKey="purpose"
-              badgeName={firstPurpose}
-              airtableData={airtable.data}
-              badgeSize={BADGE_SIZE}
-            />
-          )}
-        </div>
-        )}
-        <Button onClick={onDownloadClick}>
-          Download
-        </Button>
       </div>
-    </>
+      <Button className={classes.downloadButton} onClick={onDownloadClick}>
+        Download
+      </Button>
+    </div>
   );
 }
 
@@ -122,11 +124,21 @@ SensorPrintView.defaultProps = {
 
 const styles = (theme: Theme) => createStyles({
   root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  outerPanel: {
+    width: '100%',
+  },
+  panel: {
     flexGrow: 1,
+    flexShrink: 0,
     margin: 0,
     padding: 0,
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
+    width: '100%',
     [theme.breakpoints.up('sm')]: {
       margin: 'auto',
       padding: theme.spacing(2),
@@ -141,16 +153,17 @@ const styles = (theme: Theme) => createStyles({
     },
   },
   navBar: {
-    backgroundColor: '#001B31',
+    backgroundColor: theme.palette.primary.main,
     boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
     paddingTop: theme.spacing(2.5),
     paddingBottom: theme.spacing(2.5),
     paddingLeft: theme.spacing(3),
     paddingRight: theme.spacing(3),
+    width: '100%',
   },
   navBarLink: {
     textDecoration: 'none',
-    color: 'white',
+    color: theme.palette.primary.contrastText,
   },
   navBarTypography: {
     fontWeight: 500,
@@ -193,6 +206,13 @@ const styles = (theme: Theme) => createStyles({
 
       display: 'block',
       float: 'none',
+    },
+  },
+  downloadButton: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+    '&:hover': {
+      backgroundColor: theme.palette.primary.light,
     },
   },
 });
