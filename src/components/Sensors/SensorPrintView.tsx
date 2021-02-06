@@ -1,4 +1,4 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 
@@ -9,8 +9,7 @@ import {
 } from 'libs/mui';
 import { SensorStateType } from 'reducers/sensor';
 import { AirtableStateType } from 'reducers/airtable';
-import { badgeSizeToStyle } from 'common/helpers';
-// import { imagesUrl } from 'common/constants';
+import { badgeSizeToStyle, getIconConfig } from 'common/helpers';
 import IconBadge from './IconBadge';
 import HexBadge from './HexBadge';
 
@@ -92,18 +91,14 @@ function SensorPrintView({
             {dentifTechTypes.map((techType) => (
               <IconBadge
                 key={techType}
-                airtableKey="techType"
-                badgeName={techType}
-                airtableData={airtable.data}
                 badgeSize={BADGE_SIZE}
+                {...getIconConfig(airtable.data, 'techType', techType)}
               />
             ))}
             {firstPurpose && (
               <IconBadge
-                airtableKey="purpose"
-                badgeName={firstPurpose}
-                airtableData={airtable.data}
                 badgeSize={BADGE_SIZE}
+                {...getIconConfig(airtable.data, 'purpose', firstPurpose)}
               />
             )}
           </div>

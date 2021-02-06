@@ -1,6 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, {
   useContext,
   useEffect,
@@ -8,9 +5,6 @@ import React, {
   useState,
 } from 'react';
 import { useParams } from 'react-router-dom';
-import JsZip from 'jszip';
-import { saveAs } from 'file-saver';
-import html2canvas from 'html2canvas';
 
 import sensorReducer, {
   sensorInitialState,
@@ -27,7 +21,7 @@ import useReducerState from 'hooks/useReducerState';
 import { AirtableStateType } from 'reducers/airtable';
 import { getSensorPath } from 'common/helpers';
 import { getQRCodeSrc } from 'sideEffects/qrCode';
-import { imagesUrl } from 'common/constants';
+import exportStickerAssets from 'services/exporting';
 
 function SensorPrint() {
   const [sensor, sensorActions] = useReducerState(
@@ -59,9 +53,9 @@ function SensorPrint() {
     });
   }, []);
 
-  // Make a badge for anything identifiable or de-indentified
+  // Make a badge for anything identifiable or de-identified
   const dentifTechTypes = useMemo(() => ((sensor.data && sensor.data.techType)
-    ? sensor.data.techType.filter((type) => type.includes('dentif'))
+    ? sensor.data.techType.filter((type: string) => type.includes('dentif'))
     : []), [sensor.data]);
 
   // Make a badge for only the first purpose
@@ -73,122 +67,13 @@ function SensorPrint() {
       qrCodeSrc={qrCodeSrc}
       airtable={airtable as AirtableStateType}
       sensor={sensor as SensorStateType}
-      onDownloadClick={(element) => {
+      onDownloadClick={() => {
         exportStickerAssets(airtable.data, dentifTechTypes, firstPurpose);
       }}
       dentifTechTypes={dentifTechTypes}
       firstPurpose={firstPurpose}
     />
   );
-}
-
-const download = (url: string) => fetch(url).then((resp) => resp.blob());
-
-const getIconPath = (airtableData, airtableKey, badgeName) => {
-  const config = airtableData[airtableKey].find((option) => option.name === badgeName);
-  if (!config) {
-    return null;
-  }
-
-  const { iconShortname } = config;
-
-  if (airtableKey === 'purpose') {
-    return iconShortname.replace(/\/(?=[^/]*$)/, '/ic_white/');
-  }
-
-  if (iconShortname.includes('yellow')) {
-    return iconShortname.replace('/yellow/', '/ic_black/');
-  }
-  if (iconShortname.includes('blue')) {
-    return iconShortname.replace('/blue/', '/ic_black/');
-  }
-  if (iconShortname.includes('black')) {
-    return iconShortname.replace('/black/', '/ic_white/');
-  }
-
-  return iconShortname.replace(/\/(?=[^/]*$)/, '/ic_black/');
-};
-
-async function exportStickerAssets(airtable, dentifTechTypes, firstPurpose) {
-  // Hexagons svg url
-  let urls = Object.keys(imagesUrl).map((key) => imagesUrl[key]);
-  // Tech Type svg urls
-  if (dentifTechTypes.length) urls = urls.concat(dentifTechTypes.map((techType) => `/images/${getIconPath(airtable, 'techType', techType)}.svg`));
-  // First Purpose svg url
-  if (firstPurpose) urls = urls.concat(`/images/${getIconPath(airtable, 'purpose', firstPurpose)}.svg`);
-
-  const svgBlobs = urls.map((url) => download(url));
-  const zip = JsZip();
-
-  svgBlobs.forEach((blob, i) => {
-    zip.file(`svg-${i}.svg`, blob);
-  });
-
-  const imgs = await Promise.all(
-    Array.from(document.querySelectorAll('[data-img-as-png]'))
-      .map((img: HTMLImageElement, i) => convertImgToBlob(img)),
-  );
-
-  imgs.forEach((blob, i) => {
-    zip.file(`images-${i}.png`, blob);
-  });
-
-  const divs = await Promise.all(
-    Array.from(document.querySelectorAll('[data-div-as-png]'))
-      .map((div: HTMLElement, i) => convertDivToBlob(div)),
-  );
-
-  divs.forEach((blob, i) => {
-    zip.file(`divs-${i}.png`, blob);
-  });
-
-  zip.generateAsync({ type: 'blob' }).then((zipFile) => {
-    const currentDate = new Date().getTime();
-    const fileName = `stickers-${currentDate}.zip`;
-    return saveAs(zipFile, fileName);
-  });
-}
-
-async function convertImgToBlob(img) {
-  // take any image
-  const canvas = document.createElement('canvas');
-  canvas.width = img.clientWidth * 2;
-  canvas.height = img.clientHeight * 2;
-
-  const context = canvas.getContext('2d');
-  context.drawImage(img, 0, 0);
-
-  const blobImg = await new Promise((resolve) => {
-    canvas.toBlob((blob) => {
-      resolve(blob);
-    }, 'image/png');
-  });
-
-  return blobImg as Blob;
-}
-
-async function convertDivToBlob(element) {
-  const canvas = document.createElement('canvas');
-  canvas.width = element.clientWidth;
-  canvas.height = element.clientHeight;
-
-  const divCanvas = await html2canvas(element, {
-    allowTaint: true,
-    backgroundColor: 'transparent',
-    canvas,
-    height: element.clientHeight,
-    width: element.clientWidth,
-    scrollY: -window.scrollY,
-    scale: 1,
-  });
-
-  const blobDiv = await new Promise((resolve) => {
-    divCanvas.toBlob((blob) => {
-      resolve(blob);
-    }, 'image/png');
-  });
-
-  return blobDiv as Blob;
 }
 
 export default SensorPrint;
