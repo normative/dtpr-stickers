@@ -29,7 +29,7 @@ export const placeInitialState: PlaceStateType = {
 
 interface PlacePayloadType {
   id?: string;
-  place?: PlaceData | {};
+  place?: PlaceData;
   error?: Error;
 }
 
@@ -58,7 +58,7 @@ function placeReducer(state, { type, payload }: PlaceActionType) {
       return {
         ...state,
         isFetching: false,
-        data: [],
+        data: null,
         error: payload.error,
         didInvalidate: true,
       };
