@@ -11,7 +11,6 @@ import { useParams } from 'react-router-dom';
 import JsZip from 'jszip';
 import { saveAs } from 'file-saver';
 import html2canvas from 'html2canvas';
-import domToImage from 'dom-to-image';
 
 import sensorReducer, {
   sensorInitialState,
@@ -134,6 +133,15 @@ async function exportStickerAssets(airtable, dentifTechTypes, firstPurpose) {
     zip.file(`images-${i}.png`, blob);
   });
 
+  const divs = await Promise.all(
+    Array.from(document.querySelectorAll('[data-div-as-png]'))
+      .map((div: HTMLElement, i) => convertDivToBlob(div)),
+  );
+
+  divs.forEach((blob, i) => {
+    zip.file(`divs-${i}.png`, blob);
+  });
+
   zip.generateAsync({ type: 'blob' }).then((zipFile) => {
     const currentDate = new Date().getTime();
     const fileName = `stickers-${currentDate}.zip`;
@@ -148,17 +156,39 @@ async function convertImgToBlob(img) {
   canvas.height = img.clientHeight * 2;
 
   const context = canvas.getContext('2d');
-
-  // copy image to it (this method allows to cut image)
   context.drawImage(img, 0, 0);
-  // we can context.rotate(), and do many other things on canvas
 
-  // toBlob is async opereation, callback is called when done
   const blobImg = await new Promise((resolve) => {
-    canvas.toBlob((blob) => resolve(blob), 'image/png');
+    canvas.toBlob((blob) => {
+      resolve(blob);
+    }, 'image/png');
   });
 
   return blobImg as Blob;
+}
+
+async function convertDivToBlob(element) {
+  const canvas = document.createElement('canvas');
+  canvas.width = element.clientWidth;
+  canvas.height = element.clientHeight;
+
+  const divCanvas = await html2canvas(element, {
+    allowTaint: true,
+    backgroundColor: 'transparent',
+    canvas,
+    height: element.clientHeight,
+    width: element.clientWidth,
+    scrollY: -window.scrollY,
+    scale: 1,
+  });
+
+  const blobDiv = await new Promise((resolve) => {
+    divCanvas.toBlob((blob) => {
+      resolve(blob);
+    }, 'image/png');
+  });
+
+  return blobDiv as Blob;
 }
 
 export default SensorPrint;
