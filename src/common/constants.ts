@@ -1,3 +1,22 @@
+export enum StickerThemeVariant {
+  BLACK = 'black',
+  WHITE = 'white',
+  BLUE = 'blue',
+  YELLOW = 'yellow',
+}
+
+export enum StickerIcons {
+  AIR = 'air',
+  BIOMETRICS = 'biometrics',
+  IMAGE = 'image',
+  LIGHT = 'light',
+  SOUND = 'sound',
+  VIDEO = 'video',
+  VOICE = 'voice',
+  WATER = 'water',
+  WAVE = 'wave',
+}
+
 export const sessionKeys = {
   AIRTABLE: 'airtableData',
 };

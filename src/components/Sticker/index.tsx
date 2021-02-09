@@ -8,9 +8,26 @@ import Light from 'components/Svgs/Light';
 import Sound from 'components/Svgs/Sound';
 import Video from 'components/Svgs/Video';
 import Voice from 'components/Svgs/Voice';
-import Water from 'components/Svgs/Water';
+import TechWater from 'components/Svgs/TechWater';
 import Wave from 'components/Svgs/Wave';
 
+import Accessibility from 'components/Svgs/Accessibility';
+import Agency from 'components/Svgs/Agency';
+import Arts from 'components/Svgs/Arts';
+import Ecology from 'components/Svgs/Ecology';
+import Emergency from 'components/Svgs/Emergency';
+import Energy from 'components/Svgs/Energy';
+import Enforcement from 'components/Svgs/Enforcement';
+import Entry from 'components/Svgs/Entry';
+import Health from 'components/Svgs/Health';
+import Inform from 'components/Svgs/Inform';
+import Mobility from 'components/Svgs/Mobility';
+import Planning from 'components/Svgs/Planning';
+import Research from 'components/Svgs/Research';
+import Security from 'components/Svgs/Security';
+import Toggle from 'components/Svgs/Toggle';
+import Waste from 'components/Svgs/Waste';
+import PurposeWater from 'components/Svgs/PurposeWater';
 import SvgText from './SvgText';
 
 const THEME = {
@@ -33,39 +50,60 @@ const THEME = {
 };
 
 const ICONS = {
-  air: Air,
-  biometrics: Biometrics,
-  image: Image,
-  light: Light,
-  sound: Sound,
-  video: Video,
-  voice: Voice,
-  water: Water,
-  wave: Wave,
+  tech: {
+    air: Air,
+    biometrics: Biometrics,
+    image: Image,
+    light: Light,
+    sound: Sound,
+    video: Video,
+    voice: Voice,
+    water: TechWater,
+    wave: Wave,
+  },
+  purpose: {
+    accessibility: Accessibility,
+    agency: Agency,
+    arts: Arts,
+    ecology: Ecology,
+    emergency: Emergency,
+    energy: Energy,
+    enforcement: Enforcement,
+    entry: Entry,
+    health: Health,
+    inform: Inform,
+    mobility: Mobility,
+    planning: Planning,
+    research: Research,
+    security: Security,
+    toggle: Toggle,
+    waste: Waste,
+    water: PurposeWater,
+  },
 };
 
+const DEFAULT_HEIGHT = 264;
+
 function Sticker({
-  innerRef, height = 264, variant, icon, children,
+  height = DEFAULT_HEIGHT, variant, context, icon, children,
 }) {
-  const Icon = ICONS[icon];
+  const Icon = ICONS[context][icon];
   const width = height * 0.8787;
-  const iconSize = height * 0.5;
   const textWidth = width * 0.7;
-  const textHeight = (height - (height - iconSize)) * 0.7;
-  const iconPosition = {
-    x: (width - iconSize) / 2,
-    y: (height - iconSize) / 3,
-  };
+  const textHeight = (height - (height - height * 0.6)) * 0.7;
+
   const textPosition = {
-    y: '90%',
+    y: '85%',
   };
 
+  if (!icon) return <></>;
+
   return (
-    <svg ref={innerRef} width={width} height={height} viewBox="0 0 232 264" version="1.1" xmlns="http://www.w3.org/2000/svg">
-      <g id="Sign-/-Hex-/-White" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+    <svg width={width} height={height} viewBox="0 0 232 264" version="1.1" xmlns="http://www.w3.org/2000/svg" data-export-badge>
+      <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
         <polygon id="Star" fill={THEME[variant].hexColor} points="116 264 1.6846467 198 1.6846467 66 116 0 230.315353 66 230.315353 198" />
       </g>
-      <Icon size={iconSize} fill={THEME[variant].color} x={iconPosition.x} y={iconPosition.y} />
+      <Icon fill={THEME[variant].color} transform="translate(4.5 2.5) scale(0.6)" />
       <SvgText
         color={THEME[variant].color}
         y={textPosition.y}
@@ -78,9 +116,15 @@ function Sticker({
   );
 }
 
-export const icons = Object.keys(ICONS).reduce((res, key) => {
-  res[key.toUpperCase()] = key;
-  return res;
-}, {});
+export const icons = {
+  tech: Object.keys(ICONS.tech).reduce((res, key) => {
+    res[key.toUpperCase()] = key;
+    return res;
+  }, {}),
+  purpose: Object.keys(ICONS.purpose).reduce((res, key) => {
+    res[key.toUpperCase()] = key;
+    return res;
+  }, {}),
+};
 
 export default memo(Sticker);

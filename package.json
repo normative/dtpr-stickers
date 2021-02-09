@@ -21,7 +21,6 @@
     "firebase": "^8.2.4",
     "firebaseui": "^4.7.1",
     "geojson": "^0.5.0",
-    "html2canvas": "^1.0.0-rc.7",
     "jszip": "^3.5.0",
     "mapbox-gl": "1.13.0",
     "nanoid": "^3.1.20",

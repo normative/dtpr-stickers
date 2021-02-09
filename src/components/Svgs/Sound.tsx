@@ -1,12 +1,12 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
+import { SVGProps } from 'common/types';
 
 function Sound({
-  size, fill = '#000000', x, y,
-}) {
+  fill = '#000000', transform,
+}: SVGProps) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" x={x} y={y} data-export-svg>
-      <g id="dtpr_icons-/-tech-/-ic_black-/-sound">
+    <svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" data-export-icon>
+      <g id="dtpr_icons-/-tech-/-ic_black-/-sound" transform={transform}>
         <rect id="Rectangle" fill={fill} x="1.2" y="8.4" width="2.4" height="7.2" rx="1.2" />
         <rect id="Rectangle" fill={fill} x="6" y="4.8" width="2.4" height="14.4" rx="1.2" />
         <rect id="Rectangle" fill={fill} x="10.8" y="2.4" width="2.4" height="19.2" rx="1.2" />

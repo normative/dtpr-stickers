@@ -1,16 +1,16 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
+import { SVGProps } from 'common/types';
 
-function Water({
-  size, fill = '#000000', x, y,
-}) {
+function TechWater({
+  fill = '#000000', transform,
+}: SVGProps) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" x={x} y={y} data-export-svg>
-      <g id="dtpr_icons-/-tech-/-ic_black-/-water" fill={fill}>
+    <svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" data-export-icon>
+      <g id="dtpr_icons-/-tech-/-ic_black-/-TechWater" fill={fill} transform={transform}>
         <path d="M17.66,7.93 C20.78,11.05 20.78,16.12 17.66,19.24 C16.1,20.8 14.05,21.58 12,21.58 C9.95,21.58 7.9,20.8 6.34,19.24 C3.22,16.12 3.22,11.05 6.34,7.93 L11.2928932,2.97710678 C11.6834175,2.58658249 12.3165825,2.58658249 12.7071068,2.97710678 L17.66,7.93 Z M12.7079392,5.80960883 C12.7073846,5.80905293 12.7068293,5.80849768 12.7062734,5.80794309 C12.3152894,5.41787905 11.6821249,5.41862483 11.2920608,5.80960883 L7.76,9.35 C6.62,10.48 6,11.99 6,13.59 C6,15.19 6.62,16.69 7.76,17.83 C8.89,18.97 10.4,19.59 12,19.59 C13.6,19.59 15.11,18.97 16.24,17.83 C17.38,16.69 18,15.19 18,13.59 C18,11.99 17.38,10.48 16.24,9.35 L12.7079392,5.80960883 Z" id="Combined-Shape" />
       </g>
     </svg>
   );
 }
 
-export default Water;
+export default TechWater;

@@ -67,9 +67,7 @@ function SensorPrint() {
       qrCodeSrc={qrCodeSrc}
       airtable={airtable as AirtableStateType}
       sensor={sensor as SensorStateType}
-      onDownloadClick={() => {
-        exportStickerAssets(airtable.data, dentifTechTypes, firstPurpose);
-      }}
+      onDownloadClick={() => { exportStickerAssets(); }}
       dentifTechTypes={dentifTechTypes}
       firstPurpose={firstPurpose}
     />

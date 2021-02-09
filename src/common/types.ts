@@ -71,3 +71,8 @@ export interface IconConfig {
   fontColor: string;
   iconName: string;
 }
+
+export interface SVGProps {
+  transform: string,
+  fill: string,
+}

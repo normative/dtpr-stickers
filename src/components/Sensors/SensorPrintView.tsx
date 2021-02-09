@@ -9,8 +9,10 @@ import {
 } from 'libs/mui';
 import { SensorStateType } from 'reducers/sensor';
 import { AirtableStateType } from 'reducers/airtable';
-import { badgeSizeToStyle, getIconConfig } from 'common/helpers';
-import IconBadge from './IconBadge';
+import {
+  badgeSizeToStyle, getStickerConfig,
+} from 'common/helpers';
+import Sticker from 'components/Sticker';
 import HexBadge from './HexBadge';
 
 interface Props {
@@ -89,17 +91,21 @@ function SensorPrintView({
               </HexBadge>
             )}
             {dentifTechTypes.map((techType) => (
-              <IconBadge
+              <Sticker
                 key={techType}
-                badgeSize={BADGE_SIZE}
-                {...getIconConfig(airtable.data, 'techType', techType)}
-              />
+                height={218}
+                {...getStickerConfig(airtable.data, 'techType', techType)}
+              >
+                {techType}
+              </Sticker>
             ))}
             {firstPurpose && (
-              <IconBadge
-                badgeSize={BADGE_SIZE}
-                {...getIconConfig(airtable.data, 'purpose', firstPurpose)}
-              />
+              <Sticker
+                height={218}
+                {...getStickerConfig(airtable.data, 'purpose', firstPurpose)}
+              >
+                {firstPurpose}
+              </Sticker>
             )}
           </div>
           )}
