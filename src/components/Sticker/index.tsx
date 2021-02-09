@@ -89,11 +89,9 @@ function Sticker({
 }) {
   const Icon = ICONS[context][icon];
   const width = height * 0.8787;
-  const textWidth = width * 0.7;
-  const textHeight = (height - (height - height * 0.6)) * 0.7;
 
   const textPosition = {
-    y: '85%',
+    y: '60%',
   };
 
   if (!icon) return <></>;
@@ -106,9 +104,9 @@ function Sticker({
       <Icon fill={THEME[variant].color} transform="translate(4.5 2.5) scale(0.6)" />
       <SvgText
         color={THEME[variant].color}
+        width={width}
+        height={height}
         y={textPosition.y}
-        width={textWidth}
-        height={textHeight}
       >
         {children}
       </SvgText>

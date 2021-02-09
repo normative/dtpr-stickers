@@ -14,7 +14,11 @@ function getIconsBlobs() {
 function getBadgesBlobs() {
   const stickers = Array.from(document.querySelectorAll('[data-export-badge]'));
   const preface = '<?xml version="1.0" standalone="no"?>\r\n';
-  return stickers.map((stickerEl) => new Blob([preface, stickerEl.outerHTML], { type: 'image/svg+xml;charset=utf-8' }));
+  return stickers.map((stickerEl) => {
+    const p = stickerEl.querySelector('p');
+    p.setAttribute('xmlns', 'http://www.w3.org/1999/xhtml');
+    return new Blob([preface, stickerEl.outerHTML], { type: 'image/svg+xml;charset=utf-8' });
+  });
 }
 
 async function exportStickerAssets() {
