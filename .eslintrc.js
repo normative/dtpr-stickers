@@ -33,7 +33,10 @@ module.exports = {
     'no-use-before-define': ['off'],
     '@typescript-eslint/no-use-before-define': ['error'],
     'no-debugger': ['warn'],
-    'no-unused-vars': ['warn'],
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': ['error'],
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['error'],
   },
   overrides: [
     {
