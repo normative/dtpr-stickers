@@ -2,18 +2,7 @@ import { StickerIcons, StickerThemeVariant } from './constants';
 import { AirtableData, Option } from './types';
 
 export function getSensorPath(sensorId: string) { return `/sensors/${sensorId}`; }
-export function getSensorPrintPath(sensorId: string) { return `/sensors/${sensorId}/print`; }
 export function getPlacePath(placeId: string) { return `/places/${placeId}`; }
-
-export const badgeSizeToStyle = (badgeSize: number, ratio: number = 1.137) => ({
-  height: `${badgeSize * ratio}in`,
-  width: `${badgeSize}in`,
-});
-interface StickerConfig {
-  variant: StickerThemeVariant;
-  icon: StickerIcons;
-  context: string;
-}
 
 export function findStickerThemeVariant(variantFromPath: string) {
   return Object.values(StickerThemeVariant)
@@ -23,6 +12,12 @@ export function findStickerThemeVariant(variantFromPath: string) {
 export function findStickerIcon(iconFromPath: string) {
   return Object.values(StickerIcons)
     .find((enumIcon: string) => enumIcon === iconFromPath);
+}
+
+interface StickerConfig {
+  variant: StickerThemeVariant;
+  icon: StickerIcons;
+  context: string;
 }
 
 export function getStickerConfig(

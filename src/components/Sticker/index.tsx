@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { memo } from 'react';
+import { createStyles, Theme, withStyles } from '@material-ui/core/styles';
 
 import Air from 'components/Svgs/Air';
 import Biometrics from 'components/Svgs/Biometrics';
@@ -85,7 +86,7 @@ const ICONS = {
 const DEFAULT_HEIGHT = 264;
 
 function Sticker({
-  height = DEFAULT_HEIGHT, variant, context, icon, children,
+  height = DEFAULT_HEIGHT, variant, context, icon, children, classes,
 }) {
   const Icon = ICONS[context][icon];
   const width = height * 0.8787;
@@ -97,13 +98,15 @@ function Sticker({
   if (!icon) return <></>;
 
   return (
-    <svg width={width} height={height} viewBox="0 0 232 264" version="1.1" xmlns="http://www.w3.org/2000/svg" data-export-badge>
+    <svg className={classes.root} width={width} height={height} viewBox="0 0 232 264" version="1.1" xmlns="http://www.w3.org/2000/svg" data-export-badge>
       <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
         <polygon id="Star" fill={THEME[variant].hexColor} points="116 264 1.6846467 198 1.6846467 66 116 0 230.315353 66 230.315353 198" />
       </g>
       <Icon fill={THEME[variant].color} transform="translate(4.5 2.5) scale(0.6)" />
       <SvgText
-        color={THEME[variant].color}
+        style={{
+          color: THEME[variant].color,
+        }}
         width={width}
         height={height}
         y={textPosition.y}
@@ -125,4 +128,10 @@ export const icons = {
   }, {}),
 };
 
-export default memo(Sticker);
+const styles = (theme: Theme) => createStyles({
+  root: {
+    margin: theme.spacing(),
+  },
+});
+
+export default withStyles(styles)(memo(Sticker));

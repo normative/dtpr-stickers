@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { memo } from 'react';
 
-function style(props) {
+function composeStyle(props) {
   return {
     fontFamily: 'Google Sans,Roboto,-apple-system',
     fontWeight: 500,
@@ -15,14 +15,14 @@ function style(props) {
 
 interface Props {
   y?: string | number;
-  color: string;
+  style: any;
   children: string;
   width: number;
   height: number;
 }
 
 function SvgText({
-  y, color, children, width, height,
+  y, style, children, width, height,
 }: Props) {
   return (
     <svg
@@ -37,7 +37,7 @@ function SvgText({
         fontWeight={500}
         y={y}
       >
-        <p style={style({ color })}>
+        <p style={composeStyle(style)}>
           {children}
         </p>
       </foreignObject>
