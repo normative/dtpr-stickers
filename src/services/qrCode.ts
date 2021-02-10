@@ -14,7 +14,6 @@ export function getQRCodeSvg(
     background: 'transparent',
     ecl: 'M',
     xmlDeclaration: false,
-    container: 'g',
     join: true,
     ...config,
   });

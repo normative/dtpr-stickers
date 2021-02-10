@@ -1,6 +1,7 @@
 /* eslint-disable react/no-danger */
 import React, { memo, useState } from 'react';
 import { createStyles, Theme, withStyles } from '@material-ui/core/styles';
+import DOMPurify from 'dompurify';
 
 import { getQRCodeSvg } from 'services/qrCode';
 
@@ -28,7 +29,9 @@ function QRCodeSticker({
   };
 
   const qrCodeUrl = `${sensorUrl}?utm_source=307&utm_medium=qr&utm_campaign=qr_scan`;
-  const [QRCodeSvg] = useState(getQRCodeSvg(qrCodeUrl));
+  const [QRCodeSvg] = useState(
+    DOMPurify.sanitize(getQRCodeSvg(qrCodeUrl), { USE_PROFILES: { svg: true } }),
+  );
 
   return (
     <svg className={classes.root} width={width} height={height} viewBox="0 0 232 264" version="1.1" xmlns="http://www.w3.org/2000/svg" data-export-badge>
