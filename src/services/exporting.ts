@@ -5,19 +5,25 @@ import { imagesUrl } from 'common/constants';
 
 const download = (url: string) => fetch(url).then((resp) => resp.blob());
 
+const PREFACE = '<?xml version="1.0" standalone="no"?>\r\n';
+const FONT_STYLE = '<style type="text/css">@import url(https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:bold|Google+Sans:medium|Google+Sans:mediumItalic|Google+Sans:bolditalic|Google+Sans:italic);</style>';
+
 function getIconsBlobs() {
   const stickers = Array.from(document.querySelectorAll('[data-export-icon]'));
-  const preface = '<?xml version="1.0" standalone="no"?>\r\n';
-  return stickers.map((stickerEl) => new Blob([preface, stickerEl.outerHTML], { type: 'image/svg+xml;charset=utf-8' }));
+  return stickers.map((stickerEl) => new Blob([PREFACE, stickerEl.outerHTML], { type: 'image/svg+xml;charset=utf-8' }));
 }
 
 function getBadgesBlobs() {
   const stickers = Array.from(document.querySelectorAll('[data-export-badge]'));
-  const preface = '<?xml version="1.0" standalone="no"?>\r\n';
   return stickers.map((stickerEl) => {
+    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+    defs.innerHTML = FONT_STYLE;
+    stickerEl.insertBefore(defs, stickerEl.firstChild);
+
     const p = stickerEl.querySelector('p');
     p.setAttribute('xmlns', 'http://www.w3.org/1999/xhtml');
-    return new Blob([preface, stickerEl.outerHTML], { type: 'image/svg+xml;charset=utf-8' });
+
+    return new Blob([PREFACE, stickerEl.outerHTML], { type: 'image/svg+xml;charset=utf-8' });
   });
 }
 
@@ -32,8 +38,8 @@ async function exportStickerAssets() {
   });
 
   const iconsBlobs = getIconsBlobs();
-  iconsBlobs.forEach((badgeBlob, i) => {
-    zip.file(`icon-${i}.svg`, badgeBlob);
+  iconsBlobs.forEach((iconBlob, i) => {
+    zip.file(`icon-${i}.svg`, iconBlob);
   });
 
   const badgesBlobs = getBadgesBlobs();
