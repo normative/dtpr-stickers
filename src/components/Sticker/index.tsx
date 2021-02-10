@@ -104,24 +104,26 @@ function Sticker({
 
   const Icon = ICONS[context][icon];
   const width = height * 0.8787;
-  const textPosition = { y: '60%' };
+  const textPosition = { y: '62%' };
 
   return (
-    <svg className={classes.root} width={width} height={height} viewBox="0 0 232 264" version="1.1" xmlns="http://www.w3.org/2000/svg" data-export-badge>
+    <svg className={classes.root} width={width} height={height} viewBox="0 0 232 264" version="1.1" xmlns="http://www.w3.org/2000/svg" data-export-badge={children}>
       <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
         <polygon id="Star" fill={THEME[variant].hexColor} points="116 264 1.6846467 198 1.6846467 66 116 0 230.315353 66 230.315353 198" />
       </g>
-      <Icon fill={THEME[variant].color} transform="translate(4.5 2.5) scale(0.6)" />
-      <SvgText
-        style={{
-          color: THEME[variant].color,
-        }}
-        width={width}
-        height={height}
-        y={textPosition.y}
-      >
-        {children}
-      </SvgText>
+      <svg data-export-icon-text={children} xmlns="http://www.w3.org/2000/svg">
+        <Icon fill={THEME[variant].color} transform="translate(4.5 2.5) scale(0.6)" />
+        <SvgText
+          style={{
+            color: THEME[variant].color,
+          }}
+          width={width}
+          height={height}
+          y={textPosition.y}
+        >
+          {children}
+        </SvgText>
+      </svg>
     </svg>
   );
 }

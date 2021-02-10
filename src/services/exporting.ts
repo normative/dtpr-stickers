@@ -8,22 +8,36 @@ const download = (url: string) => fetch(url).then((resp) => resp.blob());
 const PREFACE = '<?xml version="1.0" standalone="no"?>\r\n';
 const FONT_STYLE = '<style type="text/css">@import url(https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:bold|Google+Sans:medium|Google+Sans:mediumItalic|Google+Sans:bolditalic|Google+Sans:italic);</style>';
 
-function getIconsBlobs() {
-  const stickers = Array.from(document.querySelectorAll('[data-export-icon]'));
-  return stickers.map((stickerEl) => new Blob([PREFACE, stickerEl.outerHTML], { type: 'image/svg+xml;charset=utf-8' }));
+function includeDesignElements(el: HTMLElement) {
+  const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+  defs.innerHTML = FONT_STYLE;
+  el.insertBefore(defs, el.firstChild);
+
+  const p = el.querySelector('p');
+  p.setAttribute('xmlns', 'http://www.w3.org/1999/xhtml');
+}
+
+function getIconsTextBlobs() {
+  const stickers = Array.from(document.querySelectorAll('[data-export-icon-text]'));
+  return stickers.map((stickerEl: HTMLElement) => {
+    includeDesignElements(stickerEl);
+
+    return {
+      blob: new Blob([PREFACE, stickerEl.outerHTML], { type: 'image/svg+xml;charset=utf-8' }),
+      name: stickerEl.dataset.exportIconText.replace(/\s/g, '-'),
+    };
+  });
 }
 
 function getBadgesBlobs() {
   const stickers = Array.from(document.querySelectorAll('[data-export-badge]'));
-  return stickers.map((stickerEl) => {
-    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-    defs.innerHTML = FONT_STYLE;
-    stickerEl.insertBefore(defs, stickerEl.firstChild);
+  return stickers.map((stickerEl: HTMLElement) => {
+    includeDesignElements(stickerEl);
 
-    const p = stickerEl.querySelector('p');
-    p.setAttribute('xmlns', 'http://www.w3.org/1999/xhtml');
-
-    return new Blob([PREFACE, stickerEl.outerHTML], { type: 'image/svg+xml;charset=utf-8' });
+    return {
+      blob: new Blob([PREFACE, stickerEl.outerHTML], { type: 'image/svg+xml;charset=utf-8' }),
+      name: stickerEl.dataset.exportBadge.replace(/\s/g, '-'),
+    };
   });
 }
 
@@ -34,17 +48,17 @@ async function exportStickerAssets() {
   const zip = JsZip();
 
   svgBlobs.forEach((blob, i) => {
-    zip.file(`svg-${i}.svg`, blob);
+    zip.file(`hexagon-${i}.svg`, blob);
   });
 
-  const iconsBlobs = getIconsBlobs();
-  iconsBlobs.forEach((iconBlob, i) => {
-    zip.file(`icon-${i}.svg`, iconBlob);
+  const iconsBlobs = getIconsTextBlobs();
+  iconsBlobs.forEach(({ blob, name }) => {
+    zip.file(`${name}-icon-text.svg`, blob);
   });
 
   const badgesBlobs = getBadgesBlobs();
-  badgesBlobs.forEach((badgeBlob, i) => {
-    zip.file(`badge-${i}.svg`, badgeBlob);
+  badgesBlobs.forEach(({ blob, name }) => {
+    zip.file(`${name}-sticker.svg`, blob);
   });
 
   zip.generateAsync({ type: 'blob' }).then((zipFile) => {
