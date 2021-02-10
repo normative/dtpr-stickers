@@ -5,7 +5,7 @@ function Enforcement({
   fill = '#000000', transform,
 }: SVGProps) {
   return (
-    <svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" data-export-icon>
+    <svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" data-export-icon>
       <defs>
         <polygon id="path-enf-1" points="0.711 0 7.75125 0 7.75125 7.0399 0.711 7.0399" />
         <polygon id="path-enf-3" points="0 0.001 10.9946 0.001 10.9946 2 0 2" />

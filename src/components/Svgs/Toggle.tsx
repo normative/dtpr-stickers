@@ -5,7 +5,7 @@ function Toggle({
   fill = '#000000', transform,
 }: SVGProps) {
   return (
-    <svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" data-export-icon>
+    <svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" data-export-icon>
       <defs>
         <polygon id="path-toggle-1" points="0.0001 0.0002 18 0.0002 18 9 0.0001 9" />
       </defs>

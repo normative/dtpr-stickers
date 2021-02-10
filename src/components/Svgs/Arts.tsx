@@ -5,7 +5,7 @@ function Arts({
   fill = '#000000', transform,
 }: SVGProps) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" version="1.1">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" data-export-icon viewBox="0 0 24 24" version="1.1">
       <defs>
         <polygon id="path-arts-1" points="0 7.23681097e-05 18.8778118 7.23681097e-05 18.8778118 20 0 20" />
       </defs>

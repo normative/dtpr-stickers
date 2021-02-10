@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { memo } from 'react';
 import { createStyles, Theme, withStyles } from '@material-ui/core/styles';
 
@@ -83,19 +82,29 @@ const ICONS = {
   },
 };
 
-const DEFAULT_HEIGHT = 264;
+interface Props {
+  height?: number;
+  variant?: string;
+  context: string;
+  icon: string;
+  children: string;
+  classes: any;
+}
 
 function Sticker({
-  height = DEFAULT_HEIGHT, variant, context, icon, children, classes,
-}) {
+  height, variant, context, icon, children, classes,
+}: Props) {
+  if (!context
+    || !icon
+    || Object.keys(ICONS).indexOf(context) < 0
+    || Object.keys(ICONS[context]).indexOf(icon) < 0
+  ) {
+    return <></>;
+  }
+
   const Icon = ICONS[context][icon];
   const width = height * 0.8787;
-
-  const textPosition = {
-    y: '60%',
-  };
-
-  if (!icon) return <></>;
+  const textPosition = { y: '60%' };
 
   return (
     <svg className={classes.root} width={width} height={height} viewBox="0 0 232 264" version="1.1" xmlns="http://www.w3.org/2000/svg" data-export-badge>
@@ -117,15 +126,9 @@ function Sticker({
   );
 }
 
-export const icons = {
-  tech: Object.keys(ICONS.tech).reduce((res, key) => {
-    res[key.toUpperCase()] = key;
-    return res;
-  }, {}),
-  purpose: Object.keys(ICONS.purpose).reduce((res, key) => {
-    res[key.toUpperCase()] = key;
-    return res;
-  }, {}),
+Sticker.defaultProps = {
+  height: 264,
+  variant: 'white',
 };
 
 const styles = (theme: Theme) => createStyles({

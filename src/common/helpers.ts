@@ -1,22 +1,12 @@
-import { StickerIcons, StickerThemeVariant } from './constants';
+import { StickerThemeVariant } from './constants';
 import { AirtableData, Option } from './types';
 
 export function getSensorPath(sensorId: string) { return `/sensors/${sensorId}`; }
 export function getPlacePath(placeId: string) { return `/places/${placeId}`; }
 
-export function findStickerThemeVariant(variantFromPath: string) {
-  return Object.values(StickerThemeVariant)
-    .find((enumVariant: string) => enumVariant === variantFromPath);
-}
-
-export function findStickerIcon(iconFromPath: string) {
-  return Object.values(StickerIcons)
-    .find((enumIcon: string) => enumIcon === iconFromPath);
-}
-
 interface StickerConfig {
-  variant: StickerThemeVariant;
-  icon: StickerIcons;
+  variant?: StickerThemeVariant;
+  icon: string;
   context: string;
 }
 
@@ -29,9 +19,9 @@ export function getStickerConfig(
   }
   const { iconShortname } = config;
   const iconPath = iconShortname.split('/');
-  const icon = findStickerIcon(iconPath[iconPath.length - 1]);
-  if (!icon) return null;
+  const icon = iconPath.pop();
+  const context = iconPath.shift();
+  const variant = iconPath.shift();
 
-  const variant = findStickerThemeVariant(iconPath[iconPath.length - 2]);
-  return { variant, context: iconPath[0], icon };
+  return { variant, context, icon };
 }

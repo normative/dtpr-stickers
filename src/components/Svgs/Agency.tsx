@@ -5,7 +5,7 @@ function Agency({
   fill = '#000000', transform,
 }: SVGProps) {
   return (
-    <svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" data-export-icon>
+    <svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" data-export-icon>
       <defs>
         <polygon id="path-agency-1" points="0.0414 0 4.9999 0 4.9999 4.9583 0.0414 4.9583" />
         <polygon id="path-agency-3" points="0 0.1274 16.8729 0.1274 16.8729 17 0 17" />
