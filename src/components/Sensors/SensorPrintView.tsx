@@ -9,29 +9,26 @@ import {
 } from 'libs/mui';
 import { SensorStateType } from 'reducers/sensor';
 import { AirtableStateType } from 'reducers/airtable';
-import { badgeSizeToStyle, getIconConfig } from 'common/helpers';
-import IconBadge from './IconBadge';
-import HexBadge from './HexBadge';
+import { getStickerConfig } from 'common/helpers';
+import Sticker from 'components/Sticker';
+import QRCodeSticker from 'components/Sticker/QRCodeSticker';
+import LogoSticker from 'components/Sticker/LogoSticker';
 
 interface Props {
   sensor: SensorStateType;
   airtable: AirtableStateType;
   sensorUrl?: string;
-  qrCodeSrc?: string;
   classes: any;
   onDownloadClick: any;
   firstPurpose: string;
   dentifTechTypes: string[];
 }
 
-const BADGE_SIZE = 2;
-
 function SensorPrintView({
   classes,
   airtable,
   sensor,
   sensorUrl,
-  qrCodeSrc,
   onDownloadClick,
   firstPurpose,
   dentifTechTypes,
@@ -66,40 +63,35 @@ function SensorPrintView({
           {sensor.data && airtable.data && (
           <div className={classes.badgeContainer} id="test-2" data-div-as-png>
             {sensor.data.logoSrc && sensor.data.accountable && (
-              <HexBadge
-                style={{
-                  wrapper: badgeSizeToStyle(BADGE_SIZE / 2.5, 1),
-                }}
-                src={sensor.data.logoSrc}
-                badgeSize={BADGE_SIZE}
+              <LogoSticker
+                height={218}
+                logoUrl={sensor.data.logoSrc}
               >
                 {sensor.data.accountable}
-              </HexBadge>
+              </LogoSticker>
             )}
-            {qrCodeSrc && (
-              <HexBadge
-                style={{
-                  wrapper: badgeSizeToStyle(BADGE_SIZE / 2, 1),
-                  typography: { fontSize: '9px' },
-                }}
-                src={qrCodeSrc}
-                badgeSize={BADGE_SIZE}
-              >
-                {sensorUrl}
-              </HexBadge>
+            {sensorUrl && (
+              <QRCodeSticker
+                height={218}
+                sensorUrl={sensorUrl}
+              />
             )}
             {dentifTechTypes.map((techType) => (
-              <IconBadge
+              <Sticker
                 key={techType}
-                badgeSize={BADGE_SIZE}
-                {...getIconConfig(airtable.data, 'techType', techType)}
-              />
+                height={218}
+                {...getStickerConfig(airtable.data, 'techType', techType)}
+              >
+                {techType}
+              </Sticker>
             ))}
             {firstPurpose && (
-              <IconBadge
-                badgeSize={BADGE_SIZE}
-                {...getIconConfig(airtable.data, 'purpose', firstPurpose)}
-              />
+              <Sticker
+                height={218}
+                {...getStickerConfig(airtable.data, 'purpose', firstPurpose)}
+              >
+                {firstPurpose}
+              </Sticker>
             )}
           </div>
           )}
@@ -114,7 +106,6 @@ function SensorPrintView({
 
 SensorPrintView.defaultProps = {
   sensorUrl: '',
-  qrCodeSrc: '',
 };
 
 const styles = (theme: Theme) => createStyles({

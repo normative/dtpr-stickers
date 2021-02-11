@@ -1,84 +1,64 @@
 import JsZip from 'jszip';
 import { saveAs } from 'file-saver';
-import html2canvas from 'html2canvas';
 
 import { imagesUrl } from 'common/constants';
-import { getIconConfig } from 'common/helpers';
 
 const download = (url: string) => fetch(url).then((resp) => resp.blob());
 
-async function convertImgToBlob(img: HTMLImageElement) {
-  const canvas = document.createElement('canvas');
-  canvas.width = img.clientWidth * 2;
-  canvas.height = img.clientHeight * 2;
+const PREFACE = '<?xml version="1.0" standalone="no"?>\r\n';
+const FONT_STYLE = '<style type="text/css">@import url(https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:bold|Google+Sans:medium|Google+Sans:mediumItalic|Google+Sans:bolditalic|Google+Sans:italic);</style>';
 
-  const context = canvas.getContext('2d');
-  context.drawImage(img, 0, 0);
+function includeDesignElements(el: HTMLElement) {
+  const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+  defs.innerHTML = FONT_STYLE;
+  el.insertBefore(defs, el.firstChild);
 
-  const blobImg = await new Promise((resolve) => {
-    canvas.toBlob((blob) => {
-      resolve(blob);
-    }, 'image/png');
-  });
-
-  return blobImg as Blob;
+  const p = el.querySelector('p');
+  p.setAttribute('xmlns', 'http://www.w3.org/1999/xhtml');
 }
 
-async function convertDivToBlob(element: HTMLElement) {
-  const canvas = document.createElement('canvas');
-  canvas.width = element.clientWidth;
-  canvas.height = element.clientHeight;
+function getIconsTextBlobs() {
+  const stickers = Array.from(document.querySelectorAll('[data-export-icon-text]'));
+  return stickers.map((stickerEl: HTMLElement) => {
+    includeDesignElements(stickerEl);
 
-  const divCanvas = await html2canvas(element, {
-    allowTaint: true,
-    backgroundColor: 'transparent',
-    canvas,
-    height: element.clientHeight,
-    width: element.clientWidth,
-    scrollY: -window.scrollY,
-    scale: 1,
+    return {
+      blob: new Blob([PREFACE, stickerEl.outerHTML], { type: 'image/svg+xml;charset=utf-8' }),
+      name: stickerEl.dataset.exportIconText.replace(/\s/g, '-'),
+    };
   });
-
-  const blobDiv = await new Promise((resolve) => {
-    divCanvas.toBlob((blob) => {
-      resolve(blob);
-    }, 'image/png');
-  });
-
-  return blobDiv as Blob;
 }
 
-async function exportStickerAssets(airtable, dentifTechTypes: string[], firstPurpose: string) {
-  // Hexagons svg url
-  let urls = Object.keys(imagesUrl).map((key) => imagesUrl[key]);
-  // Tech Type svg urls
-  if (dentifTechTypes.length) urls = urls.concat(dentifTechTypes.map((techType) => getIconConfig(airtable, 'techType', techType)?.iconSrc));
-  // First Purpose svg url
-  if (firstPurpose) urls = urls.concat(getIconConfig(airtable, 'purpose', firstPurpose)?.iconSrc);
+function getBadgesBlobs() {
+  const stickers = Array.from(document.querySelectorAll('[data-export-badge]'));
+  return stickers.map((stickerEl: HTMLElement) => {
+    includeDesignElements(stickerEl);
+
+    return {
+      blob: new Blob([PREFACE, stickerEl.outerHTML], { type: 'image/svg+xml;charset=utf-8' }),
+      name: stickerEl.dataset.exportBadge.replace(/\s/g, '-'),
+    };
+  });
+}
+
+async function exportStickerAssets() {
+  const urls = Object.keys(imagesUrl).map((key) => imagesUrl[key]);
 
   const svgBlobs = urls.map((url) => download(url));
   const zip = JsZip();
 
   svgBlobs.forEach((blob, i) => {
-    zip.file(`svg-${i}.svg`, blob);
+    zip.file(`hexagon-${i}.svg`, blob);
   });
 
-  const imgs = await Promise.all(
-    Array.from(document.querySelectorAll('[data-img-as-png]'))
-      .map((img: HTMLImageElement) => convertImgToBlob(img)),
-  );
-
-  imgs.forEach((blob, i) => {
-    zip.file(`images-${i}.png`, blob);
+  const iconsBlobs = getIconsTextBlobs();
+  iconsBlobs.forEach(({ blob, name }) => {
+    zip.file(`${name}-icon-text.svg`, blob);
   });
 
-  const divs = await Promise.all(
-    Array.from(document.querySelectorAll('[data-div-as-png]'))
-      .map((div: HTMLElement) => convertDivToBlob(div)),
-  );
-
-  divs.forEach((blob, i) => {
-    zip.file(`divs-${i}.png`, blob);
+  const badgesBlobs = getBadgesBlobs();
+  badgesBlobs.forEach(({ blob, name }) => {
+    zip.file(`${name}-sticker.svg`, blob);
   });
 
   zip.generateAsync({ type: 'blob' }).then((zipFile) => {
