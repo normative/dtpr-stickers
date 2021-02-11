@@ -27,7 +27,7 @@ export const sensorInitialState = {
 };
 
 interface SensorPayloadType {
-  sensor?: SensorData | {};
+  sensor?: SensorData;
   error?: Error;
 }
 

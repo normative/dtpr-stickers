@@ -7,7 +7,7 @@ export function fetchAirtableRequested(): AirtableActionType {
 }
 
 export const FETCH_AIRTABLE_SUCCESSED = 'FETCH_AIRTABLE_SUCCESSED';
-export function fetchAirtableSuccessed(airtable): AirtableActionType {
+export function fetchAirtableSuccessed(airtable: AirtableData): AirtableActionType {
   return ({ type: FETCH_AIRTABLE_SUCCESSED, payload: { airtable } });
 }
 
@@ -68,7 +68,7 @@ function airtableReducer(state, { type, payload }: AirtableActionType) {
       return {
         ...state,
         isFetching: false,
-        data: [],
+        data: null,
         error: payload.error,
         didInvalidate: true,
       };

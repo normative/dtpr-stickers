@@ -64,3 +64,15 @@ export interface AirtableData {
   storage: Option[];
   accountable: Option[];
 }
+
+export interface IconConfig {
+  hexSrc: string;
+  iconSrc: string;
+  fontColor: string;
+  iconName: string;
+}
+
+export interface SVGProps {
+  transform: string,
+  fill: string,
+}

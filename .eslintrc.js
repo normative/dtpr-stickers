@@ -15,6 +15,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
+  ignorePatterns: ['*.test.ts'],
   plugins: [
     'react',
     '@typescript-eslint',
@@ -32,6 +33,10 @@ module.exports = {
     'no-use-before-define': ['off'],
     '@typescript-eslint/no-use-before-define': ['error'],
     'no-debugger': ['warn'],
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': ['error'],
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['warn'],
   },
   overrides: [
     {

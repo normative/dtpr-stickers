@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactGA from 'react-ga';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { blue, pink, common } from '@material-ui/core/colors';
+import { pink, common } from '@material-ui/core/colors';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {
   BrowserRouter as Router,
@@ -23,7 +23,12 @@ ReactGA.set({ anonymizeIp: true });
 
 const theme = createMuiTheme({
   palette: {
-    primary: blue,
+    primary: {
+      // light: will be calculated from palette.primary.main,
+      main: '#001B31',
+      // dark: will be calculated from palette.primary.main,
+      contrastText: 'white',
+    },
     secondary: pink,
     background: {
       default: common.white,

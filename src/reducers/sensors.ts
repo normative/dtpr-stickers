@@ -59,7 +59,7 @@ function sensorsReducer(state, { type, payload }: SensorsActionType) {
       return {
         ...state,
         isFetching: false,
-        data: [],
+        data: null,
         error: payload.error,
         didInvalidate: true,
       };
