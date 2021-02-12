@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { useContext, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 
