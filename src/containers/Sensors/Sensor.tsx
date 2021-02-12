@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+/* eslint-disable react/jsx-props-no-spreading */
+import React, { useContext, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { PlaceStateType } from 'reducers/place';
-import { AirtableStateType } from 'reducers/airtable';
 
 import { getSensor } from 'sideEffects/firebase';
 import sensorReducer, {
@@ -19,6 +19,8 @@ import { AirtableContext } from 'context/airtable';
 import { PlaceContext } from 'context/place';
 
 import SensorView from 'components/Sensors/SensorView';
+import { getAirtableSensorsGroupData } from 'selectors/sensor';
+import { sensorsGroupNames, sensorsGroupLabels } from 'common/constants';
 
 function Sensor() {
   const [sensor, sensorActions] = useReducerState(
@@ -43,11 +45,32 @@ function Sensor() {
     }
   }, [sensor.data]);
 
+  const sensorsGroup = useMemo(() => Object
+    .values(sensorsGroupNames)
+    .map(
+      (sensorGroup: string) => ({
+        sensorGroup,
+        label: sensorsGroupLabels[sensorGroup],
+        options: getAirtableSensorsGroupData(
+          sensorGroup, sensorId, sensor.data?.[sensorGroup], airtable.data,
+        ),
+      }),
+    ), [sensorId, sensor.data, airtable.data]);
+
+  const techType = sensorsGroup.find(
+    ({ sensorGroup }) => sensorGroup === sensorsGroupNames.TECH_TYPE,
+  );
+  const purpose = sensorsGroup.find(
+    ({ sensorGroup }) => sensorGroup === sensorsGroupNames.PURPOSE,
+  );
+
   return (
     <SensorView
       place={place as PlaceStateType}
-      airtable={airtable as AirtableStateType}
       sensor={sensor as SensorStateType}
+      techType={techType}
+      purpose={purpose}
+      sensorsGroup={sensorsGroup}
     />
   );
 }

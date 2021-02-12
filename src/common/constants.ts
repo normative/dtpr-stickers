@@ -7,6 +7,7 @@ export enum StickerThemeVariant {
 
 export enum sessionKeys {
   AIRTABLE = 'airtableData',
+  DATASET = 'dataset',
 }
 
 export enum imagesUrl {
@@ -15,4 +16,23 @@ export enum imagesUrl {
   YELLOW_HEX_URL = '/images/hexes/yellow.svg',
   BLUE_HEX_URL = '/images/hexes/blue.svg',
   BLACK_HEX_URL = '/images/hexes/black.svg',
+}
+
+export enum sensorsGroupNames {
+  PURPOSE = 'purpose',
+  TECH_TYPE = 'techType',
+  DATA_TYPE = 'dataType',
+  DATA_PROCESS = 'dataProcess',
+  ACCESS = 'access',
+  STORAGE = 'storage',
+}
+
+export enum sensorsGroupLabels {
+  accountability = 'Accountability',
+  purpose = 'Purpose',
+  techType = 'Technology Type',
+  dataType = 'Data Type',
+  dataProcess = 'Data Process',
+  access = 'Access',
+  storage = 'Storage',
 }

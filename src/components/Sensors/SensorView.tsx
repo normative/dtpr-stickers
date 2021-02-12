@@ -1,91 +1,68 @@
 import React from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
+
 import {
-  Typography, Divider, Button, LinearProgress, Toolbar, ArrowBackIcon,
+  Typography, Divider, LinearProgress,
 } from 'libs/mui';
+
 import { Option } from 'common/types';
+import { sensorsGroupLabels } from 'common/constants';
 
 import { PlaceStateType } from 'reducers/place';
 import { SensorStateType } from 'reducers/sensor';
-import { AirtableStateType } from 'reducers/airtable';
 
-import { Link } from 'react-router-dom';
-import { getPlacePath } from 'common/helpers';
 import FeedbackFooter from '../FeedbackFooter';
 import Accordian from './Accordian';
+import Badge from './Badge';
 
+interface SensorsGroup {
+  sensorGroup: string;
+  label: string;
+  options: Option[];
+}
 interface Props {
   place: PlaceStateType;
   sensor: SensorStateType;
-  airtable: AirtableStateType;
+  sensorsGroup: SensorsGroup[];
+  techType: SensorsGroup;
+  purpose: SensorsGroup;
   classes: any;
 }
 
 function SensorView({
-  classes, airtable, place, sensor,
+  classes,
+  place,
+  sensor,
+  sensorsGroup,
+  techType,
+  purpose,
 }: Props) {
-  const isLoading = sensor.isFetching || airtable.isFetching;
+  const isLoading = sensor.isFetching;
 
   if (isLoading) return <LinearProgress color="secondary" />;
   if (!sensor.data) return <Typography>Hmm can`t find that sensor :/</Typography>;
 
   const {
     headline,
-    description,
+    description: sensorDescription,
     accountable,
     accountableDescription,
-    purpose,
-    techType,
-    dataType,
-    dataProcess,
-    access,
-    storage,
-    email,
-    logoSrc,
     sensorImageSrc,
+    email,
   } = sensor.data;
 
-  let purposeBadgeOption: Option | undefined;
-  let techTypeBadgeOption: Option | undefined;
-  let accountableBadgeOption: Option | undefined;
-
-  if (airtable.data) {
-    purposeBadgeOption = (purpose
-        && purpose[0]
-        && airtable.data.purpose.find((option) => option.name === purpose[0]))
-      || undefined;
-    techTypeBadgeOption = (techType
-        && techType[0]
-        && airtable.data.techType.find((option) => option.name === techType[0]))
-      || undefined;
-    accountableBadgeOption = (accountable && airtable.data.accountable[0]) || undefined;
-  }
-
   // const hasfooter = phone || chat || email || onsiteStaff;
+  const accountableOption = accountable ? {
+    name: accountable,
+    iconShortname: 'accountable/org',
+    description: accountableDescription,
+  } : null;
+
   return (
     <div className={classes.root}>
-      <Toolbar className={classes.toolbar}>
-        {place.data && (
-          <Link
-            to={getPlacePath(sensor.data.placeId)}
-            style={{ textDecoration: 'none' }}
-          >
-            <Button
-              className={classes.backButton}
-              color="primary"
-              variant="outlined"
-              size="small"
-            >
-              <ArrowBackIcon className={classes.backButtonIcon} fontSize="small" />
-              <div className={classes.backButtonText}>{place.data.name}</div>
-            </Button>
-          </Link>
-        )}
-      </Toolbar>
       <div className={classes.header}>
         {headline && (
           <Typography
-            gutterBottom
             variant="h6"
             align="center"
             style={{ wordBreak: 'break-word', fontWeight: 'bold' }}
@@ -96,43 +73,9 @@ function SensorView({
       </div>
       <Divider variant="fullWidth" />
       <div className={classes.summaryWrapper}>
-        {purposeBadgeOption && (
-          <div className={classes.summaryCell}>
-            <img
-              className={classes.summaryBadge}
-              src={`/images/${purposeBadgeOption.iconShortname}.svg`}
-              alt="purpose badge icon"
-            />
-            <Typography variant="subtitle2">
-              {purposeBadgeOption.name}
-            </Typography>
-          </div>
-        )}
-        {techTypeBadgeOption && (
-          <div className={classes.summaryCell}>
-            <img
-              className={classes.summaryBadge}
-              src={`/images/${techTypeBadgeOption.iconShortname}.svg`}
-              alt="tech badge icon"
-            />
-            <Typography variant="subtitle2">
-              {techTypeBadgeOption.name}
-            </Typography>
-          </div>
-        )}
-        {accountableBadgeOption && (
-          <div className={classes.summaryCell}>
-            <img
-              className={classes.summaryBadge}
-              src={
-                logoSrc
-                || `/images/${accountableBadgeOption.iconShortname}.svg`
-              }
-              alt="accountable badge icon"
-            />
-            <Typography variant="subtitle2">{accountable}</Typography>
-          </div>
-        )}
+        <Badge option={purpose?.options[0]} />
+        <Badge option={techType?.options[0]} />
+        <Badge option={accountableOption} />
       </div>
       <Divider variant="fullWidth" />
       <div className={classes.content}>
@@ -143,116 +86,31 @@ function SensorView({
             alt="sensor icon"
           />
         )}
-        {description && <Typography paragraph>{description}</Typography>}
+        {sensorDescription && <Typography paragraph>{sensorDescription}</Typography>}
       </div>
-      {airtable.data && (
-        <div>
-          {accountableBadgeOption && accountableDescription && (
+      <div>
+        {/* On top accountability sensor info */}
+        {accountableOption?.description && (
+        <Accordian
+          icon="/images/accountable/org.svg"
+          title={accountableOption.name}
+          label={sensorsGroupLabels.accountability}
+          body={accountableOption.description}
+        />
+        )}
+        {/* Followed by the rest of sensor groups */}
+        {sensorsGroup.map(({ label, options }) => options.map(
+          ({ name, description, iconShortname }) => (
             <Accordian
-              icon={`/images/${accountableBadgeOption.iconShortname}.svg`}
-              title={accountable}
-              label="Accountability"
-              body={accountableDescription}
+              key={name}
+              icon={`/images/${iconShortname}.svg`}
+              title={name}
+              label={label}
+              body={description}
             />
-          )}
-          {purpose
-            && purpose.map((name) => {
-              const option = airtable.data.purpose.find(
-                (airtableOption) => airtableOption.name === name,
-              );
-              if (!option) return null;
-              return (
-                <Accordian
-                  key={option.name}
-                  icon={`/images/${option.iconShortname}.svg`}
-                  title={option.name}
-                  label="Purpose"
-                  body={option.description}
-                />
-              );
-            })}
-          {techType
-            && techType.map((name) => {
-              const option = airtable.data.techType.find(
-                (airtableOption) => airtableOption.name === name,
-              );
-              if (!option) return null;
-              return (
-                <Accordian
-                  key={option.name}
-                  icon={`/images/${option.iconShortname}.svg`}
-                  title={option.name}
-                  label="Technology Type"
-                  body={option.description}
-                />
-              );
-            })}
-          {dataType
-            && dataType.map((name) => {
-              const option = airtable.data.dataType.find(
-                (airtableOption) => airtableOption.name === name,
-              );
-              if (!option) return null;
-              return (
-                <Accordian
-                  key={option.name}
-                  icon={`/images/${option.iconShortname}.svg`}
-                  title={option.name}
-                  label="Data Type"
-                  body={option.description}
-                />
-              );
-            })}
-          {dataProcess
-            && dataProcess.map((name) => {
-              const option = airtable.data.dataType.find(
-                (airtableOption) => airtableOption.name === name,
-              );
-              if (!option) return null;
-              return (
-                <Accordian
-                  key={option.name}
-                  icon={`/images/${option.iconShortname}.svg`}
-                  title={option.name}
-                  label="Data Processing"
-                  body={option.description}
-                />
-              );
-            })}
-          {access
-            && access.map((name) => {
-              const option = airtable.data.access.find(
-                (airtableOption) => airtableOption.name === name,
-              );
-              if (!option) return null;
-              return (
-                <Accordian
-                  key={option.name}
-                  icon={`/images/${option.iconShortname}.svg`}
-                  title={option.name}
-                  label="Access"
-                  body={option.description}
-                />
-              );
-            })}
-          {storage
-            && storage.map((name) => {
-              const option = airtable.data.storage.find(
-                (airtableOption) => airtableOption.name === name,
-              );
-              if (!option) return null;
-              return (
-                <Accordian
-                  key={option.name}
-                  icon={`/images/${option.iconShortname}.svg`}
-                  title={option.name}
-                  label="Storage"
-                  body={option.description}
-                />
-              );
-            })}
-        </div>
-      )}
+          ),
+        ))}
+      </div>
       <FeedbackFooter
         placeName={place.data ? place.data.name : 'Loading...'}
         technology={sensor.data.name}
@@ -301,7 +159,7 @@ const styles = (theme: Theme) => createStyles({
     marginBottom: '-2px',
   },
   header: {
-    padding: theme.spacing(3),
+    padding: theme.spacing(2),
     textAlign: 'center',
   },
   content: {
