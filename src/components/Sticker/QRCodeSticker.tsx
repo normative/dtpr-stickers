@@ -35,9 +35,11 @@ function QRCodeSticker({
 
   return (
     <svg className={classes.root} width={width} height={height} viewBox="0 0 232 264" version="1.1" xmlns="http://www.w3.org/2000/svg" data-export-badge="qrcode">
-      <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-        <polygon id="Star" fill={THEME.hexColor} points="116 264 1.6846467 198 1.6846467 66 116 0 230.315353 66 230.315353 198" />
-      </g>
+      <svg data-export-hexagon="hexagon-qrcode" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+          <polygon id="Star" fill={THEME.hexColor} points="116 264 1.6846467 198 1.6846467 66 116 0 230.315353 66 230.315353 198" />
+        </g>
+      </svg>
       <svg viewBox="0 0 256 256">
         <g dangerouslySetInnerHTML={{ __html: QRCodeSvg }} transform="translate(65.0 35.0) scale(0.5)" />
       </svg>

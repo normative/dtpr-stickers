@@ -13,6 +13,7 @@ import { getStickerConfig } from 'common/helpers';
 import Sticker from 'components/Sticker';
 import QRCodeSticker from 'components/Sticker/QRCodeSticker';
 import LogoSticker from 'components/Sticker/LogoSticker';
+import { StickerThemeVariant } from 'common/constants';
 
 interface Props {
   sensor: SensorStateType;
@@ -88,7 +89,7 @@ function SensorPrintView({
             {firstPurpose && (
               <Sticker
                 height={218}
-                {...getStickerConfig(airtable.data, 'purpose', firstPurpose)}
+                {...getStickerConfig(airtable.data, 'purpose', firstPurpose, StickerThemeVariant.BLACK)}
               >
                 {firstPurpose}
               </Sticker>
