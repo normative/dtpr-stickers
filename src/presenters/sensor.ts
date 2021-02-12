@@ -11,7 +11,7 @@ export function prepareSensorsGroups(
     .map(
       (sensorGroup: string) => ({
         sensorGroup,
-        label: sensorsGroupLabels[sensorGroup],
+        label: sensorsGroupLabels[sensorGroup.toUpperCase()],
         options: getAirtableSensorsGroupData(
           sensorGroup, sensorId, sensorData?.[sensorGroup], airtableData,
         ),
