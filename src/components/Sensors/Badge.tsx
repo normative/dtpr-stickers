@@ -4,7 +4,7 @@ import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 
 interface Props {
-  option?: Option;
+  option: Option | undefined;
   classes: any;
 }
 
@@ -24,10 +24,6 @@ function Badge({ option, classes }: Props) {
     </div>
   );
 }
-
-Badge.defaultProps = {
-  option: undefined,
-};
 
 const styles = (theme: Theme) => createStyles({
   root: {
