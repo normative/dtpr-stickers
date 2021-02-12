@@ -16,3 +16,22 @@ export enum imagesUrl {
   BLUE_HEX_URL = '/images/hexes/blue.svg',
   BLACK_HEX_URL = '/images/hexes/black.svg',
 }
+
+export enum sensorsGroupNames {
+  PURPOSE = 'purpose',
+  TECH_TYPE = 'techType',
+  DATA_TYPE = 'dataType',
+  DATA_PROCESS = 'dataProcess',
+  ACCESS = 'access',
+  STORAGE = 'storage',
+}
+
+export enum sensorsGroupLabels {
+  ACCOUNTABILITY = 'Accountability',
+  PURPOSE = 'Purpose',
+  TECH_TYPE = 'Technology Type',
+  DATA_TYPE = 'Data Type',
+  DATA_PROCESS = 'Data Process',
+  ACCESS = 'Access',
+  STORAGE = 'Storage',
+}
