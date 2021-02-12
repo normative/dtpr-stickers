@@ -7,9 +7,9 @@ export function getAirtableSensorsGroupData(
   if (!sensorId || !sensorsGroup || !sensorsGroup.length || !airtableData) return [];
 
   const sessionKey = `${sensorId}-${sensorsGroupName}`;
-  // const datasetFromLS = sessionStorage.getItem(sessionKey);
+  const datasetFromLS = sessionStorage.getItem(sessionKey);
 
-  // if (datasetFromLS) return JSON.parse(datasetFromLS);
+  if (datasetFromLS) return JSON.parse(datasetFromLS);
 
   const dataset = sensorsGroup
     .map((name) => airtableData[sensorsGroupName]?.find(
@@ -17,9 +17,9 @@ export function getAirtableSensorsGroupData(
     ))
     .filter((item) => item);
 
-  // if (dataset?.length) {
-  //   sessionStorage.setItem(sessionKey, JSON.stringify(dataset));
-  // }
+  if (dataset?.length) {
+    sessionStorage.setItem(sessionKey, JSON.stringify(dataset));
+  }
 
   return dataset;
 }

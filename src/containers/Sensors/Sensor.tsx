@@ -16,9 +16,9 @@ import { AirtableContext } from 'context/airtable';
 import { PlaceContext } from 'context/place';
 
 import SensorView from 'components/Sensors/SensorView';
-import { getAirtableSensorsGroupData } from 'selectors/sensor';
-import { sensorsGroupNames, sensorsGroupLabels } from 'common/constants';
+import { sensorsGroupNames } from 'common/constants';
 import { LinearProgress } from '@material-ui/core';
+import { prepareSensorsGroups } from 'presenters/sensor';
 
 function Sensor() {
   const [sensor, sensorActions] = useReducerState(
@@ -45,17 +45,7 @@ function Sensor() {
 
   const sensorsGroup = useMemo(() => {
     if (!sensor.data || !airtable.data) return [];
-    return Object
-      .values(sensorsGroupNames)
-      .map(
-        (sensorGroup: string) => ({
-          sensorGroup,
-          label: sensorsGroupLabels[sensorGroup],
-          options: getAirtableSensorsGroupData(
-            sensorGroup, sensorId, sensor.data?.[sensorGroup], airtable.data,
-          ),
-        }),
-      );
+    return prepareSensorsGroups(sensorId, sensor.data, airtable.data);
   }, [sensorId, sensor.data, airtable.data]);
 
   const techType = useMemo(() => sensorsGroup.find(

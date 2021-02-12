@@ -7,7 +7,6 @@ export enum StickerThemeVariant {
 
 export enum sessionKeys {
   AIRTABLE = 'airtableData',
-  DATASET = 'dataset',
 }
 
 export enum imagesUrl {
