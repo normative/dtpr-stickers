@@ -25,13 +25,15 @@ export enum sensorsGroupNames {
   ACCESS = 'access',
   STORAGE = 'storage',
 }
-
+/**
+ * Map sensor group names to labels
+ */
 export enum sensorsGroupLabels {
-  ACCOUNTABILITY = 'Accountability',
-  PURPOSE = 'Purpose',
-  TECH_TYPE = 'Technology Type',
-  DATA_TYPE = 'Data Type',
-  DATA_PROCESS = 'Data Process',
-  ACCESS = 'Access',
-  STORAGE = 'Storage',
+  accountability = 'Accountability',
+  purpose = 'Purpose',
+  techType = 'Technology Type',
+  dataType = 'Data Type',
+  dataProcess = 'Data Process',
+  access = 'Access',
+  storage = 'Storage',
 }

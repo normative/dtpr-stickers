@@ -74,7 +74,7 @@ function SensorView({
         <Accordian
           icon="/images/accountable/org.svg"
           title={accountableOption.name}
-          label={sensorsGroupLabels.ACCOUNTABILITY}
+          label={sensorsGroupLabels.accountability}
           body={accountableOption.description}
         />
         )}
