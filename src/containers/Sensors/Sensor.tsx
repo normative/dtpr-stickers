@@ -2,15 +2,12 @@
 import React, { useContext, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { PlaceStateType } from 'reducers/place';
-
 import { getSensor } from 'sideEffects/firebase';
 import sensorReducer, {
   sensorInitialState,
   fetchSensorRequested,
   fetchSensorSuccessed,
   fetchSensorFailed,
-  SensorStateType,
 } from 'reducers/sensor';
 
 import useReducerState from 'hooks/useReducerState';
@@ -21,6 +18,7 @@ import { PlaceContext } from 'context/place';
 import SensorView from 'components/Sensors/SensorView';
 import { getAirtableSensorsGroupData } from 'selectors/sensor';
 import { sensorsGroupNames, sensorsGroupLabels } from 'common/constants';
+import { LinearProgress } from '@material-ui/core';
 
 function Sensor() {
   const [sensor, sensorActions] = useReducerState(
@@ -45,29 +43,37 @@ function Sensor() {
     }
   }, [sensor.data]);
 
-  const sensorsGroup = useMemo(() => Object
-    .values(sensorsGroupNames)
-    .map(
-      (sensorGroup: string) => ({
-        sensorGroup,
-        label: sensorsGroupLabels[sensorGroup],
-        options: getAirtableSensorsGroupData(
-          sensorGroup, sensorId, sensor.data?.[sensorGroup], airtable.data,
-        ),
-      }),
-    ), [sensorId, sensor.data, airtable.data]);
+  const sensorsGroup = useMemo(() => {
+    if (!sensor.data || !airtable.data) return [];
+    return Object
+      .values(sensorsGroupNames)
+      .map(
+        (sensorGroup: string) => ({
+          sensorGroup,
+          label: sensorsGroupLabels[sensorGroup],
+          options: getAirtableSensorsGroupData(
+            sensorGroup, sensorId, sensor.data?.[sensorGroup], airtable.data,
+          ),
+        }),
+      );
+  }, [sensorId, sensor.data, airtable.data]);
 
-  const techType = sensorsGroup.find(
+  const techType = useMemo(() => sensorsGroup.find(
     ({ sensorGroup }) => sensorGroup === sensorsGroupNames.TECH_TYPE,
-  );
-  const purpose = sensorsGroup.find(
+  ), [sensorsGroup]);
+
+  const purpose = useMemo(() => sensorsGroup.find(
     ({ sensorGroup }) => sensorGroup === sensorsGroupNames.PURPOSE,
-  );
+  ), [sensorsGroup]);
+
+  if (!sensor.data || sensor.isFetching || !airtable.data || airtable.isFetching) {
+    return <LinearProgress color="secondary" />;
+  }
 
   return (
     <SensorView
-      place={place as PlaceStateType}
-      sensor={sensor as SensorStateType}
+      place={place.data}
+      sensor={sensor.data}
       techType={techType}
       purpose={purpose}
       sensorsGroup={sensorsGroup}

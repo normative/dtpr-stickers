@@ -1,15 +1,10 @@
 import React from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 
-import {
-  Typography, Divider, LinearProgress,
-} from 'libs/mui';
+import { Typography, Divider } from 'libs/mui';
 
-import { Option } from 'common/types';
+import { Option, PlaceData, SensorData } from 'common/types';
 import { sensorsGroupLabels } from 'common/constants';
-
-import { PlaceStateType } from 'reducers/place';
-import { SensorStateType } from 'reducers/sensor';
 
 import FeedbackFooter from '../FeedbackFooter';
 import Accordian from './Accordian';
@@ -21,8 +16,8 @@ interface SensorsGroup {
   options: Option[];
 }
 interface Props {
-  place: PlaceStateType;
-  sensor: SensorStateType;
+  place: PlaceData;
+  sensor: SensorData;
   sensorsGroup: SensorsGroup[];
   techType: SensorsGroup;
   purpose: SensorsGroup;
@@ -37,37 +32,22 @@ function SensorView({
   techType,
   purpose,
 }: Props) {
-  const isLoading = sensor.isFetching;
-
-  if (isLoading) return <LinearProgress color="secondary" />;
-  if (!sensor.data) return <Typography>Hmm can`t find that sensor :/</Typography>;
-
-  const {
-    headline,
-    description: sensorDescription,
-    accountable,
-    accountableDescription,
-    sensorImageSrc,
-    email,
-  } = sensor.data;
-
-  // const hasfooter = phone || chat || email || onsiteStaff;
-  const accountableOption = accountable ? {
-    name: accountable,
+  const accountableOption = sensor.accountable ? {
+    name: sensor.accountable,
     iconShortname: 'accountable/org',
-    description: accountableDescription,
+    description: sensor.accountableDescription,
   } : null;
 
   return (
     <div className={classes.root}>
       <div className={classes.header}>
-        {headline && (
+        {sensor.headline && (
           <Typography
             variant="h6"
             align="center"
             style={{ wordBreak: 'break-word', fontWeight: 'bold' }}
           >
-            {headline}
+            {sensor.headline}
           </Typography>
         )}
       </div>
@@ -79,14 +59,14 @@ function SensorView({
       </div>
       <Divider variant="fullWidth" />
       <div className={classes.content}>
-        {sensorImageSrc && (
+        {sensor.sensorImageSrc && (
           <img
             className={classes.sensorImage}
-            src={sensorImageSrc}
+            src={sensor.sensorImageSrc}
             alt="sensor icon"
           />
         )}
-        {sensorDescription && <Typography paragraph>{sensorDescription}</Typography>}
+        {sensor.description && <Typography paragraph>{sensor.description}</Typography>}
       </div>
       <div>
         {/* On top accountability sensor info */}
@@ -112,9 +92,9 @@ function SensorView({
         ))}
       </div>
       <FeedbackFooter
-        placeName={place.data ? place.data.name : 'Loading...'}
-        technology={sensor.data.name}
-        email={email || 'dtpr-hello@sidewalklabs.com'}
+        placeName={place?.name}
+        technology={sensor.name}
+        email={sensor.email || 'dtpr-hello@sidewalklabs.com'}
       />
     </div>
   );
@@ -129,35 +109,6 @@ const styles = (theme: Theme) => createStyles({
       maxWidth: theme.breakpoints.values.md,
     },
   },
-  toolbar: {
-    flexWrap: 'wrap',
-    [theme.breakpoints.down('xs')]: {
-      flexDirection: 'column',
-      alignItems: 'start',
-    },
-    borderBottom: '0.5px solid rgba(0,0,0,.2)',
-    minHeight: '48px',
-  },
-  toolbarRight: {
-    flex: 1,
-    display: 'flex',
-    justifyContent: 'flex-end',
-    flexWrap: 'wrap',
-  },
-  backButton: {
-    borderRadius: '16px',
-    fontWeight: 700,
-    textTransform: 'none',
-    flexShrink: 0,
-    padding: '0 16px 0 8px',
-    height: '32px',
-  },
-  backButtonIcon: {
-    marginRight: theme.spacing(),
-  },
-  backButtonText: {
-    marginBottom: '-2px',
-  },
   header: {
     padding: theme.spacing(2),
     textAlign: 'center',
@@ -165,33 +116,9 @@ const styles = (theme: Theme) => createStyles({
   content: {
     padding: theme.spacing(2),
   },
-  footer: {
-    background: theme.palette.grey['200'],
-    marginTop: theme.spacing(3),
-    padding: theme.spacing(3),
-  },
   summaryWrapper: {
     display: 'flex',
     padding: theme.spacing(2),
-  },
-  summaryCell: {
-    flex: 1,
-    textAlign: 'center',
-  },
-  summaryBadge: {
-    height: '48px',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    marginBottom: theme.spacing(),
-  },
-  heading: {
-    flex: 1,
-    alignSelf: 'center',
-    marginLeft: theme.spacing(),
-  },
-  label: {
-    alignSelf: 'center',
-    marginLeft: theme.spacing(),
   },
   sensorImage: {
     width: '100%',
