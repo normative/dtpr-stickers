@@ -11,7 +11,10 @@ interface StickerConfig {
 }
 
 export function getStickerConfig(
-  airtableData: AirtableData, airtableKey: string, badgeName: string,
+  airtableData: AirtableData,
+  airtableKey: string,
+  badgeName: string,
+  defaultVariant: StickerThemeVariant = StickerThemeVariant.WHITE,
 ): StickerConfig | null {
   const config = airtableData[airtableKey].find((option: Option) => option.name === badgeName);
   if (!config) {
@@ -21,7 +24,7 @@ export function getStickerConfig(
   const iconPath = iconShortname.split('/');
   const icon = iconPath.pop();
   const context = iconPath.shift();
-  const variant = iconPath.shift();
+  const variant = iconPath.shift() || defaultVariant;
 
   return { variant, context, icon };
 }

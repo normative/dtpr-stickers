@@ -9,14 +9,6 @@ export enum sessionKeys {
   AIRTABLE = 'airtableData',
 }
 
-export enum imagesUrl {
-  WHITE_HEX_URL = '/images/hexes/white.svg',
-  OUTLINED_HEX_URL = '/images/hexes/white.svg',
-  YELLOW_HEX_URL = '/images/hexes/yellow.svg',
-  BLUE_HEX_URL = '/images/hexes/blue.svg',
-  BLACK_HEX_URL = '/images/hexes/black.svg',
-}
-
 export enum sensorsGroupNames {
   PURPOSE = 'purpose',
   TECH_TYPE = 'techType',
@@ -25,13 +17,15 @@ export enum sensorsGroupNames {
   ACCESS = 'access',
   STORAGE = 'storage',
 }
-
+/**
+ * Map sensor group names to labels
+ */
 export enum sensorsGroupLabels {
-  ACCOUNTABILITY = 'Accountability',
-  PURPOSE = 'Purpose',
-  TECH_TYPE = 'Technology Type',
-  DATA_TYPE = 'Data Type',
-  DATA_PROCESS = 'Data Process',
-  ACCESS = 'Access',
-  STORAGE = 'Storage',
+  accountability = 'Accountability',
+  purpose = 'Purpose',
+  techType = 'Technology Type',
+  dataType = 'Data Type',
+  dataProcess = 'Data Process',
+  access = 'Access',
+  storage = 'Storage',
 }
