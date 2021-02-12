@@ -3,18 +3,16 @@ import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 
 import { Typography, Divider } from 'libs/mui';
 
-import { Option, PlaceData, SensorData } from 'common/types';
-import { sensorsGroupLabels } from 'common/constants';
+import {
+  PlaceData, SensorData, SensorsGroup,
+} from 'common/types';
 
 import FeedbackFooter from '../FeedbackFooter';
-import Accordian from './Accordian';
-import Badge from './Badge';
+import SensorBadge from './SensorBadge';
+import SensorDetails from './SensorDetails';
+import SensorTaxonomy from './SensorTaxonomy';
+import SensorTabs from './SensorTabs';
 
-interface SensorsGroup {
-  sensorGroup: string;
-  label: string;
-  options: Option[];
-}
 interface Props {
   place: PlaceData;
   sensor: SensorData;
@@ -22,6 +20,7 @@ interface Props {
   techType: SensorsGroup;
   purpose: SensorsGroup;
   classes: any;
+  systems: string[];
 }
 
 function SensorView({
@@ -31,6 +30,7 @@ function SensorView({
   sensorsGroup,
   techType,
   purpose,
+  systems,
 }: Props) {
   const accountableOption = sensor.accountable ? {
     name: sensor.accountable,
@@ -53,49 +53,25 @@ function SensorView({
       </div>
       <Divider variant="fullWidth" />
       <div className={classes.summaryWrapper}>
-        <Badge option={purpose?.options[0]} />
-        <Badge option={techType?.options[0]} />
-        <Badge option={accountableOption} />
+        <SensorBadge option={purpose?.options[0]} />
+        <SensorBadge option={techType?.options[0]} />
+        <SensorBadge option={accountableOption} />
       </div>
       <Divider variant="fullWidth" />
-      <div className={classes.content}>
-        {sensor.sensorImageSrc && (
-          <img
-            className={classes.sensorImage}
-            src={sensor.sensorImageSrc}
-            alt="sensor icon"
+      <SensorTabs tabs={['DETAILS', 'FAQ']}>
+        <div>
+          <SensorDetails description={sensor.description} systems={systems} />
+          <SensorTaxonomy accountable={accountableOption} sensorsGroup={sensorsGroup} />
+          <FeedbackFooter
+            placeName={place?.name}
+            technology={sensor.name}
+            email={sensor.email || 'dtpr-hello@sidewalklabs.com'}
           />
-        )}
-        {sensor.description && <Typography paragraph>{sensor.description}</Typography>}
-      </div>
-      <div>
-        {/* On top accountability sensor info */}
-        {accountableOption?.description && (
-        <Accordian
-          icon="/images/accountable/org.svg"
-          title={accountableOption.name}
-          label={sensorsGroupLabels.accountability}
-          body={accountableOption.description}
-        />
-        )}
-        {/* Followed by the rest of sensor groups */}
-        {sensorsGroup.map(({ label, options }) => options.map(
-          ({ name, description, iconShortname }) => (
-            <Accordian
-              key={name}
-              icon={`/images/${iconShortname}.svg`}
-              title={name}
-              label={label}
-              body={description}
-            />
-          ),
-        ))}
-      </div>
-      <FeedbackFooter
-        placeName={place?.name}
-        technology={sensor.name}
-        email={sensor.email || 'dtpr-hello@sidewalklabs.com'}
-      />
+        </div>
+        <div>
+          FAQ
+        </div>
+      </SensorTabs>
     </div>
   );
 }
@@ -112,9 +88,6 @@ const styles = (theme: Theme) => createStyles({
   header: {
     padding: theme.spacing(2),
     textAlign: 'center',
-  },
-  content: {
-    padding: theme.spacing(2),
   },
   summaryWrapper: {
     display: 'flex',

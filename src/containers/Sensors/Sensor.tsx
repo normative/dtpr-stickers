@@ -55,6 +55,11 @@ function Sensor() {
     ({ sensorGroup }) => sensorGroup === sensorsGroupNames.PURPOSE,
   ), [sensorsGroup]);
 
+  const systems = useMemo(() => {
+    if (!sensor.data?.systems) return [];
+    return Object.values(sensor.data.systems).map(({ title }) => title);
+  }, [sensor.data]);
+
   if (!sensor.data || sensor.isFetching || !airtable.data || airtable.isFetching) {
     return <LinearProgress color="secondary" />;
   }
@@ -66,6 +71,7 @@ function Sensor() {
       techType={techType}
       purpose={purpose}
       sensorsGroup={sensorsGroup}
+      systems={systems}
     />
   );
 }

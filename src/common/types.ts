@@ -15,6 +15,17 @@ export interface PlaceData {
   admins: { [uid: string]: boolean },
 }
 
+export interface SensorsGroup {
+  sensorGroup: string;
+  label: string;
+  options: Option[];
+}
+
+export interface System {
+  title: string;
+  description: string;
+}
+
 export interface SensorData {
   id: string,
   placeId: string,
@@ -37,6 +48,7 @@ export interface SensorData {
   logoSrc?: string,
   sensorImageRef: string,
   sensorImageSrc?: string,
+  systems?: System[],
 }
 
 // The table names in airtable
