@@ -1,4 +1,6 @@
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, {
+  useContext, useEffect, useMemo, useState,
+} from 'react';
 import { useParams } from 'react-router-dom';
 
 import { getSensor } from 'sideEffects/firebase';
@@ -15,10 +17,29 @@ import { AirtableContext } from 'context/airtable';
 import { PlaceContext } from 'context/place';
 
 import SensorView from 'components/Sensors/SensorView';
-import { sensorsGroupNames } from 'common/constants';
+import { feedbackQuestionTypes, sensorsGroupNames } from 'common/constants';
 import { LinearProgress } from 'libs/mui';
 import { prepareSensorsGroups } from 'presenters/sensor';
-import { FAQ } from 'common/types';
+import { FAQ, FeedbackQuestion } from 'common/types';
+
+const FEEDBACK_QUESTIONS: FeedbackQuestion[] = [
+  {
+    text: 'Is this information helpful?',
+    type: feedbackQuestionTypes.EMOJI,
+  },
+  {
+    text: 'How did you find the process of reading the sign, scanning the QR code, and then reading the information on the phone?',
+    type: feedbackQuestionTypes.EMOJI,
+  },
+  {
+    text: 'Do you have any questions or concerns?',
+    type: feedbackQuestionTypes.EMAIL,
+  },
+  {
+    text: 'How would you rate this app?',
+    type: feedbackQuestionTypes.EMOJI,
+  },
+];
 
 function Sensor() {
   const [sensor, sensorActions] = useReducerState(
@@ -31,6 +52,8 @@ function Sensor() {
   const [place, placeActions] = useContext(PlaceContext);
   const airtable = useContext(AirtableContext);
   const { sensorId }: { sensorId: string } = useParams();
+  const [questionIndex, setQuestionIndex] = useState(0);
+  const [answers, setAnswers] = useState([]);
 
   useEffect(() => {
     sensorActions.onRequest();
@@ -66,6 +89,11 @@ function Sensor() {
     return Object.values(sensor.data.FAQ) as FAQ[];
   }, [sensor.data]);
 
+  const onResponse = (type: string, answer: string) => {
+    setQuestionIndex(questionIndex + 1);
+    setAnswers(answers.concat(answer));
+  };
+
   if (!sensor.data || sensor.isFetching || !airtable.data || airtable.isFetching) {
     return <LinearProgress color="secondary" />;
   }
@@ -79,6 +107,12 @@ function Sensor() {
       sensorsGroup={sensorsGroup}
       systems={systems}
       faq={faq}
+      onResponse={(answer: string) => {
+        onResponse(FEEDBACK_QUESTIONS[questionIndex].type, answer);
+      }}
+      question={FEEDBACK_QUESTIONS[questionIndex]}
+      questionIndex={questionIndex + 1}
+      questionsLength={FEEDBACK_QUESTIONS.length}
     />
   );
 }

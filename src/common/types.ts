@@ -31,6 +31,11 @@ export interface FAQ {
   response: string;
 }
 
+export interface FeedbackQuestion {
+  text: string;
+  type: string;
+}
+
 export interface SensorData {
   id: string,
   placeId: string,

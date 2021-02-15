@@ -6,12 +6,13 @@ import { Typography, Divider } from 'libs/mui';
 
 import {
   FAQ,
+  FeedbackQuestion,
   PlaceData, SensorData, SensorsGroup,
 } from 'common/types';
 
 import Accordion from 'components/Accordion';
 
-import FeedbackFooter from '../FeedbackFooter';
+import SensorFeedback from './SensorFeedback';
 import SensorBadge from './SensorBadge';
 import SensorDetails from './SensorDetails';
 import SensorTaxonomy from './SensorTaxonomy';
@@ -26,6 +27,10 @@ interface Props {
   classes: any;
   systems: string[];
   faq: FAQ[];
+  onResponse: (answer: string) => void;
+  question: FeedbackQuestion;
+  questionIndex: number;
+  questionsLength: number;
 }
 
 function SensorView({
@@ -37,6 +42,10 @@ function SensorView({
   purpose,
   systems,
   faq,
+  onResponse,
+  question: feedbackQuestion,
+  questionIndex,
+  questionsLength,
 }: Props) {
   const accountableOption = sensor.accountable ? {
     name: sensor.accountable,
@@ -68,10 +77,11 @@ function SensorView({
         <div>
           <SensorDetails description={sensor.description} systems={systems} />
           <SensorTaxonomy accountable={accountableOption} sensorsGroup={sensorsGroup} />
-          <FeedbackFooter
-            placeName={place?.name}
-            technology={sensor.name}
-            email={sensor.email || 'dtpr-hello@sidewalklabs.com'}
+          <SensorFeedback
+            onClick={onResponse}
+            question={feedbackQuestion}
+            questionIndex={questionIndex}
+            questionsLength={questionsLength}
           />
         </div>
         <div className={classes.faq}>
