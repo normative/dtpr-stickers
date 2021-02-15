@@ -33,13 +33,28 @@ const FEEDBACK_QUESTIONS: FeedbackQuestion[] = [
   },
   {
     text: 'Do you have any questions or concerns?',
-    type: feedbackQuestionTypes.EMAIL,
+    type: feedbackQuestionTypes.COMMENT,
   },
   {
     text: 'How would you rate this app?',
     type: feedbackQuestionTypes.EMOJI,
   },
+  {
+    text: '',
+    type: feedbackQuestionTypes.THANKS,
+  },
 ];
+
+const FEEDBACK_QUESTIONS_LENGTH = FEEDBACK_QUESTIONS.length - 1;
+
+function calcFeedbackProgress(questionIndex: number) {
+  return (questionIndex / FEEDBACK_QUESTIONS_LENGTH) * 100 || 2.5;
+}
+
+function getProgressText(questionIndex: number) {
+  if (questionIndex >= FEEDBACK_QUESTIONS_LENGTH) return '';
+  return `${questionIndex + 1} / ${FEEDBACK_QUESTIONS_LENGTH} answered`;
+}
 
 function Sensor() {
   const [sensor, sensorActions] = useReducerState(
@@ -111,8 +126,8 @@ function Sensor() {
         onResponse(FEEDBACK_QUESTIONS[questionIndex].type, answer);
       }}
       question={FEEDBACK_QUESTIONS[questionIndex]}
-      questionIndex={questionIndex + 1}
-      questionsLength={FEEDBACK_QUESTIONS.length}
+      progressText={getProgressText(questionIndex)}
+      progressValue={calcFeedbackProgress(questionIndex)}
     />
   );
 }

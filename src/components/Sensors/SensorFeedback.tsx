@@ -13,26 +13,24 @@ interface Props {
   onClick: (answer: string) => void;
   classes: any;
   question: FeedbackQuestionType;
-  questionIndex: number;
-  questionsLength: number;
+  progressText: string;
+  progressValue: number;
 }
 
 function Feedback({
-  classes, onClick, question, questionsLength, questionIndex,
+  classes, onClick, question, progressText, progressValue,
 }: Props) {
   return (
     <div className={classes.container}>
-      <LinearProgress className={classes.linearProgress} variant="determinate" value={(questionIndex / questionsLength) * 100} />
+      <LinearProgress
+        className={classes.linearProgress}
+        variant="determinate"
+        value={progressValue}
+      />
       <Typography className={classes.title}>Feedback</Typography>
       <FeedbackQuestion onClick={onClick} text={question.text} type={question.type} />
       <Typography className={classes.progressText}>
-        {questionIndex}
-        {' '}
-        /
-        {' '}
-        {questionsLength}
-        {' '}
-        answered
+        {progressText}
       </Typography>
     </div>
   );
@@ -45,6 +43,7 @@ const styles = (theme: Theme) => createStyles({
     padding: theme.spacing(2),
     paddingTop: theme.spacing(2.5),
     paddingBottom: theme.spacing(2.5),
+    position: 'relative',
   },
   title: {
     fontWeight: 700,

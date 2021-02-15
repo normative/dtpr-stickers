@@ -8,10 +8,9 @@ import {
 import { Typography } from 'libs/mui';
 import { feedbackQuestionTypes } from 'common/constants';
 import FeedbackEmojis from './FeedbackEmojis';
+import FeedbackComment from './FeedbackComment';
+import FeedbackThanks from './FeedbackThanks';
 
-// interface Props {
-
-// };
 interface Props {
   onClick: (name: string) => void;
   classes: any;
@@ -27,16 +26,23 @@ function Feedback({
       <Typography className={classes.text}>
         {text}
       </Typography>
-      {
-        type === feedbackQuestionTypes.EMOJI && (
-          <FeedbackEmojis onClick={onClick} />
-        )
-      }
-      {
-        type === feedbackQuestionTypes.EMAIL && (
-          <div>{text}</div>
-        )
-      }
+      <div className={classes.answerContainer}>
+        {
+          type === feedbackQuestionTypes.EMOJI && (
+            <FeedbackEmojis onClick={onClick} />
+          )
+        }
+        {
+          type === feedbackQuestionTypes.COMMENT && (
+            <FeedbackComment onClick={onClick} />
+          )
+        }
+        {
+          type === feedbackQuestionTypes.THANKS && (
+            <FeedbackThanks />
+          )
+        }
+      </div>
     </div>
   );
 }
@@ -50,6 +56,10 @@ const styles = (theme: Theme) => createStyles({
     margin: theme.spacing(2),
     marginLeft: 0,
     marginRight: 0,
+    minHeight: '50px',
+  },
+  answerContainer: {
+    minHeight: '50px',
   },
 });
 

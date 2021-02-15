@@ -5,13 +5,10 @@ import {
   withStyles,
 } from '@material-ui/core/styles';
 
-import { Button, Typography } from 'libs/mui';
+import { Button } from 'libs/mui';
 import { feedbackEmojis } from 'common/constants';
 import FeedbackEmoji from '../Svgs/FeedbackEmoji';
 
-// interface Props {
-
-// };
 interface Props {
   onClick: (name: string) => void;
   classes: any;

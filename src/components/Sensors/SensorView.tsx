@@ -29,8 +29,8 @@ interface Props {
   faq: FAQ[];
   onResponse: (answer: string) => void;
   question: FeedbackQuestion;
-  questionIndex: number;
-  questionsLength: number;
+  progressText: string;
+  progressValue: number;
 }
 
 function SensorView({
@@ -44,8 +44,8 @@ function SensorView({
   faq,
   onResponse,
   question: feedbackQuestion,
-  questionIndex,
-  questionsLength,
+  progressText,
+  progressValue,
 }: Props) {
   const accountableOption = sensor.accountable ? {
     name: sensor.accountable,
@@ -80,8 +80,8 @@ function SensorView({
           <SensorFeedback
             onClick={onResponse}
             question={feedbackQuestion}
-            questionIndex={questionIndex}
-            questionsLength={questionsLength}
+            progressText={progressText}
+            progressValue={progressValue}
           />
         </div>
         <div className={classes.faq}>
