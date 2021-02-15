@@ -26,6 +26,11 @@ export interface System {
   description: string;
 }
 
+export interface FAQ {
+  question: string;
+  response: string;
+}
+
 export interface SensorData {
   id: string,
   placeId: string,

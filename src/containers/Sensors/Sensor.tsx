@@ -16,8 +16,9 @@ import { PlaceContext } from 'context/place';
 
 import SensorView from 'components/Sensors/SensorView';
 import { sensorsGroupNames } from 'common/constants';
-import { LinearProgress } from '@material-ui/core';
+import { LinearProgress } from 'libs/mui';
 import { prepareSensorsGroups } from 'presenters/sensor';
+import { FAQ } from 'common/types';
 
 function Sensor() {
   const [sensor, sensorActions] = useReducerState(
@@ -60,6 +61,11 @@ function Sensor() {
     return Object.values(sensor.data.systems).map(({ title }) => title);
   }, [sensor.data]);
 
+  const faq = useMemo(() => {
+    if (!sensor.data?.FAQ) return [];
+    return Object.values(sensor.data.FAQ) as FAQ[];
+  }, [sensor.data]);
+
   if (!sensor.data || sensor.isFetching || !airtable.data || airtable.isFetching) {
     return <LinearProgress color="secondary" />;
   }
@@ -72,6 +78,7 @@ function Sensor() {
       purpose={purpose}
       sensorsGroup={sensorsGroup}
       systems={systems}
+      faq={faq}
     />
   );
 }

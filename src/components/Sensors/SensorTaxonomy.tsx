@@ -2,7 +2,7 @@ import React from 'react';
 
 import { sensorsGroupLabels } from 'common/constants';
 import { Option, SensorsGroup } from 'common/types';
-import Accordian from './Accordian';
+import SensorAccordion from './SensorAccordion';
 
 interface Props {
   accountable?: Option;
@@ -16,7 +16,7 @@ function SensorTaxonomy({ accountable, sensorsGroup }: Props) {
     <div>
       {/* On top accountability sensor info */}
       {accountable?.description && (
-      <Accordian
+      <SensorAccordion
         icon="/images/accountable/org.svg"
         title={accountable.name}
         label={sensorsGroupLabels.accountability}
@@ -26,7 +26,7 @@ function SensorTaxonomy({ accountable, sensorsGroup }: Props) {
       {/* Followed by the rest of sensor groups */}
       {sensorsGroup.map(({ label, options }) => options.map(
         ({ name, description, iconShortname }) => (
-          <Accordian
+          <SensorAccordion
             key={name}
             icon={`/images/${iconShortname}.svg`}
             title={name}

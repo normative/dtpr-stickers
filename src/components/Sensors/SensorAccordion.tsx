@@ -93,13 +93,13 @@ const styles = (theme: Theme) => createStyles({
 
 interface Props {
   readonly classes: any;
-  icon: string;
+  icon?: string;
   title: string;
   label: string;
   body: string;
 }
 
-class SensorView extends Component<Props, any> {
+class SensorAccordion extends Component<Props, any> {
   render() {
     const {
       classes, icon, title, label, body,
@@ -127,7 +127,7 @@ class SensorView extends Component<Props, any> {
           }}
           expandIcon={<ExpandMoreIcon />}
         >
-          <img src={icon} />
+          {icon && <img src={icon} />}
           <Typography className={classes.heading}>{title}</Typography>
           <Typography color="textSecondary" className={classes.label}>
             {label}
@@ -143,4 +143,4 @@ class SensorView extends Component<Props, any> {
   }
 }
 
-export default withStyles(styles)(SensorView);
+export default withStyles(styles)(SensorAccordion);

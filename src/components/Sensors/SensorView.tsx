@@ -1,11 +1,15 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 
 import { Typography, Divider } from 'libs/mui';
 
 import {
+  FAQ,
   PlaceData, SensorData, SensorsGroup,
 } from 'common/types';
+
+import Accordion from 'components/Accordion';
 
 import FeedbackFooter from '../FeedbackFooter';
 import SensorBadge from './SensorBadge';
@@ -21,6 +25,7 @@ interface Props {
   purpose: SensorsGroup;
   classes: any;
   systems: string[];
+  faq: FAQ[];
 }
 
 function SensorView({
@@ -31,6 +36,7 @@ function SensorView({
   techType,
   purpose,
   systems,
+  faq,
 }: Props) {
   const accountableOption = sensor.accountable ? {
     name: sensor.accountable,
@@ -68,8 +74,12 @@ function SensorView({
             email={sensor.email || 'dtpr-hello@sidewalklabs.com'}
           />
         </div>
-        <div>
-          FAQ
+        <div className={classes.faq}>
+          {faq.map(({ question, response }, i) => (
+            <Accordion key={`question-${i}`} title={question}>
+              {response}
+            </Accordion>
+          ))}
         </div>
       </SensorTabs>
     </div>
@@ -99,6 +109,11 @@ const styles = (theme: Theme) => createStyles({
     maxHeight: '300px',
     margin: 'auto',
     marginBottom: theme.spacing(2),
+  },
+  faq: {
+    padding: theme.spacing(3),
+    paddingLeft: theme.spacing(),
+    paddingRight: theme.spacing(),
   },
 });
 
