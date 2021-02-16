@@ -45,12 +45,18 @@ const styles = (theme: Theme) => createStyles({
     '&:before': {
       display: 'none',
     },
+    '&$expanded': {
+      margin: 0,
+    },
+    '&.Mui-expanded': {
+      margin: 0,
+    },
   },
   expansionPanelExpanded: {
-    margin: '0',
+    margin: 0,
   },
   expansionPanelSummaryRoot: {
-    margin: '0',
+    margin: 0,
     minHeight: '56px',
     padding: '0 16px 0 16px',
     '&$expansionPanelSummaryExpanded': {
@@ -59,7 +65,7 @@ const styles = (theme: Theme) => createStyles({
     },
   },
   expansionPanelSummaryContent: {
-    margin: '0',
+    margin: 0,
     '&>:last-child': {
       paddingRight: 0,
     },
@@ -72,8 +78,8 @@ const styles = (theme: Theme) => createStyles({
     // needed for nested reference
   },
   expansionPanelDetailsRoot: {
-    borderLeft: '2px solid #000',
-    marginLeft: theme.spacing(4 + 1),
+    borderLeft: '2px dashed #000',
+    marginLeft: theme.spacing(4.125),
     paddingLeft: theme.spacing(3),
     paddingTop: 0,
     paddingRight: theme.spacing(3),
@@ -93,16 +99,17 @@ const styles = (theme: Theme) => createStyles({
 
 interface Props {
   readonly classes: any;
-  icon: string;
+  icon?: string;
   title: string;
   label: string;
   body: string;
+  name: string;
 }
 
-class SensorView extends Component<Props, any> {
+class SensorAccordion extends Component<Props, any> {
   render() {
     const {
-      classes, icon, title, label, body,
+      classes, icon, title, label, body, name,
     } = this.props;
     const parsedBody = markdownConverter.makeHtml(body);
 
@@ -115,7 +122,7 @@ class SensorView extends Component<Props, any> {
         onChange={(event, expanded) => {
           ReactGA.event({
             category: 'User',
-            action: `Tapped Accordian: ${expanded}`,
+            action: `Tapped Accordion of ${name}: ${title} - ${label}`,
           });
         }}
       >
@@ -127,7 +134,7 @@ class SensorView extends Component<Props, any> {
           }}
           expandIcon={<ExpandMoreIcon />}
         >
-          <img src={icon} />
+          {icon && <img src={icon} />}
           <Typography className={classes.heading}>{title}</Typography>
           <Typography color="textSecondary" className={classes.label}>
             {label}
@@ -143,4 +150,4 @@ class SensorView extends Component<Props, any> {
   }
 }
 
-export default withStyles(styles)(SensorView);
+export default withStyles(styles)(SensorAccordion);

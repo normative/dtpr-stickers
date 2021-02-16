@@ -14,7 +14,6 @@ export { default as Tab } from '@material-ui/core/Tab';
 export { default as ExpansionPanel } from '@material-ui/core/ExpansionPanel';
 export { default as ExpansionPanelSummary } from '@material-ui/core/ExpansionPanelSummary';
 export { default as ExpansionPanelDetails } from '@material-ui/core/ExpansionPanelDetails';
-export { default as ExpandMoreIcon } from '@material-ui/icons/ExpandMore';
 export { default as Button } from '@material-ui/core/Button';
 export { default as Input } from '@material-ui/core/Input';
 export { default as InputLabel } from '@material-ui/core/InputLabel';
@@ -22,9 +21,15 @@ export { default as FormControl } from '@material-ui/core/FormControl';
 export { default as Select } from '@material-ui/core/Select';
 export { default as MenuItem } from '@material-ui/core/MenuItem';
 export { default as Divider } from '@material-ui/core/Divider';
+export { default as Accordion } from '@material-ui/core/Accordion';
+export { default as AccordionSummary } from '@material-ui/core/AccordionSummary';
+export { default as AccordionDetails } from '@material-ui/core/AccordionDetails';
 
 // Material UI Icons
 export { default as AddIcon } from '@material-ui/icons/Add';
 export { default as EditIcon } from '@material-ui/icons/Edit';
 export { default as ArrowBackIcon } from '@material-ui/icons/ArrowBack';
+export { default as ArrowForwardIcon } from '@material-ui/icons/ArrowForward';
 export { default as SendIcon } from '@material-ui/icons/Send';
+export { default as ExpandMoreIcon } from '@material-ui/icons/ExpandMore';
+export { default as CheckIcon } from '@material-ui/icons/Check';

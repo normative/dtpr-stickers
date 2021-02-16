@@ -1,20 +1,24 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 
 import { Typography, Divider } from 'libs/mui';
 
-import { Option, PlaceData, SensorData } from 'common/types';
-import { sensorsGroupLabels } from 'common/constants';
+import {
+  FAQ,
+  FeedbackQuestion,
+  PlaceData, SensorData, SensorsGroup, System,
+} from 'common/types';
 
-import FeedbackFooter from '../FeedbackFooter';
-import Accordian from './Accordian';
-import Badge from './Badge';
+import Accordion from 'components/Accordion';
 
-interface SensorsGroup {
-  sensorGroup: string;
-  label: string;
-  options: Option[];
-}
+import SensorFeedback from './SensorFeedback';
+import SensorBadge from './SensorBadge';
+import SensorDetails from './SensorDetails';
+import SensorTaxonomy from './SensorTaxonomy';
+import SensorTabs from './SensorTabs';
+import SensorPlace from './SensorPlace';
+
 interface Props {
   place: PlaceData;
   sensor: SensorData;
@@ -22,6 +26,12 @@ interface Props {
   techType: SensorsGroup;
   purpose: SensorsGroup;
   classes: any;
+  systems: System[];
+  faq: FAQ[];
+  onResponse: (answer: string) => void;
+  question: FeedbackQuestion;
+  progressText: string;
+  progressValue: number;
 }
 
 function SensorView({
@@ -31,6 +41,12 @@ function SensorView({
   sensorsGroup,
   techType,
   purpose,
+  systems,
+  faq,
+  onResponse,
+  question: feedbackQuestion,
+  progressText,
+  progressValue,
 }: Props) {
   const accountableOption = sensor.accountable ? {
     name: sensor.accountable,
@@ -53,49 +69,35 @@ function SensorView({
       </div>
       <Divider variant="fullWidth" />
       <div className={classes.summaryWrapper}>
-        <Badge option={purpose?.options[0]} />
-        <Badge option={techType?.options[0]} />
-        <Badge option={accountableOption} />
+        <SensorBadge option={purpose?.options[0]} />
+        <SensorBadge option={techType?.options[0]} />
+        <SensorBadge option={accountableOption} />
       </div>
       <Divider variant="fullWidth" />
-      <div className={classes.content}>
-        {sensor.sensorImageSrc && (
-          <img
-            className={classes.sensorImage}
-            src={sensor.sensorImageSrc}
-            alt="sensor icon"
+      <SensorTabs tabs={['DETAILS', 'FAQ']}>
+        <div>
+          <SensorDetails description={sensor.description} systems={systems} />
+          <SensorTaxonomy
+            sensorName={sensor.name}
+            accountable={accountableOption}
+            sensorsGroup={sensorsGroup}
           />
-        )}
-        {sensor.description && <Typography paragraph>{sensor.description}</Typography>}
-      </div>
-      <div>
-        {/* On top accountability sensor info */}
-        {accountableOption?.description && (
-        <Accordian
-          icon="/images/accountable/org.svg"
-          title={accountableOption.name}
-          label={sensorsGroupLabels.accountability}
-          body={accountableOption.description}
-        />
-        )}
-        {/* Followed by the rest of sensor groups */}
-        {sensorsGroup.map(({ label, options }) => options.map(
-          ({ name, description, iconShortname }) => (
-            <Accordian
-              key={name}
-              icon={`/images/${iconShortname}.svg`}
-              title={name}
-              label={label}
-              body={description}
-            />
-          ),
-        ))}
-      </div>
-      <FeedbackFooter
-        placeName={place?.name}
-        technology={sensor.name}
-        email={sensor.email || 'dtpr-hello@sidewalklabs.com'}
-      />
+          <SensorFeedback
+            onClick={onResponse}
+            question={feedbackQuestion}
+            progressText={progressText}
+            progressValue={progressValue}
+          />
+          <SensorPlace place={place} />
+        </div>
+        <div className={classes.faq}>
+          {faq.map(({ question, response }, i) => (
+            <Accordion key={`question-${i}`} title={question}>
+              {response}
+            </Accordion>
+          ))}
+        </div>
+      </SensorTabs>
     </div>
   );
 }
@@ -113,9 +115,6 @@ const styles = (theme: Theme) => createStyles({
     padding: theme.spacing(2),
     textAlign: 'center',
   },
-  content: {
-    padding: theme.spacing(2),
-  },
   summaryWrapper: {
     display: 'flex',
     padding: theme.spacing(2),
@@ -126,6 +125,11 @@ const styles = (theme: Theme) => createStyles({
     maxHeight: '300px',
     margin: 'auto',
     marginBottom: theme.spacing(2),
+  },
+  faq: {
+    padding: theme.spacing(3),
+    paddingLeft: theme.spacing(),
+    paddingRight: theme.spacing(),
   },
 });
 

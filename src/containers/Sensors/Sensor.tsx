@@ -1,5 +1,8 @@
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, {
+  useContext, useEffect, useMemo, useState,
+} from 'react';
 import { useParams } from 'react-router-dom';
+import ReactGA from 'react-ga';
 
 import { getSensor } from 'sideEffects/firebase';
 import sensorReducer, {
@@ -15,9 +18,53 @@ import { AirtableContext } from 'context/airtable';
 import { PlaceContext } from 'context/place';
 
 import SensorView from 'components/Sensors/SensorView';
-import { sensorsGroupNames } from 'common/constants';
-import { LinearProgress } from '@material-ui/core';
+import { feedbackQuestionTypes, sensorsGroupNames } from 'common/constants';
+import { LinearProgress } from 'libs/mui';
 import { prepareSensorsGroups } from 'presenters/sensor';
+import { FAQ, FeedbackQuestion, System } from 'common/types';
+
+const FEEDBACK_QUESTIONS: FeedbackQuestion[] = [
+  {
+    text: 'How do you feel about this technology?',
+    type: feedbackQuestionTypes.EMOJI,
+  },
+  {
+    text: 'Is this information helpful?',
+    type: feedbackQuestionTypes.EMOJI,
+  },
+  {
+    text: 'How did you find the process of reading the sign, scanning the QR code, and then reading the information on the phone?',
+    type: feedbackQuestionTypes.EMOJI,
+  },
+  {
+    text: 'Do you have any questions or concerns?',
+    type: feedbackQuestionTypes.COMMENT,
+  },
+  {
+    text: 'How would you rate this app?',
+    type: feedbackQuestionTypes.EMOJI,
+  },
+  {
+    text: '',
+    type: feedbackQuestionTypes.THANKS,
+  },
+];
+
+const FEEDBACK_QUESTIONS_LENGTH = FEEDBACK_QUESTIONS.length - 1;
+
+const ACTIONS = {
+  [feedbackQuestionTypes.EMOJI]: 'Clicked',
+  [feedbackQuestionTypes.COMMENT]: 'Commented',
+};
+
+function calcFeedbackProgress(questionIndex: number) {
+  return (questionIndex / FEEDBACK_QUESTIONS_LENGTH) * 100 || 2.5;
+}
+
+function getProgressText(questionIndex: number) {
+  if (questionIndex >= FEEDBACK_QUESTIONS_LENGTH) return '';
+  return `${questionIndex + 1} / ${FEEDBACK_QUESTIONS_LENGTH} answered`;
+}
 
 function Sensor() {
   const [sensor, sensorActions] = useReducerState(
@@ -30,6 +77,8 @@ function Sensor() {
   const [place, placeActions] = useContext(PlaceContext);
   const airtable = useContext(AirtableContext);
   const { sensorId }: { sensorId: string } = useParams();
+  const [questionIndex, setQuestionIndex] = useState(0);
+  const [answers, setAnswers] = useState([]);
 
   useEffect(() => {
     sensorActions.onRequest();
@@ -55,8 +104,29 @@ function Sensor() {
     ({ sensorGroup }) => sensorGroup === sensorsGroupNames.PURPOSE,
   ), [sensorsGroup]);
 
+  const systems = useMemo(() => {
+    if (!sensor.data?.systems) return [];
+    return Object.values(sensor.data.systems) as System[];
+  }, [sensor.data]);
+
+  const faq = useMemo(() => {
+    if (!sensor.data?.FAQ) return [];
+    return Object.values(sensor.data.FAQ) as FAQ[];
+  }, [sensor.data]);
+
+  const onResponse = (type: string, answer: string) => {
+    setQuestionIndex(questionIndex + 1);
+    setAnswers(answers.concat(answer));
+
+    ReactGA.event({
+      category: 'User',
+      action: `${ACTIONS[type]} Feedback for question "${FEEDBACK_QUESTIONS[questionIndex]}": \n"${answer}"`,
+      label: sensor.data?.name,
+    });
+  };
+
   if (!sensor.data || sensor.isFetching || !airtable.data || airtable.isFetching) {
-    return <LinearProgress color="secondary" />;
+    return <LinearProgress color="primary" />;
   }
 
   return (
@@ -66,6 +136,14 @@ function Sensor() {
       techType={techType}
       purpose={purpose}
       sensorsGroup={sensorsGroup}
+      systems={systems}
+      faq={faq}
+      onResponse={(answer: string) => {
+        onResponse(FEEDBACK_QUESTIONS[questionIndex].type, answer);
+      }}
+      question={FEEDBACK_QUESTIONS[questionIndex]}
+      progressText={getProgressText(questionIndex)}
+      progressValue={calcFeedbackProgress(questionIndex)}
     />
   );
 }

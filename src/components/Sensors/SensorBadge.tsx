@@ -8,7 +8,7 @@ interface Props {
   classes: any;
 }
 
-function Badge({ option, classes }: Props) {
+function SensorBadge({ option, classes }: Props) {
   if (!option) return <></>;
 
   return (
@@ -38,4 +38,4 @@ const styles = (theme: Theme) => createStyles({
   },
 });
 
-export default withStyles(styles)(Badge);
+export default withStyles(styles)(SensorBadge);

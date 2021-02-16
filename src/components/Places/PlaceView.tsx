@@ -23,7 +23,7 @@ function PlaceView({
 }: Props) {
   const isLoading = place.isFetching || sensors.isFetching || airtable.isFetching;
 
-  if (isLoading) return <LinearProgress color="secondary" />;
+  if (isLoading) return <LinearProgress color="primary" />;
   if (!place.data) return <Typography>Hmm can`t find that place :/</Typography>;
 
   const { name: placeName, lngLat = {}, address = '' } = place.data;

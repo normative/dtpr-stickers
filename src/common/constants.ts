@@ -29,3 +29,17 @@ export enum sensorsGroupLabels {
   access = 'Access',
   storage = 'Storage',
 }
+
+export enum feedbackEmojis {
+  VERY_SAD = 'verySad',
+  SAD = 'sad',
+  NEUTRAL = 'neutral',
+  HAPPY = 'happy',
+  VERY_HAPPY = 'veryHappy',
+}
+
+export enum feedbackQuestionTypes {
+  COMMENT = 'comment',
+  EMOJI = 'emoji',
+  THANKS = 'thanks',
+}
