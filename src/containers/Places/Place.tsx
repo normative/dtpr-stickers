@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { PlaceStateType } from 'reducers/place';
 import sensorsReducer, {
   fetchSensorsFailed,
   fetchSensorsRequested,
@@ -15,6 +14,7 @@ import { AirtableContext } from 'context/airtable';
 import useReducerState from 'hooks/useReducerState';
 import { AirtableStateType } from 'reducers/airtable';
 import { PlaceContext } from 'context/place';
+import { LinearProgress } from '@material-ui/core';
 
 function Place() {
   const [sensors, sensorsActions] = useReducerState(
@@ -39,11 +39,13 @@ function Place() {
     }
   }, [place.data]);
 
+  if (!place.data || place.isFetching || !airtable.data || airtable.isFetching) {
+    return <LinearProgress color="primary" />;
+  }
+
   return (
     <PlaceView
-      place={place as PlaceStateType}
-      airtable={airtable as AirtableStateType}
-      sensors={sensors as SensorsStateType}
+      place={place.data}
     />
   );
 }
