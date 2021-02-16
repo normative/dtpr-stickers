@@ -75,7 +75,7 @@ function SensorTabs({ classes, children, tabs }: Props) {
     <div className={classes.root}>
       <StyledTabs value={value} onChange={handleChange} aria-label="tabs">
         {tabs.map((tab, i) => (
-          <StyledTab label={tab} {...a11yProps(i)} />
+          <StyledTab key={tab} label={tab} {...a11yProps(i)} />
         ))}
       </StyledTabs>
       {

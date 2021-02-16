@@ -10,7 +10,7 @@ interface Props {
   classes: any;
 }
 
-function FeedbackComment({ classes }: Props) {
+function FeedbackThanks({ classes }: Props) {
   return (
     <div className={classes.container}>
       <Typography className={classes.text}>
@@ -36,4 +36,4 @@ const styles = () => createStyles({
   },
 });
 
-export default withStyles(styles)(FeedbackComment);
+export default withStyles(styles)(FeedbackThanks);

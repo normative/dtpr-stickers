@@ -18,7 +18,7 @@ interface Props {
   type: string;
 }
 
-function Feedback({
+function FeedbackQuestion({
   classes, onClick, text, type,
 }: Props) {
   return (
@@ -63,4 +63,4 @@ const styles = (theme: Theme) => createStyles({
   },
 });
 
-export default withStyles(styles)(Feedback);
+export default withStyles(styles)(FeedbackQuestion);

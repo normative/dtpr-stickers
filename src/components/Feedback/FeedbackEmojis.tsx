@@ -22,7 +22,7 @@ const emojisList = [
   { name: feedbackEmojis.VERY_HAPPY, color: '#16A04D', bgColor: '#CDF1E0' },
 ];
 
-function Feedback({ classes, onClick }: Props) {
+function FeedbackEmojis({ classes, onClick }: Props) {
   return (
     <div className={classes.container}>
       {emojisList.map(({ name, color, bgColor }) => (
@@ -30,6 +30,7 @@ function Feedback({ classes, onClick }: Props) {
           variant="outlined"
           disableRipple
           className={classes.button}
+          key={name}
           style={{
             backgroundColor: bgColor,
           }}
@@ -66,4 +67,4 @@ const styles = (theme: Theme) => createStyles({
   },
 });
 
-export default withStyles(styles)(Feedback);
+export default withStyles(styles)(FeedbackEmojis);

@@ -115,7 +115,7 @@ class SensorAccordion extends Component<Props, any> {
         onChange={(event, expanded) => {
           ReactGA.event({
             category: 'User',
-            action: `Tapped Accordian: ${expanded}`,
+            action: `Tapped Accordion: ${title} - ${label}`,
           });
         }}
       >

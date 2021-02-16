@@ -2,6 +2,7 @@ import React, {
   useContext, useEffect, useMemo, useState,
 } from 'react';
 import { useParams } from 'react-router-dom';
+import ReactGA from 'react-ga';
 
 import { getSensor } from 'sideEffects/firebase';
 import sensorReducer, {
@@ -46,6 +47,11 @@ const FEEDBACK_QUESTIONS: FeedbackQuestion[] = [
 ];
 
 const FEEDBACK_QUESTIONS_LENGTH = FEEDBACK_QUESTIONS.length - 1;
+
+const ACTIONS = {
+  [feedbackQuestionTypes.EMOJI]: 'Clicked',
+  [feedbackQuestionTypes.COMMENT]: 'Commented',
+};
 
 function calcFeedbackProgress(questionIndex: number) {
   return (questionIndex / FEEDBACK_QUESTIONS_LENGTH) * 100 || 2.5;
@@ -107,6 +113,12 @@ function Sensor() {
   const onResponse = (type: string, answer: string) => {
     setQuestionIndex(questionIndex + 1);
     setAnswers(answers.concat(answer));
+
+    ReactGA.event({
+      category: 'User',
+      action: `${ACTIONS[type]} Feedback: ${answer}`,
+      label: sensor.data?.name,
+    });
   };
 
   if (!sensor.data || sensor.isFetching || !airtable.data || airtable.isFetching) {
