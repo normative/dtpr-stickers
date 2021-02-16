@@ -36,7 +36,7 @@ function SensorPrintView({
 }: Props) {
   const isLoading = sensor.isFetching || airtable.isFetching;
 
-  if (isLoading) return <LinearProgress color="secondary" />;
+  if (isLoading) return <LinearProgress color="primary" />;
   if (!sensor.data) return <Typography>Hmm can`t find that sensor :/</Typography>;
 
   return (

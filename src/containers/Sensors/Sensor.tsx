@@ -122,7 +122,7 @@ function Sensor() {
   };
 
   if (!sensor.data || sensor.isFetching || !airtable.data || airtable.isFetching) {
-    return <LinearProgress color="secondary" />;
+    return <LinearProgress color="primary" />;
   }
 
   return (
