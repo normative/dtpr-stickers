@@ -30,23 +30,16 @@ export enum sensorsGroupLabels {
   storage = 'Storage',
 }
 
-export enum sensorsGroupNames {
-  PURPOSE = 'purpose',
-  TECH_TYPE = 'techType',
-  DATA_TYPE = 'dataType',
-  DATA_PROCESS = 'dataProcess',
-  ACCESS = 'access',
-  STORAGE = 'storage',
+export enum feedbackEmojis {
+  VERY_SAD = 'verySad',
+  SAD = 'sad',
+  NEUTRAL = 'neutral',
+  HAPPY = 'happy',
+  VERY_HAPPY = 'veryHappy',
 }
-/**
- * Map sensor group names to labels
- */
-export enum sensorsGroupLabels {
-  accountability = 'Accountability',
-  purpose = 'Purpose',
-  techType = 'Technology Type',
-  dataType = 'Data Type',
-  dataProcess = 'Data Process',
-  access = 'Access',
-  storage = 'Storage',
+
+export enum feedbackQuestionTypes {
+  COMMENT = 'comment',
+  EMOJI = 'emoji',
+  THANKS = 'thanks',
 }
