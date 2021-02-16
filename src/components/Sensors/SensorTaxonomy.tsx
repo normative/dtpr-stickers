@@ -7,9 +7,10 @@ import SensorAccordion from './SensorAccordion';
 interface Props {
   accountable?: Option;
   sensorsGroup?: SensorsGroup[];
+  sensorName: string;
 }
 
-function SensorTaxonomy({ accountable, sensorsGroup }: Props) {
+function SensorTaxonomy({ sensorName, accountable, sensorsGroup }: Props) {
   if (!accountable && !sensorsGroup?.length) <></>;
 
   return (
@@ -21,6 +22,7 @@ function SensorTaxonomy({ accountable, sensorsGroup }: Props) {
         title={accountable.name}
         label={sensorsGroupLabels.accountability}
         body={accountable.description}
+        name={sensorName}
       />
       )}
       {/* Followed by the rest of sensor groups */}
@@ -32,6 +34,7 @@ function SensorTaxonomy({ accountable, sensorsGroup }: Props) {
             title={name}
             label={label}
             body={description}
+            name={sensorName}
           />
         ),
       ))}

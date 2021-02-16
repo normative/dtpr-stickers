@@ -14,7 +14,7 @@ function Footer({ classes }: WithStyles) {
         {' '}
         We may share feedback on this page with Helpful Places.
       </Typography>
-      <Link to="/">
+      <Link to="https://dtpr.helpfulplaces.com/">
         <Typography className={classes.link} color="primary">
           LEARN MORE
         </Typography>

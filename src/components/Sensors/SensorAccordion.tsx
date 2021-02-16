@@ -97,12 +97,13 @@ interface Props {
   title: string;
   label: string;
   body: string;
+  name: string;
 }
 
 class SensorAccordion extends Component<Props, any> {
   render() {
     const {
-      classes, icon, title, label, body,
+      classes, icon, title, label, body, name,
     } = this.props;
     const parsedBody = markdownConverter.makeHtml(body);
 
@@ -115,7 +116,7 @@ class SensorAccordion extends Component<Props, any> {
         onChange={(event, expanded) => {
           ReactGA.event({
             category: 'User',
-            action: `Tapped Accordion: ${title} - ${label}`,
+            action: `Tapped Accordion of ${name}: ${title} - ${label}`,
           });
         }}
       >

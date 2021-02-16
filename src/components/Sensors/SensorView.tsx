@@ -76,7 +76,11 @@ function SensorView({
       <SensorTabs tabs={['DETAILS', 'FAQ']}>
         <div>
           <SensorDetails description={sensor.description} systems={systems} />
-          <SensorTaxonomy accountable={accountableOption} sensorsGroup={sensorsGroup} />
+          <SensorTaxonomy
+            sensorName={sensor.name}
+            accountable={accountableOption}
+            sensorsGroup={sensorsGroup}
+          />
           <SensorFeedback
             onClick={onResponse}
             question={feedbackQuestion}
