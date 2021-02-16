@@ -17,6 +17,7 @@ import SensorBadge from './SensorBadge';
 import SensorDetails from './SensorDetails';
 import SensorTaxonomy from './SensorTaxonomy';
 import SensorTabs from './SensorTabs';
+import SensorPlace from './SensorPlace';
 
 interface Props {
   place: PlaceData;
@@ -87,6 +88,7 @@ function SensorView({
             progressText={progressText}
             progressValue={progressValue}
           />
+          <SensorPlace place={place} />
         </div>
         <div className={classes.faq}>
           {faq.map(({ question, response }, i) => (

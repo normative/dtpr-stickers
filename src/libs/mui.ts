@@ -29,6 +29,7 @@ export { default as AccordionDetails } from '@material-ui/core/AccordionDetails'
 export { default as AddIcon } from '@material-ui/icons/Add';
 export { default as EditIcon } from '@material-ui/icons/Edit';
 export { default as ArrowBackIcon } from '@material-ui/icons/ArrowBack';
+export { default as ArrowForwardIcon } from '@material-ui/icons/ArrowForward';
 export { default as SendIcon } from '@material-ui/icons/Send';
 export { default as ExpandMoreIcon } from '@material-ui/icons/ExpandMore';
 export { default as CheckIcon } from '@material-ui/icons/Check';
