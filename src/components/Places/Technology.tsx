@@ -17,23 +17,8 @@ const GOOGLE_MAPS_SEARCH = 'https://www.google.com/maps/search/?api=1';
 function PlaceView({ classes, place }: Props) {
   return (
     <div className={classes.root}>
-      <div className={classes.header}>
-        <Typography className={classes.name}>
-          {place.name}
-        </Typography>
-        <Link href={`${GOOGLE_MAPS_SEARCH}&query=${place.address}`} target="_blank" className={classes.addressLink}>
-          <PlaceIcon fontSize="small" />
-          <Typography className={classes.address}>
-            {place.address}
-          </Typography>
-        </Link>
-      </div>
-      <Divider variant="fullWidth" />
-      <SensorTabs tabs={['TECHNOLOGIES']}>
-        <div className={classes.technologies}>
-          Technologies
-        </div>
-      </SensorTabs>
+      <div className={classes.title} />
+      <div className={classes.card} />
     </div>
   );
 }
