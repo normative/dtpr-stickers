@@ -45,12 +45,18 @@ const styles = (theme: Theme) => createStyles({
     '&:before': {
       display: 'none',
     },
+    '&$expanded': {
+      margin: 0,
+    },
+    '&.Mui-expanded': {
+      margin: 0,
+    },
   },
   expansionPanelExpanded: {
     margin: 0,
   },
   expansionPanelSummaryRoot: {
-    margin: '0',
+    margin: 0,
     minHeight: '56px',
     padding: '0 16px 0 16px',
     '&$expansionPanelSummaryExpanded': {
@@ -59,7 +65,7 @@ const styles = (theme: Theme) => createStyles({
     },
   },
   expansionPanelSummaryContent: {
-    margin: '0',
+    margin: 0,
     '&>:last-child': {
       paddingRight: 0,
     },
