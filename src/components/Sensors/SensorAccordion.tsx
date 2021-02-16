@@ -47,7 +47,7 @@ const styles = (theme: Theme) => createStyles({
     },
   },
   expansionPanelExpanded: {
-    margin: '0',
+    margin: 0,
   },
   expansionPanelSummaryRoot: {
     margin: '0',
@@ -72,8 +72,8 @@ const styles = (theme: Theme) => createStyles({
     // needed for nested reference
   },
   expansionPanelDetailsRoot: {
-    borderLeft: '2px solid #000',
-    marginLeft: theme.spacing(4 + 1),
+    borderLeft: '2px dashed #000',
+    marginLeft: theme.spacing(4.125),
     paddingLeft: theme.spacing(3),
     paddingTop: 0,
     paddingRight: theme.spacing(3),

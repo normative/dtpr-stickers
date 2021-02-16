@@ -25,6 +25,10 @@ import { FAQ, FeedbackQuestion, System } from 'common/types';
 
 const FEEDBACK_QUESTIONS: FeedbackQuestion[] = [
   {
+    text: 'How do you feel about this technology?',
+    type: feedbackQuestionTypes.EMOJI,
+  },
+  {
     text: 'Is this information helpful?',
     type: feedbackQuestionTypes.EMOJI,
   },
@@ -116,7 +120,7 @@ function Sensor() {
 
     ReactGA.event({
       category: 'User',
-      action: `${ACTIONS[type]} Feedback: ${answer}`,
+      action: `${ACTIONS[type]} Feedback for question "${FEEDBACK_QUESTIONS[questionIndex]}": \n"${answer}"`,
       label: sensor.data?.name,
     });
   };
