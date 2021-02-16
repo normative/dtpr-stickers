@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   createStyles,
   Theme,
   withStyles,
 } from '@material-ui/core/styles';
+import Fade from '@material-ui/core/Fade';
 
 import { Typography } from 'libs/mui';
 import { feedbackQuestionTypes } from 'common/constants';
@@ -21,29 +22,47 @@ interface Props {
 function FeedbackQuestion({
   classes, onClick, text, type,
 }: Props) {
+  const [fade, setFade] = useState(false);
+
+  useEffect(() => {
+    setFade(true);
+  }, [text]);
+
+  const handleOnClick = (value: string) => {
+    setFade(false);
+    setTimeout(() => {
+      onClick(value);
+    }, 35);
+  };
+
   return (
-    <div className={classes.container}>
-      <Typography className={classes.text}>
-        {text}
-      </Typography>
-      <div className={classes.answerContainer}>
+    <Fade in={fade} timeout={30}>
+      <div className={classes.container}>
         {
-          type === feedbackQuestionTypes.EMOJI && (
-            <FeedbackEmojis onClick={onClick} />
-          )
-        }
-        {
-          type === feedbackQuestionTypes.COMMENT && (
-            <FeedbackComment onClick={onClick} />
-          )
-        }
-        {
-          type === feedbackQuestionTypes.THANKS && (
+          type === feedbackQuestionTypes.THANKS ? (
             <FeedbackThanks />
+          ) : (
+            <>
+              <Typography className={classes.text}>
+                {text}
+              </Typography>
+              <div className={classes.answerContainer}>
+                {
+                  type === feedbackQuestionTypes.EMOJI && (
+                    <FeedbackEmojis onClick={handleOnClick} />
+                  )
+                }
+                {
+                  type === feedbackQuestionTypes.COMMENT && (
+                    <FeedbackComment onClick={handleOnClick} />
+                  )
+                }
+              </div>
+            </>
           )
         }
       </div>
-    </div>
+    </Fade>
   );
 }
 

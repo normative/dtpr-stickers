@@ -3,10 +3,11 @@ import {
   createStyles, Theme, withStyles,
 } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
+import { System } from 'common/types';
 
 interface Props {
   description?: string;
-  systems?: string[];
+  systems?: System[];
   classes: any;
 }
 
@@ -17,7 +18,7 @@ function SensorDetails({ description, systems, classes }: Props) {
     <div className={classes.root}>
       {description && (
         <div>
-          <Typography className={classes.label}>
+          <Typography>
             <strong>Purpose:</strong>
             {' '}
             {description}
@@ -29,9 +30,16 @@ function SensorDetails({ description, systems, classes }: Props) {
           <Typography>
             <strong>This sensor is part of the following systems:</strong>
           </Typography>
-          <Typography>
-            {systems.join(', ')}
-          </Typography>
+          {systems.map(({ title, description: systemDescription }) => (
+            <div className={classes.system} key={title}>
+              <Typography>
+                <strong>{title}</strong>
+              </Typography>
+              <Typography className={classes.systemDescription}>
+                {systemDescription}
+              </Typography>
+            </div>
+          ))}
         </div>
       )}
     </div>
@@ -51,6 +59,13 @@ const styles = (theme: Theme) => createStyles({
     padding: theme.spacing(3),
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
+  },
+  system: {
+    marginTop: theme.spacing(),
+    paddingLeft: theme.spacing(),
+  },
+  systemDescription: {
+    paddingLeft: theme.spacing(),
   },
 });
 

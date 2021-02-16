@@ -7,7 +7,7 @@ import { Typography, Divider } from 'libs/mui';
 import {
   FAQ,
   FeedbackQuestion,
-  PlaceData, SensorData, SensorsGroup,
+  PlaceData, SensorData, SensorsGroup, System,
 } from 'common/types';
 
 import Accordion from 'components/Accordion';
@@ -26,7 +26,7 @@ interface Props {
   techType: SensorsGroup;
   purpose: SensorsGroup;
   classes: any;
-  systems: string[];
+  systems: System[];
   faq: FAQ[];
   onResponse: (answer: string) => void;
   question: FeedbackQuestion;

@@ -21,7 +21,7 @@ import SensorView from 'components/Sensors/SensorView';
 import { feedbackQuestionTypes, sensorsGroupNames } from 'common/constants';
 import { LinearProgress } from 'libs/mui';
 import { prepareSensorsGroups } from 'presenters/sensor';
-import { FAQ, FeedbackQuestion } from 'common/types';
+import { FAQ, FeedbackQuestion, System } from 'common/types';
 
 const FEEDBACK_QUESTIONS: FeedbackQuestion[] = [
   {
@@ -102,7 +102,7 @@ function Sensor() {
 
   const systems = useMemo(() => {
     if (!sensor.data?.systems) return [];
-    return Object.values(sensor.data.systems).map(({ title }) => title);
+    return Object.values(sensor.data.systems) as System[];
   }, [sensor.data]);
 
   const faq = useMemo(() => {

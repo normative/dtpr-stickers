@@ -5,7 +5,7 @@ import {
   withStyles,
 } from '@material-ui/core/styles';
 
-import { Button, CheckIcon, Input } from 'libs/mui';
+import { IconButton, Input, SendIcon } from 'libs/mui';
 
 interface Props {
   onClick: (name: string) => void;
@@ -24,28 +24,28 @@ function FeedbackComment({
         placeholder="Your response"
         className={classes.input}
       />
-      <Button
-        variant="outlined"
-        color="primary"
+      <IconButton
         onClick={() => onClick(text)}
         className={classes.button}
       >
-        <CheckIcon className={classes.icon} />
-      </Button>
+        <SendIcon color="primary" />
+      </IconButton>
     </div>
   );
 }
 
 const styles = (theme: Theme) => createStyles({
   container: {
-    display: 'flex',
+    position: 'relative',
   },
   input: {
+    paddingRight: theme.spacing(5),
     width: '100%',
-    marginRight: theme.spacing(2),
   },
   button: {
+    position: 'absolute',
     padding: 0,
+    right: 0,
   },
   icon: {
     height: '24px',

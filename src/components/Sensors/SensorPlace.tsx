@@ -29,7 +29,7 @@ function SensorPlace({ classes, place }: Props) {
       </Typography>
       <Link to={`/places/${place?.id}`} className={classes.link}>
         <Typography className={classes.linkText} component="span">
-          LEARN MORE
+          SEE ALL
         </Typography>
         <ArrowForwardIcon color="secondary" />
       </Link>
