@@ -1,44 +1,8 @@
-import flattenDeep from 'lodash.flattendeep';
-import groupBy from 'lodash.groupby';
 
 import { allSensorsTaxonomyFlatten, placeSensors, sensorsGroupedByTaxonomyPropValues, taxonomyPropWithSensor } from '__mockData__/groupSensorByTaxonomyPropValue';
+import { flattenSensorTaxonomy, groupSensorByTaxonomyPropValue, mapSensorToMultipleTaxonomyProp, mapSensorToTaxonomyProp } from './place';
 
 const taxonomyToBeFlatten = ['systems', 'techType', 'purpose', 'dataType'];
-
-function groupSensorByTaxonomyPropValue(sensors, taxonomy) {
-  const flattenList = flattenSensorTaxonomy(sensors, taxonomy);
-  return groupBy(flattenList, ({ taxonomyProp, value }) => {
-    return `${taxonomyProp}:${value}`;
-  });
-}
-
-function flattenSensorTaxonomy(sensors, taxonomy) {
-  return flattenDeep(sensors.map((sensor) => (
-    mapSensorToMultipleTaxonomyProp(sensor, taxonomy)
-  )));
-}
-
-function mapSensorToMultipleTaxonomyProp(sensor, taxonomy) {
-  return taxonomy.map((taxonomyProp) => {
-    return mapSensorToTaxonomyProp(sensor, taxonomyProp);
-  })
-}
-
-function mapSensorToTaxonomyProp(sensor, taxonomyProp) {
-  let taxonomy = sensor[taxonomyProp];
-  if (!taxonomy) return [];
-
-  if(taxonomyProp === 'systems') {
-    taxonomy = Object.values(sensor.systems).map(({ title }) => title);
-  }
-
-  return Object.values(taxonomy).map((taxonomyValue) => ({
-    sensorName: sensor.name,
-    sensorDescription: sensor.description,
-    value: taxonomyValue,
-    taxonomyProp,
-  }));
-}
 
 describe('group sensors by taxonomy', () => {
   test('should map sensor to taxonomy property', () => {
@@ -48,6 +12,8 @@ describe('group sensors by taxonomy', () => {
       "taxonomyProp": "techType",
       "value": "Hands Free",
     }]);
+
+    expect(mapSensorToTaxonomyProp(placeSensors[1], 'systems')).toEqual([]);
   });
 
   test('should map sensor to multiple taxonomy property', () => {
