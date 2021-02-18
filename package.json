@@ -22,6 +22,8 @@
     "firebaseui": "^4.7.1",
     "geojson": "^0.5.0",
     "jszip": "^3.5.0",
+    "lodash.flattendeep": "^4.4.0",
+    "lodash.groupby": "^4.6.0",
     "mapbox-gl": "1.13.0",
     "nanoid": "^3.1.20",
     "qrcode-svg": "^1.1.0",

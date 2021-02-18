@@ -45,9 +45,6 @@ const styles = (theme: Theme) => createStyles({
     '&:before': {
       display: 'none',
     },
-    '&$expanded': {
-      margin: 0,
-    },
     '&.Mui-expanded': {
       margin: 0,
     },
