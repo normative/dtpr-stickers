@@ -1,4 +1,5 @@
 import { LngLat } from 'mapbox-gl';
+import { sensorsGroupNames } from './constants';
 
 export interface ReducerStateType {
   isFetching: Boolean,
@@ -13,6 +14,14 @@ export interface PlaceData {
   address: string, // mapbox place_name
   sensors: { [sensorId: string]: boolean }
   admins: { [uid: string]: boolean },
+}
+
+export interface SensorByTaxonomyProp {
+  id: string,
+  sensorDescription: string,
+  sensorName: string,
+  taxonomyProp: sensorsGroupNames,
+  value: string,
 }
 
 export interface SensorsGroup {

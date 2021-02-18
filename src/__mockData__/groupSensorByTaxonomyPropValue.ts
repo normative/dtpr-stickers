@@ -1,5 +1,5 @@
-export const placeSensors = [
-  {
+export const placeSensors = {
+  1: {
     accountableDescription: '',
     description: '',
     email: '',
@@ -18,7 +18,7 @@ export const placeSensors = [
       'Still camera - infrared',
     ],
   },
-  {
+  2: {
     access: [
       'Available based on role',
     ],
@@ -50,7 +50,7 @@ export const placeSensors = [
       'Video camera - infrared',
     ],
   },
-  {
+  3: {
     access: [
       'Available to the accountable organization',
       'Not available to vendor',
@@ -87,7 +87,7 @@ export const placeSensors = [
       'De-identified Video',
     ],
   },
-  {
+  4: {
     access: [
       'Available to the accountable organization',
     ],
@@ -119,7 +119,7 @@ export const placeSensors = [
       'Video camera',
     ],
   },
-  {
+  5: {
     access: [
       'Available to vendor',
       'Available to the accountable organization',
@@ -152,7 +152,7 @@ export const placeSensors = [
       'De-identified Image',
     ],
   },
-  {
+  6: {
     accountable: 'ORG NAME',
     accountableDescription: 'rhfgd',
     chat: '',
@@ -175,7 +175,7 @@ export const placeSensors = [
       'Soil Moisture Sensor',
     ],
   },
-  {
+  7: {
     access: [
       'Available to me',
       'Not available to vendor',
@@ -213,7 +213,7 @@ export const placeSensors = [
       'Identifiable RFID',
     ],
   },
-  {
+  8: {
     FAQ: [
       {
         question: 'Where can I see the impact of this sensor?',
@@ -265,7 +265,7 @@ export const placeSensors = [
       'Hands Free',
     ],
   },
-  {
+  9: {
     access: [
       'Available to me',
     ],
@@ -298,7 +298,7 @@ export const placeSensors = [
       'Video camera',
     ],
   },
-  {
+  10: {
     access: [
       'Available to vendor',
     ],
@@ -330,18 +330,20 @@ export const placeSensors = [
       'Microphone',
     ],
   },
-];
+};
 
 export const taxonomyPropWithSensor = [
   [
     {
       sensorDescription: 'Page Description',
+      id: '8',
       sensorName: 'Emergency Sensor',
       taxonomyProp: 'systems',
       value: 'HVAC System',
     },
     {
       sensorDescription: 'Page Description',
+      id: '8',
       sensorName: 'Emergency Sensor',
       taxonomyProp: 'systems',
       value: 'Observatory',
@@ -350,6 +352,7 @@ export const taxonomyPropWithSensor = [
   [
     {
       sensorDescription: 'Page Description',
+      id: '8',
       sensorName: 'Emergency Sensor',
       taxonomyProp: 'techType',
       value: 'Hands Free',
@@ -358,6 +361,7 @@ export const taxonomyPropWithSensor = [
   [
     {
       sensorDescription: 'Page Description',
+      id: '8',
       sensorName: 'Emergency Sensor',
       taxonomyProp: 'purpose',
       value: 'Fire & Emergency',
@@ -366,6 +370,7 @@ export const taxonomyPropWithSensor = [
   [
     {
       sensorDescription: 'Page Description',
+      id: '8',
       sensorName: 'Emergency Sensor',
       taxonomyProp: 'dataType',
       value: 'Tabular',
@@ -373,243 +378,508 @@ export const taxonomyPropWithSensor = [
   ],
 ];
 
+export const multipleTaxonomyPropsWithSensors = [
+  [
+    [],
+    [
+      {
+        id: '1',
+        sensorDescription: '',
+        sensorName: 'New Sensor',
+        taxonomyProp: 'techType',
+        value: 'Microphone',
+      },
+      {
+        id: '1',
+        sensorDescription: '',
+        sensorName: 'New Sensor',
+        taxonomyProp: 'techType',
+        value: 'Still camera - infrared',
+      },
+    ],
+    [
+      {
+        id: '1',
+        sensorDescription: '',
+        sensorName: 'New Sensor',
+        taxonomyProp: 'purpose',
+        value: 'Energy Efficiency',
+      },
+      {
+        id: '1',
+        sensorDescription: '',
+        sensorName: 'New Sensor',
+        taxonomyProp: 'purpose',
+        value: 'Mobility',
+      },
+      {
+        id: '1',
+        sensorDescription: '',
+        sensorName: 'New Sensor',
+        taxonomyProp: 'purpose',
+        value: 'Safety & Security',
+      },
+    ],
+    [],
+  ],
+  [
+    [],
+    [
+      {
+        id: '2',
+        sensorDescription: 'Page Description',
+        sensorName: 'Sensor Name',
+        taxonomyProp: 'techType',
+        value: 'Video camera - infrared',
+      },
+    ],
+    [
+      {
+        id: '2',
+        sensorDescription: 'Page Description',
+        sensorName: 'Sensor Name',
+        taxonomyProp: 'purpose',
+        value: 'Wayfinding & Services',
+      },
+    ],
+    [
+      {
+        id: '2',
+        sensorDescription: 'Page Description',
+        sensorName: 'Sensor Name',
+        taxonomyProp: 'dataType',
+        value: 'Tabular',
+      },
+    ],
+  ],
+  [
+    [],
+    [
+      {
+        id: '3',
+        sensorDescription: 'At a city intersection, a camera with onboard computer vision monitors pedestrian crossing. This technology detects when people are waiting to cross the street, and automatically changes the traffic light. It ensures that people have enough time to cross. This benefits pedestrians with shorter wait times and safer crossings. No raw images of faces are sent to the cloud. Only information about location and traffic type (i.e., pedestrian, car or cyclist) are sent for further processing.',
+        sensorName: 'Computer Vision Camera',
+        taxonomyProp: 'techType',
+        value: 'De-identified Video',
+      },
+    ],
+    [
+      {
+        id: '3',
+        sensorDescription: 'At a city intersection, a camera with onboard computer vision monitors pedestrian crossing. This technology detects when people are waiting to cross the street, and automatically changes the traffic light. It ensures that people have enough time to cross. This benefits pedestrians with shorter wait times and safer crossings. No raw images of faces are sent to the cloud. Only information about location and traffic type (i.e., pedestrian, car or cyclist) are sent for further processing.',
+        sensorName: 'Computer Vision Camera',
+        taxonomyProp: 'purpose',
+        value: 'Mobility',
+      },
+    ],
+    [
+      {
+        id: '3',
+        sensorDescription: 'At a city intersection, a camera with onboard computer vision monitors pedestrian crossing. This technology detects when people are waiting to cross the street, and automatically changes the traffic light. It ensures that people have enough time to cross. This benefits pedestrians with shorter wait times and safer crossings. No raw images of faces are sent to the cloud. Only information about location and traffic type (i.e., pedestrian, car or cyclist) are sent for further processing.',
+        sensorName: 'Computer Vision Camera',
+        taxonomyProp: 'dataType',
+        value: 'Pixel-based Image',
+      },
+      {
+        id: '3',
+        sensorDescription: 'At a city intersection, a camera with onboard computer vision monitors pedestrian crossing. This technology detects when people are waiting to cross the street, and automatically changes the traffic light. It ensures that people have enough time to cross. This benefits pedestrians with shorter wait times and safer crossings. No raw images of faces are sent to the cloud. Only information about location and traffic type (i.e., pedestrian, car or cyclist) are sent for further processing.',
+        sensorName: 'Computer Vision Camera',
+        taxonomyProp: 'dataType',
+        value: 'Values / Time',
+      },
+    ],
+  ],
+  [
+    [],
+    [
+      {
+        id: '4',
+        sensorDescription: 'This is a description',
+        sensorName: 'Nest Cam',
+        taxonomyProp: 'techType',
+        value: 'Video camera',
+      },
+    ],
+    [
+      {
+        id: '4',
+        sensorDescription: 'This is a description',
+        sensorName: 'Nest Cam',
+        taxonomyProp: 'purpose',
+        value: 'Safety & Security',
+      },
+    ],
+    [
+      {
+        id: '4',
+        sensorDescription: 'This is a description',
+        sensorName: 'Nest Cam',
+        taxonomyProp: 'dataType',
+        value: 'Pixel-based Image',
+      },
+    ],
+  ],
+  [
+    [],
+    [
+      {
+        id: '5',
+        sensorDescription: 'More description',
+        sensorName: 'Numina Sensor',
+        taxonomyProp: 'techType',
+        value: 'De-identified Image',
+      },
+    ],
+    [
+      {
+        id: '5',
+        sensorDescription: 'More description',
+        sensorName: 'Numina Sensor',
+        taxonomyProp: 'purpose',
+        value: 'Planning & Decision-making',
+      },
+    ],
+    [
+      {
+        id: '5',
+        sensorDescription: 'More description',
+        sensorName: 'Numina Sensor',
+        taxonomyProp: 'dataType',
+        value: 'Spatial',
+      },
+    ],
+  ],
+  [
+    [],
+    [
+
+    ],
+    [
+
+    ],
+    [
+
+    ],
+  ],
+  [
+    [],
+    [
+
+    ],
+    [
+
+    ],
+    [
+
+    ],
+  ],
+  [
+    [
+      {
+        id: '8',
+        sensorDescription: 'Page Description',
+        sensorName: 'Emergency Sensor',
+        taxonomyProp: 'systems',
+        value: 'HVAC System',
+      },
+      {
+        id: '8',
+        sensorDescription: 'Page Description',
+        sensorName: 'Emergency Sensor',
+        taxonomyProp: 'systems',
+        value: 'Observatory',
+      },
+    ],
+    [
+      {
+        id: '8',
+        sensorDescription: 'Page Description',
+        sensorName: 'Emergency Sensor',
+        taxonomyProp: 'techType',
+        value: 'Hands Free',
+      },
+    ],
+    [
+      {
+        id: '8',
+        sensorDescription: 'Page Description',
+        sensorName: 'Emergency Sensor',
+        taxonomyProp: 'purpose',
+        value: 'Fire & Emergency',
+      },
+    ],
+    [
+      {
+        id: '8',
+        sensorDescription: 'Page Description',
+        sensorName: 'Emergency Sensor',
+        taxonomyProp: 'dataType',
+        value: 'Tabular',
+      },
+    ],
+  ],
+  [
+    [],
+    [
+      {
+        id: '9',
+        sensorDescription: 'Purpose: to understand pedestrian dynamics and patterns of behavior for all travel modes between the Jackson Square T stop and the Southwest Corridor. Data Collected: de-identified images collected through Numina sensors are used to count pedestrians, bikes, and vehicles. Find out more by clicking the icons below.',
+        sensorName: 'Nest Camera',
+        taxonomyProp: 'techType',
+        value: 'Video camera',
+      },
+    ],
+    [
+      {
+        id: '9',
+        sensorDescription: 'Purpose: to understand pedestrian dynamics and patterns of behavior for all travel modes between the Jackson Square T stop and the Southwest Corridor. Data Collected: de-identified images collected through Numina sensors are used to count pedestrians, bikes, and vehicles. Find out more by clicking the icons below.',
+        sensorName: 'Nest Camera',
+        taxonomyProp: 'purpose',
+        value: 'Safety & Security',
+      },
+    ],
+    [
+      {
+        id: '9',
+        sensorDescription: 'Purpose: to understand pedestrian dynamics and patterns of behavior for all travel modes between the Jackson Square T stop and the Southwest Corridor. Data Collected: de-identified images collected through Numina sensors are used to count pedestrians, bikes, and vehicles. Find out more by clicking the icons below.',
+        sensorName: 'Nest Camera',
+        taxonomyProp: 'dataType',
+        value: 'Pixel-based Image',
+      },
+    ],
+  ],
+  [
+    [],
+    [
+      {
+        id: '10',
+        sensorDescription: 'This is a description',
+        sensorName: 'WildMics',
+        taxonomyProp: 'techType',
+        value: 'Microphone',
+      },
+    ],
+    [
+      {
+        id: '10',
+        sensorDescription: 'This is a description',
+        sensorName: 'WildMics',
+        taxonomyProp: 'purpose',
+        value: 'Switch',
+      },
+    ],
+    [
+      {
+        id: '10',
+        sensorDescription: 'This is a description',
+        sensorName: 'WildMics',
+        taxonomyProp: 'dataType',
+        value: 'Boolean',
+      },
+    ],
+  ],
+];
+
 export const allSensorsTaxonomyFlatten = [
   {
     sensorDescription: '',
+    id: '1',
     sensorName: 'New Sensor',
     taxonomyProp: 'techType',
     value: 'Microphone',
   },
   {
     sensorDescription: '',
+    id: '1',
     sensorName: 'New Sensor',
     taxonomyProp: 'techType',
     value: 'Still camera - infrared',
   },
   {
     sensorDescription: '',
+    id: '1',
     sensorName: 'New Sensor',
     taxonomyProp: 'purpose',
     value: 'Energy Efficiency',
   },
   {
     sensorDescription: '',
+    id: '1',
     sensorName: 'New Sensor',
     taxonomyProp: 'purpose',
     value: 'Mobility',
   },
   {
     sensorDescription: '',
+    id: '1',
     sensorName: 'New Sensor',
     taxonomyProp: 'purpose',
     value: 'Safety & Security',
   },
   {
     sensorDescription: 'Page Description',
+    id: '2',
     sensorName: 'Sensor Name',
     taxonomyProp: 'techType',
     value: 'Video camera - infrared',
   },
   {
     sensorDescription: 'Page Description',
+    id: '2',
     sensorName: 'Sensor Name',
     taxonomyProp: 'purpose',
     value: 'Wayfinding & Services',
   },
   {
     sensorDescription: 'Page Description',
+    id: '2',
     sensorName: 'Sensor Name',
     taxonomyProp: 'dataType',
     value: 'Tabular',
   },
   {
     sensorDescription: 'At a city intersection, a camera with onboard computer vision monitors pedestrian crossing. This technology detects when people are waiting to cross the street, and automatically changes the traffic light. It ensures that people have enough time to cross. This benefits pedestrians with shorter wait times and safer crossings. No raw images of faces are sent to the cloud. Only information about location and traffic type (i.e., pedestrian, car or cyclist) are sent for further processing.',
+    id: '3',
     sensorName: 'Computer Vision Camera',
     taxonomyProp: 'techType',
     value: 'De-identified Video',
   },
   {
     sensorDescription: 'At a city intersection, a camera with onboard computer vision monitors pedestrian crossing. This technology detects when people are waiting to cross the street, and automatically changes the traffic light. It ensures that people have enough time to cross. This benefits pedestrians with shorter wait times and safer crossings. No raw images of faces are sent to the cloud. Only information about location and traffic type (i.e., pedestrian, car or cyclist) are sent for further processing.',
+    id: '3',
     sensorName: 'Computer Vision Camera',
     taxonomyProp: 'purpose',
     value: 'Mobility',
   },
   {
     sensorDescription: 'At a city intersection, a camera with onboard computer vision monitors pedestrian crossing. This technology detects when people are waiting to cross the street, and automatically changes the traffic light. It ensures that people have enough time to cross. This benefits pedestrians with shorter wait times and safer crossings. No raw images of faces are sent to the cloud. Only information about location and traffic type (i.e., pedestrian, car or cyclist) are sent for further processing.',
+    id: '3',
     sensorName: 'Computer Vision Camera',
     taxonomyProp: 'dataType',
     value: 'Pixel-based Image',
   },
   {
     sensorDescription: 'At a city intersection, a camera with onboard computer vision monitors pedestrian crossing. This technology detects when people are waiting to cross the street, and automatically changes the traffic light. It ensures that people have enough time to cross. This benefits pedestrians with shorter wait times and safer crossings. No raw images of faces are sent to the cloud. Only information about location and traffic type (i.e., pedestrian, car or cyclist) are sent for further processing.',
+    id: '3',
     sensorName: 'Computer Vision Camera',
     taxonomyProp: 'dataType',
     value: 'Values / Time',
   },
   {
     sensorDescription: 'This is a description',
+    id: '4',
     sensorName: 'Nest Cam',
     taxonomyProp: 'techType',
     value: 'Video camera',
   },
   {
     sensorDescription: 'This is a description',
+    id: '4',
     sensorName: 'Nest Cam',
     taxonomyProp: 'purpose',
     value: 'Safety & Security',
   },
   {
     sensorDescription: 'This is a description',
+    id: '4',
     sensorName: 'Nest Cam',
     taxonomyProp: 'dataType',
     value: 'Pixel-based Image',
   },
   {
     sensorDescription: 'More description',
+    id: '5',
     sensorName: 'Numina Sensor',
     taxonomyProp: 'techType',
     value: 'De-identified Image',
   },
   {
     sensorDescription: 'More description',
+    id: '5',
     sensorName: 'Numina Sensor',
     taxonomyProp: 'purpose',
     value: 'Planning & Decision-making',
   },
   {
     sensorDescription: 'More description',
+    id: '5',
     sensorName: 'Numina Sensor',
     taxonomyProp: 'dataType',
     value: 'Spatial',
   },
   {
-    sensorDescription: 'descroption',
-    sensorName: '',
-    taxonomyProp: 'techType',
-    value: 'Soil Moisture Sensor',
-  },
-  {
-    sensorDescription: 'descroption',
-    sensorName: '',
-    taxonomyProp: 'purpose',
-    value: 'Waste Management',
-  },
-  {
-    sensorDescription: 'descroption',
-    sensorName: '',
-    taxonomyProp: 'dataType',
-    value: 'Pixel-based Image',
-  },
-  {
-    sensorDescription: '',
-    sensorName: '',
-    taxonomyProp: 'techType',
-    value: 'Contactless Payments',
-  },
-  {
-    sensorDescription: '',
-    sensorName: '',
-    taxonomyProp: 'techType',
-    value: 'LiDAR',
-  },
-  {
-    sensorDescription: '',
-    sensorName: '',
-    taxonomyProp: 'techType',
-    value: 'Water Quality',
-  },
-  {
-    sensorDescription: '',
-    sensorName: '',
-    taxonomyProp: 'techType',
-    value: 'Identifiable RFID',
-  },
-  {
-    sensorDescription: '',
-    sensorName: '',
-    taxonomyProp: 'purpose',
-    value: null,
-  },
-  {
-    sensorDescription: '',
-    sensorName: '',
-    taxonomyProp: 'purpose',
-    value: 'Commerce',
-  },
-  {
-    sensorDescription: '',
-    sensorName: '',
-    taxonomyProp: 'purpose',
-    value: 'Locate Lost Item',
-  },
-  {
-    sensorDescription: '',
-    sensorName: '',
-    taxonomyProp: 'dataType',
-    value: 'Pixel-based Image',
-  },
-  {
     sensorDescription: 'Page Description',
+    id: '8',
     sensorName: 'Emergency Sensor',
     taxonomyProp: 'systems',
     value: 'HVAC System',
   },
   {
     sensorDescription: 'Page Description',
+    id: '8',
     sensorName: 'Emergency Sensor',
     taxonomyProp: 'systems',
     value: 'Observatory',
   },
   {
     sensorDescription: 'Page Description',
+    id: '8',
     sensorName: 'Emergency Sensor',
     taxonomyProp: 'techType',
     value: 'Hands Free',
   },
   {
     sensorDescription: 'Page Description',
+    id: '8',
     sensorName: 'Emergency Sensor',
     taxonomyProp: 'purpose',
     value: 'Fire & Emergency',
   },
   {
     sensorDescription: 'Page Description',
+    id: '8',
     sensorName: 'Emergency Sensor',
     taxonomyProp: 'dataType',
     value: 'Tabular',
   },
   {
     sensorDescription: 'Purpose: to understand pedestrian dynamics and patterns of behavior for all travel modes between the Jackson Square T stop and the Southwest Corridor. Data Collected: de-identified images collected through Numina sensors are used to count pedestrians, bikes, and vehicles. Find out more by clicking the icons below.',
+    id: '9',
     sensorName: 'Nest Camera',
     taxonomyProp: 'techType',
     value: 'Video camera',
   },
   {
     sensorDescription: 'Purpose: to understand pedestrian dynamics and patterns of behavior for all travel modes between the Jackson Square T stop and the Southwest Corridor. Data Collected: de-identified images collected through Numina sensors are used to count pedestrians, bikes, and vehicles. Find out more by clicking the icons below.',
+    id: '9',
     sensorName: 'Nest Camera',
     taxonomyProp: 'purpose',
     value: 'Safety & Security',
   },
   {
     sensorDescription: 'Purpose: to understand pedestrian dynamics and patterns of behavior for all travel modes between the Jackson Square T stop and the Southwest Corridor. Data Collected: de-identified images collected through Numina sensors are used to count pedestrians, bikes, and vehicles. Find out more by clicking the icons below.',
+    id: '9',
     sensorName: 'Nest Camera',
     taxonomyProp: 'dataType',
     value: 'Pixel-based Image',
   },
   {
     sensorDescription: 'This is a description',
+    id: '10',
     sensorName: 'WildMics',
     taxonomyProp: 'techType',
     value: 'Microphone',
   },
   {
     sensorDescription: 'This is a description',
+    id: '10',
     sensorName: 'WildMics',
     taxonomyProp: 'purpose',
     value: 'Switch',
   },
   {
     sensorDescription: 'This is a description',
+    id: '10',
     sensorName: 'WildMics',
     taxonomyProp: 'dataType',
     value: 'Boolean',
@@ -617,113 +887,82 @@ export const allSensorsTaxonomyFlatten = [
 
 export const sensorsGroupedByTaxonomyPropValues = {
   'dataType:Boolean': [{
-    sensorDescription: 'This is a description', sensorName: 'WildMics', taxonomyProp: 'dataType', value: 'Boolean',
+    id: '10', sensorDescription: 'This is a description', sensorName: 'WildMics', taxonomyProp: 'dataType', value: 'Boolean',
   }],
   'dataType:Pixel-based Image': [{
-    sensorDescription: 'At a city intersection, a camera with onboard computer vision monitors pedestrian crossing. This technology detects when people are waiting to cross the street, and automatically changes the traffic light. It ensures that people have enough time to cross. This benefits pedestrians with shorter wait times and safer crossings. No raw images of faces are sent to the cloud. Only information about location and traffic type (i.e., pedestrian, car or cyclist) are sent for further processing.', sensorName: 'Computer Vision Camera', taxonomyProp: 'dataType', value: 'Pixel-based Image',
+    id: '3', sensorDescription: 'At a city intersection, a camera with onboard computer vision monitors pedestrian crossing. This technology detects when people are waiting to cross the street, and automatically changes the traffic light. It ensures that people have enough time to cross. This benefits pedestrians with shorter wait times and safer crossings. No raw images of faces are sent to the cloud. Only information about location and traffic type (i.e., pedestrian, car or cyclist) are sent for further processing.', sensorName: 'Computer Vision Camera', taxonomyProp: 'dataType', value: 'Pixel-based Image',
   }, {
-    sensorDescription: 'This is a description', sensorName: 'Nest Cam', taxonomyProp: 'dataType', value: 'Pixel-based Image',
+    id: '4', sensorDescription: 'This is a description', sensorName: 'Nest Cam', taxonomyProp: 'dataType', value: 'Pixel-based Image',
   }, {
-    sensorDescription: 'descroption', sensorName: '', taxonomyProp: 'dataType', value: 'Pixel-based Image',
-  }, {
-    sensorDescription: '', sensorName: '', taxonomyProp: 'dataType', value: 'Pixel-based Image',
-  }, {
-    sensorDescription: 'Purpose: to understand pedestrian dynamics and patterns of behavior for all travel modes between the Jackson Square T stop and the Southwest Corridor. Data Collected: de-identified images collected through Numina sensors are used to count pedestrians, bikes, and vehicles. Find out more by clicking the icons below.', sensorName: 'Nest Camera', taxonomyProp: 'dataType', value: 'Pixel-based Image',
+    id: '9', sensorDescription: 'Purpose: to understand pedestrian dynamics and patterns of behavior for all travel modes between the Jackson Square T stop and the Southwest Corridor. Data Collected: de-identified images collected through Numina sensors are used to count pedestrians, bikes, and vehicles. Find out more by clicking the icons below.', sensorName: 'Nest Camera', taxonomyProp: 'dataType', value: 'Pixel-based Image',
   }],
   'dataType:Spatial': [{
-    sensorDescription: 'More description', sensorName: 'Numina Sensor', taxonomyProp: 'dataType', value: 'Spatial',
+    id: '5', sensorDescription: 'More description', sensorName: 'Numina Sensor', taxonomyProp: 'dataType', value: 'Spatial',
   }],
   'dataType:Tabular': [{
-    sensorDescription: 'Page Description', sensorName: 'Sensor Name', taxonomyProp: 'dataType', value: 'Tabular',
+    id: '2', sensorDescription: 'Page Description', sensorName: 'Sensor Name', taxonomyProp: 'dataType', value: 'Tabular',
   }, {
-    sensorDescription: 'Page Description', sensorName: 'Emergency Sensor', taxonomyProp: 'dataType', value: 'Tabular',
+    id: '8', sensorDescription: 'Page Description', sensorName: 'Emergency Sensor', taxonomyProp: 'dataType', value: 'Tabular',
   }],
   'dataType:Values / Time': [{
-    sensorDescription: 'At a city intersection, a camera with onboard computer vision monitors pedestrian crossing. This technology detects when people are waiting to cross the street, and automatically changes the traffic light. It ensures that people have enough time to cross. This benefits pedestrians with shorter wait times and safer crossings. No raw images of faces are sent to the cloud. Only information about location and traffic type (i.e., pedestrian, car or cyclist) are sent for further processing.', sensorName: 'Computer Vision Camera', taxonomyProp: 'dataType', value: 'Values / Time',
-  }],
-  'purpose:Commerce': [{
-    sensorDescription: '', sensorName: '', taxonomyProp: 'purpose', value: 'Commerce',
+    id: '3', sensorDescription: 'At a city intersection, a camera with onboard computer vision monitors pedestrian crossing. This technology detects when people are waiting to cross the street, and automatically changes the traffic light. It ensures that people have enough time to cross. This benefits pedestrians with shorter wait times and safer crossings. No raw images of faces are sent to the cloud. Only information about location and traffic type (i.e., pedestrian, car or cyclist) are sent for further processing.', sensorName: 'Computer Vision Camera', taxonomyProp: 'dataType', value: 'Values / Time',
   }],
   'purpose:Energy Efficiency': [{
-    sensorDescription: '', sensorName: 'New Sensor', taxonomyProp: 'purpose', value: 'Energy Efficiency',
+    id: '1', sensorDescription: '', sensorName: 'New Sensor', taxonomyProp: 'purpose', value: 'Energy Efficiency',
   }],
   'purpose:Fire & Emergency': [{
-    sensorDescription: 'Page Description', sensorName: 'Emergency Sensor', taxonomyProp: 'purpose', value: 'Fire & Emergency',
-  }],
-  'purpose:Locate Lost Item': [{
-    sensorDescription: '', sensorName: '', taxonomyProp: 'purpose', value: 'Locate Lost Item',
+    id: '8', sensorDescription: 'Page Description', sensorName: 'Emergency Sensor', taxonomyProp: 'purpose', value: 'Fire & Emergency',
   }],
   'purpose:Mobility': [{
-    sensorDescription: '', sensorName: 'New Sensor', taxonomyProp: 'purpose', value: 'Mobility',
+    id: '1', sensorDescription: '', sensorName: 'New Sensor', taxonomyProp: 'purpose', value: 'Mobility',
   }, {
-    sensorDescription: 'At a city intersection, a camera with onboard computer vision monitors pedestrian crossing. This technology detects when people are waiting to cross the street, and automatically changes the traffic light. It ensures that people have enough time to cross. This benefits pedestrians with shorter wait times and safer crossings. No raw images of faces are sent to the cloud. Only information about location and traffic type (i.e., pedestrian, car or cyclist) are sent for further processing.', sensorName: 'Computer Vision Camera', taxonomyProp: 'purpose', value: 'Mobility',
+    id: '3', sensorDescription: 'At a city intersection, a camera with onboard computer vision monitors pedestrian crossing. This technology detects when people are waiting to cross the street, and automatically changes the traffic light. It ensures that people have enough time to cross. This benefits pedestrians with shorter wait times and safer crossings. No raw images of faces are sent to the cloud. Only information about location and traffic type (i.e., pedestrian, car or cyclist) are sent for further processing.', sensorName: 'Computer Vision Camera', taxonomyProp: 'purpose', value: 'Mobility',
   }],
   'purpose:Planning & Decision-making': [{
-    sensorDescription: 'More description', sensorName: 'Numina Sensor', taxonomyProp: 'purpose', value: 'Planning & Decision-making',
+    id: '5', sensorDescription: 'More description', sensorName: 'Numina Sensor', taxonomyProp: 'purpose', value: 'Planning & Decision-making',
   }],
   'purpose:Safety & Security': [{
-    sensorDescription: '', sensorName: 'New Sensor', taxonomyProp: 'purpose', value: 'Safety & Security',
+    id: '1', sensorDescription: '', sensorName: 'New Sensor', taxonomyProp: 'purpose', value: 'Safety & Security',
   }, {
-    sensorDescription: 'This is a description', sensorName: 'Nest Cam', taxonomyProp: 'purpose', value: 'Safety & Security',
+    id: '4', sensorDescription: 'This is a description', sensorName: 'Nest Cam', taxonomyProp: 'purpose', value: 'Safety & Security',
   }, {
-    sensorDescription: 'Purpose: to understand pedestrian dynamics and patterns of behavior for all travel modes between the Jackson Square T stop and the Southwest Corridor. Data Collected: de-identified images collected through Numina sensors are used to count pedestrians, bikes, and vehicles. Find out more by clicking the icons below.', sensorName: 'Nest Camera', taxonomyProp: 'purpose', value: 'Safety & Security',
+    id: '9', sensorDescription: 'Purpose: to understand pedestrian dynamics and patterns of behavior for all travel modes between the Jackson Square T stop and the Southwest Corridor. Data Collected: de-identified images collected through Numina sensors are used to count pedestrians, bikes, and vehicles. Find out more by clicking the icons below.', sensorName: 'Nest Camera', taxonomyProp: 'purpose', value: 'Safety & Security',
   }],
   'purpose:Switch': [{
-    sensorDescription: 'This is a description', sensorName: 'WildMics', taxonomyProp: 'purpose', value: 'Switch',
-  }],
-  'purpose:Waste Management': [{
-    sensorDescription: 'descroption', sensorName: '', taxonomyProp: 'purpose', value: 'Waste Management',
+    id: '10', sensorDescription: 'This is a description', sensorName: 'WildMics', taxonomyProp: 'purpose', value: 'Switch',
   }],
   'purpose:Wayfinding & Services': [{
-    sensorDescription: 'Page Description', sensorName: 'Sensor Name', taxonomyProp: 'purpose', value: 'Wayfinding & Services',
-  }],
-  'purpose:null': [{
-    sensorDescription: '', sensorName: '', taxonomyProp: 'purpose', value: null,
+    id: '2', sensorDescription: 'Page Description', sensorName: 'Sensor Name', taxonomyProp: 'purpose', value: 'Wayfinding & Services',
   }],
   'systems:HVAC System': [{
-    sensorDescription: 'Page Description', sensorName: 'Emergency Sensor', taxonomyProp: 'systems', value: 'HVAC System',
+    id: '8', sensorDescription: 'Page Description', sensorName: 'Emergency Sensor', taxonomyProp: 'systems', value: 'HVAC System',
   }],
   'systems:Observatory': [{
-    sensorDescription: 'Page Description', sensorName: 'Emergency Sensor', taxonomyProp: 'systems', value: 'Observatory',
-  }],
-  'techType:Contactless Payments': [{
-    sensorDescription: '', sensorName: '', taxonomyProp: 'techType', value: 'Contactless Payments',
+    id: '8', sensorDescription: 'Page Description', sensorName: 'Emergency Sensor', taxonomyProp: 'systems', value: 'Observatory',
   }],
   'techType:De-identified Image': [{
-    sensorDescription: 'More description', sensorName: 'Numina Sensor', taxonomyProp: 'techType', value: 'De-identified Image',
+    id: '5', sensorDescription: 'More description', sensorName: 'Numina Sensor', taxonomyProp: 'techType', value: 'De-identified Image',
   }],
   'techType:De-identified Video': [{
-    sensorDescription: 'At a city intersection, a camera with onboard computer vision monitors pedestrian crossing. This technology detects when people are waiting to cross the street, and automatically changes the traffic light. It ensures that people have enough time to cross. This benefits pedestrians with shorter wait times and safer crossings. No raw images of faces are sent to the cloud. Only information about location and traffic type (i.e., pedestrian, car or cyclist) are sent for further processing.', sensorName: 'Computer Vision Camera', taxonomyProp: 'techType', value: 'De-identified Video',
+    id: '3', sensorDescription: 'At a city intersection, a camera with onboard computer vision monitors pedestrian crossing. This technology detects when people are waiting to cross the street, and automatically changes the traffic light. It ensures that people have enough time to cross. This benefits pedestrians with shorter wait times and safer crossings. No raw images of faces are sent to the cloud. Only information about location and traffic type (i.e., pedestrian, car or cyclist) are sent for further processing.', sensorName: 'Computer Vision Camera', taxonomyProp: 'techType', value: 'De-identified Video',
   }],
   'techType:Hands Free': [{
-    sensorDescription: 'Page Description', sensorName: 'Emergency Sensor', taxonomyProp: 'techType', value: 'Hands Free',
-  }],
-  'techType:Identifiable RFID': [{
-    sensorDescription: '', sensorName: '', taxonomyProp: 'techType', value: 'Identifiable RFID',
-  }],
-  'techType:LiDAR': [{
-    sensorDescription: '', sensorName: '', taxonomyProp: 'techType', value: 'LiDAR',
+    id: '8', sensorDescription: 'Page Description', sensorName: 'Emergency Sensor', taxonomyProp: 'techType', value: 'Hands Free',
   }],
   'techType:Microphone': [{
-    sensorDescription: '', sensorName: 'New Sensor', taxonomyProp: 'techType', value: 'Microphone',
+    id: '1', sensorDescription: '', sensorName: 'New Sensor', taxonomyProp: 'techType', value: 'Microphone',
   }, {
-    sensorDescription: 'This is a description', sensorName: 'WildMics', taxonomyProp: 'techType', value: 'Microphone',
-  }],
-  'techType:Soil Moisture Sensor': [{
-    sensorDescription: 'descroption', sensorName: '', taxonomyProp: 'techType', value: 'Soil Moisture Sensor',
+    id: '10', sensorDescription: 'This is a description', sensorName: 'WildMics', taxonomyProp: 'techType', value: 'Microphone',
   }],
   'techType:Still camera - infrared': [{
-    sensorDescription: '', sensorName: 'New Sensor', taxonomyProp: 'techType', value: 'Still camera - infrared',
+    id: '1', sensorDescription: '', sensorName: 'New Sensor', taxonomyProp: 'techType', value: 'Still camera - infrared',
   }],
   'techType:Video camera': [{
-    sensorDescription: 'This is a description', sensorName: 'Nest Cam', taxonomyProp: 'techType', value: 'Video camera',
+    id: '4', sensorDescription: 'This is a description', sensorName: 'Nest Cam', taxonomyProp: 'techType', value: 'Video camera',
   }, {
-    sensorDescription: 'Purpose: to understand pedestrian dynamics and patterns of behavior for all travel modes between the Jackson Square T stop and the Southwest Corridor. Data Collected: de-identified images collected through Numina sensors are used to count pedestrians, bikes, and vehicles. Find out more by clicking the icons below.', sensorName: 'Nest Camera', taxonomyProp: 'techType', value: 'Video camera',
+    id: '9', sensorDescription: 'Purpose: to understand pedestrian dynamics and patterns of behavior for all travel modes between the Jackson Square T stop and the Southwest Corridor. Data Collected: de-identified images collected through Numina sensors are used to count pedestrians, bikes, and vehicles. Find out more by clicking the icons below.', sensorName: 'Nest Camera', taxonomyProp: 'techType', value: 'Video camera',
   }],
   'techType:Video camera - infrared': [{
-    sensorDescription: 'Page Description', sensorName: 'Sensor Name', taxonomyProp: 'techType', value: 'Video camera - infrared',
-  }],
-  'techType:Water Quality': [{
-    sensorDescription: '', sensorName: '', taxonomyProp: 'techType', value: 'Water Quality',
+    id: '2', sensorDescription: 'Page Description', sensorName: 'Sensor Name', taxonomyProp: 'techType', value: 'Video camera - infrared',
   }],
 };

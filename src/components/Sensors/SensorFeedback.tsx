@@ -40,7 +40,6 @@ const styles = (theme: Theme) => createStyles({
   container: {
     backgroundColor: '#F7F7F7',
     borderTop: '1px solid #B4B4B4',
-    marginTop: theme.spacing(3),
     padding: theme.spacing(2),
     paddingTop: theme.spacing(2.5),
     paddingBottom: theme.spacing(2.5),

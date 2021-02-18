@@ -12,11 +12,11 @@ interface Props {
 }
 
 function SensorDetails({ description, systems, classes }: Props) {
-  if (!description && !systems?.length) <></>;
+  if (!description && !systems?.length) return <></>;
 
   return (
     <div className={classes.root}>
-      {description && (
+      {!!description && (
         <div>
           <Typography>
             <strong>Purpose:</strong>
@@ -25,7 +25,7 @@ function SensorDetails({ description, systems, classes }: Props) {
           </Typography>
         </div>
       )}
-      {systems?.length && (
+      {!!systems?.length && (
         <div>
           <Typography>
             <strong>This sensor is part of the following systems:</strong>
@@ -56,9 +56,7 @@ const styles = (theme: Theme) => createStyles({
     backgroundColor: theme.palette.background.default,
     display: 'grid',
     rowGap: theme.spacing(2),
-    padding: theme.spacing(3),
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
+    padding: theme.spacing(2),
   },
   system: {
     marginTop: theme.spacing(),

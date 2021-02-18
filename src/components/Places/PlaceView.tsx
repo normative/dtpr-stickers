@@ -4,17 +4,21 @@ import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import {
   Typography, Link, PlaceIcon, Divider,
 } from 'libs/mui';
-import { PlaceData } from 'common/types';
+import { PlaceData, SensorByTaxonomyProp } from 'common/types';
 import SensorTabs from 'components/Sensors/SensorTabs';
+import PlaceSensors from './PlaceSensors';
 
 interface Props {
   place: PlaceData;
   classes: any;
+  sensors: {
+    [name: string]: SensorByTaxonomyProp[];
+  };
 }
 
 const GOOGLE_MAPS_SEARCH = 'https://www.google.com/maps/search/?api=1';
 
-function PlaceView({ classes, place }: Props) {
+function PlaceView({ classes, place, sensors }: Props) {
   return (
     <div className={classes.root}>
       <div className={classes.header}>
@@ -31,7 +35,7 @@ function PlaceView({ classes, place }: Props) {
       <Divider variant="fullWidth" />
       <SensorTabs tabs={['TECHNOLOGIES']}>
         <div className={classes.technologies}>
-          Technologies
+          <PlaceSensors sensors={sensors} />
         </div>
       </SensorTabs>
     </div>

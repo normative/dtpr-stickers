@@ -57,7 +57,7 @@ function SensorView({
   return (
     <div className={classes.root}>
       <div className={classes.header}>
-        {sensor.headline && (
+        {!!sensor.headline && (
           <Typography
             variant="h6"
             align="center"
@@ -75,7 +75,7 @@ function SensorView({
       </div>
       <Divider variant="fullWidth" />
       <SensorTabs tabs={['DETAILS', 'FAQ']}>
-        <div>
+        <div className={classes.details}>
           <SensorDetails description={sensor.description} systems={systems} />
           <SensorTaxonomy
             sensorName={sensor.name}
@@ -125,6 +125,9 @@ const styles = (theme: Theme) => createStyles({
     maxHeight: '300px',
     margin: 'auto',
     marginBottom: theme.spacing(2),
+  },
+  details: {
+    paddingTop: theme.spacing(1),
   },
   faq: {
     padding: theme.spacing(3),
