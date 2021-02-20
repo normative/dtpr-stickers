@@ -2,23 +2,29 @@ import React from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 
 import {
-  Typography, Link, PlaceIcon, Divider,
+  Typography, Link, PlaceIcon, Divider, SortIcon, IconButton,
 } from 'libs/mui';
-import { PlaceData, SensorByTaxonomyProp } from 'common/types';
+import { PlaceData, SensorData, TaxonomyPropValuesGroups } from 'common/types';
 import SensorTabs from 'components/Sensors/SensorTabs';
-import PlaceSensors from './PlaceSensors';
+import TaxonomySensors from './TaxonomySensors';
 
 interface Props {
   place: PlaceData;
   classes: any;
-  sensors: {
-    [name: string]: SensorByTaxonomyProp[];
-  };
+  taxonomySensors: TaxonomyPropValuesGroups;
+  taxonomySensorsSortedIds: string[];
+  otherSensors: SensorData[];
 }
 
 const GOOGLE_MAPS_SEARCH = 'https://www.google.com/maps/search/?api=1';
 
-function PlaceView({ classes, place, sensors }: Props) {
+function PlaceView({
+  classes,
+  place,
+  taxonomySensors,
+  taxonomySensorsSortedIds,
+  otherSensors,
+}: Props) {
   return (
     <div className={classes.root}>
       <div className={classes.header}>
@@ -35,7 +41,23 @@ function PlaceView({ classes, place, sensors }: Props) {
       <Divider variant="fullWidth" />
       <SensorTabs tabs={['TECHNOLOGIES']}>
         <div className={classes.technologies}>
-          <PlaceSensors sensors={sensors} />
+          <IconButton className={classes.sort} onClick={() => {}}>
+            <Typography className={classes.sortText}>
+              SORT BY
+            </Typography>
+            {' '}
+            <SortIcon fontSize="small" />
+          </IconButton>
+          {
+            taxonomySensorsSortedIds.map((value) => (
+              <TaxonomySensors
+                key={value}
+                taxonomyPropValue={value}
+                sensors={taxonomySensors[value]}
+              />
+            ))
+          }
+          { !!otherSensors?.length && <TaxonomySensors taxonomyPropValue="Others" sensors={otherSensors} /> }
         </div>
       </SensorTabs>
     </div>
@@ -74,6 +96,25 @@ const styles = (theme: Theme) => createStyles({
   technologies: {
     marginTop: theme.spacing(1.5),
     padding: theme.spacing(2),
+    position: 'relative',
+  },
+  sort: {
+    alignItems: 'center',
+    color: '#828282',
+    display: 'flex',
+    padding: theme.spacing(2),
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    '&:hover': {
+      backgroundColor: 'inherit',
+    },
+  },
+  sortText: {
+    color: '#828282',
+    fontWeight: 600,
+    fontSize: '0.75rem',
+    letterSpacing: '0.25px',
   },
 });
 

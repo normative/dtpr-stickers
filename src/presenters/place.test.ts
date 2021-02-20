@@ -1,52 +1,46 @@
 
-import { allSensorsTaxonomyFlatten, multipleTaxonomyPropsWithSensors, placeSensors, sensorsGroupedByTaxonomyPropValues, taxonomyPropWithSensor } from '__mockData__/groupSensorByTaxonomyPropValue';
-import { flattenSensorTaxonomy, groupSensorByTaxonomyPropValue, mapMultipleSensorsToMultipleTaxonomyProps, mapSensorToMultipleTaxonomyProp, mapSensorToTaxonomyProp } from './place';
+import { dataTypePropValuesWithSensorDetails, groupedSensorsBySystemsTaxonomyProp, groupedSensorsByTaxonomyPropValues, placeSensors, sensorsGroupedByNotFoundTaxonomyProp, sensorsGroupedBySystemsPropValues, sensorsGroupedByTaxonomyProp, sensorsGroupedByTaxonomyPropValues } from '__mockData__/groupSensorByTaxonomyPropValue';
+import { groupSensorsByTaxonomyPropValues, mapSensorsIntoTaxonomyPropValues, mapSensorToTaxonomyPropValue, prepareSystemsTaxonomy, splitSensorsWithTaxonomyPropFromOthers } from './place';
+import { SensorDataWithId, Sensors } from 'common/types';
+
 
 const taxonomyToBeFlatten = ['systems', 'techType', 'purpose', 'dataType'];
 
 describe('group sensors by taxonomy', () => {
   test('should map sensor to taxonomy property', () => {
-    expect(mapSensorToTaxonomyProp({ id: 8, ...placeSensors[8] }, 'techType')).toEqual([{
+    expect(mapSensorToTaxonomyPropValue({ id: 8, ...placeSensors[8] }, placeSensors[8].techType)).toEqual([{
       id: 8,
-      sensorDescription: "Page Description",
-      sensorName: "Emergency Sensor",
-      taxonomyProp: "techType",
-      value: "Hands Free",
+      description: "Page Description",
+      name: "Emergency Sensor",
+      taxonomyPropValue: "Hands Free",
     }]);
-
-    expect(mapSensorToTaxonomyProp({ id: 8, ...placeSensors[8] }, 'systems')).toEqual([
-      {
-        id: 8,
-        sensorDescription: 'Page Description',
-        sensorName: 'Emergency Sensor',
-        taxonomyProp: 'systems',
-        value: 'HVAC System',
-      },
-      {
-        id: 8,
-        sensorDescription: 'Page Description',
-        sensorName: 'Emergency Sensor',
-        taxonomyProp: 'systems',
-        value: 'Observatory',
-      },
-    ]);
-
-    expect(mapSensorToTaxonomyProp({ id: 3, ...placeSensors[2] }, 'systems')).toEqual([]);
   });
 
-  test('should map sensor to multiple taxonomy property', () => {
-    expect(mapSensorToMultipleTaxonomyProp({ id: '8', ...placeSensors[8] }, taxonomyToBeFlatten)).toEqual(taxonomyPropWithSensor);
+  test('should prepare systems sensor to taxonomy as string[]', () => {
+    expect(prepareSystemsTaxonomy(placeSensors[8].systems)).toEqual(["HVAC System", "Observatory"]);
   });
 
-  test('should map multiple sensors to multiple taxonomy properties', () => {
-    expect(mapMultipleSensorsToMultipleTaxonomyProps(placeSensors, taxonomyToBeFlatten)).toEqual(multipleTaxonomyPropsWithSensors);
+  test('should split sensors into two groups: "[taxonomy prop]" & "Others"', () => {
+    expect(splitSensorsWithTaxonomyPropFromOthers(placeSensors, 'dataType')).toEqual(sensorsGroupedByTaxonomyProp);
+
+    expect(splitSensorsWithTaxonomyPropFromOthers(placeSensors, 'systems')).toEqual(groupedSensorsBySystemsTaxonomyProp);
   });
 
-  test('should flatten all sensor taxonomy', () => {
-    expect(flattenSensorTaxonomy(placeSensors, taxonomyToBeFlatten)).toEqual(allSensorsTaxonomyFlatten);
+  test('should map sensors into taxonomy prop values', () => {
+    expect(
+      mapSensorsIntoTaxonomyPropValues(sensorsGroupedByTaxonomyProp.dataType as unknown as SensorDataWithId[], 'dataType'),
+    ).toEqual(dataTypePropValuesWithSensorDetails);
+
+    expect(
+      mapSensorsIntoTaxonomyPropValues(groupedSensorsBySystemsTaxonomyProp.systems as unknown as SensorDataWithId[], 'systems'),
+    ).toEqual([[{"description": "Page Description", "id": "8", "name": "Emergency Sensor", "taxonomyPropValue": "HVAC System"}, {"description": "Page Description", "id": "8", "name": "Emergency Sensor", "taxonomyPropValue": "Observatory"}]]);
   });
 
-  test('should group all sensor by taxonomy prop values', () => {
-    expect(groupSensorByTaxonomyPropValue(placeSensors, taxonomyToBeFlatten)).toEqual(sensorsGroupedByTaxonomyPropValues);
+  test('should group sensors by taxonomy prop values', () => {
+    expect(groupSensorsByTaxonomyPropValues(placeSensors, 'dataType')).toEqual(groupedSensorsByTaxonomyPropValues);
+
+    expect(groupSensorsByTaxonomyPropValues(placeSensors, 'systems')).toEqual(sensorsGroupedBySystemsPropValues);
+
+    expect(groupSensorsByTaxonomyPropValues(placeSensors, 'notFound')).toEqual(sensorsGroupedByNotFoundTaxonomyProp);
   });
 })

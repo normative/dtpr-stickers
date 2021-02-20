@@ -35,3 +35,4 @@ export { default as SendIcon } from '@material-ui/icons/Send';
 export { default as ExpandMoreIcon } from '@material-ui/icons/ExpandMore';
 export { default as CheckIcon } from '@material-ui/icons/Check';
 export { default as PlaceIcon } from '@material-ui/icons/Place';
+export { default as SortIcon } from '@material-ui/icons/Sort';

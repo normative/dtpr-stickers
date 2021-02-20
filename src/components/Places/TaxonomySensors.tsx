@@ -2,13 +2,12 @@ import React from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import { Box, Divider, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { SensorByTaxonomyProp } from 'common/types';
+import { SensorData, SensorDetailsWithTaxonomyPropValue } from 'common/types';
 
 interface Props {
   classes: any;
-  sensors: {
-    [name: string]: SensorByTaxonomyProp[];
-  };
+  sensors: Array<SensorDetailsWithTaxonomyPropValue | SensorData>;
+  taxonomyPropValue: string;
 }
 
 const CardDivider = withStyles({
@@ -19,30 +18,23 @@ const CardDivider = withStyles({
   },
 })(Divider);
 
-function Sensors({ classes, sensors }: Props) {
+function Sensors({ classes, sensors, taxonomyPropValue }: Props) {
   return (
-    <div>
-      {Object.keys(sensors).map((taxonomyProAndValue) => {
-        const [, value] = taxonomyProAndValue.split(':');
-        return (
-          <div className={classes.root} key={taxonomyProAndValue}>
-            <Typography className={classes.taxonomyPropValue}>
-              {value}
-            </Typography>
-            {sensors[taxonomyProAndValue].map(({ id, sensorDescription, sensorName }) => (
-              <Box className={classes.card} key={sensorName}>
-                <Link to={`/sensors/${id}`} style={{ textDecoration: 'none' }}>
-                  <Typography className={classes.sensorName}>{sensorName.toUpperCase()}</Typography>
-                </Link>
-                <CardDivider />
-                <Typography className={classes.sensorDescription}>
-                  {sensorDescription}
-                </Typography>
-              </Box>
-            ))}
-          </div>
-        );
-      })}
+    <div className={classes.root}>
+      <Typography className={classes.taxonomyPropValue}>
+        {taxonomyPropValue}
+      </Typography>
+      {sensors.map(({ id, description, name }) => (
+        <Box className={classes.card} key={id}>
+          <Link to={`/sensors/${id}`} style={{ textDecoration: 'none' }}>
+            <Typography className={classes.sensorName}>{name.toUpperCase()}</Typography>
+          </Link>
+          <CardDivider />
+          <Typography className={classes.sensorDescription}>
+            {description}
+          </Typography>
+        </Box>
+      ))}
     </div>
   );
 }

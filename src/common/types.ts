@@ -1,5 +1,4 @@
 import { LngLat } from 'mapbox-gl';
-import { sensorsGroupNames } from './constants';
 
 export interface ReducerStateType {
   isFetching: Boolean,
@@ -16,12 +15,25 @@ export interface PlaceData {
   admins: { [uid: string]: boolean },
 }
 
-export interface SensorByTaxonomyProp {
-  id: string,
-  sensorDescription: string,
-  sensorName: string,
-  taxonomyProp: sensorsGroupNames,
-  value: string,
+export interface SensorDataWithId extends SensorData {
+  id: string;
+}
+
+export interface SensorDetailsWithTaxonomyPropValue {
+  taxonomyPropValue: string;
+  name: string;
+  description: string;
+  id: string;
+}
+
+export interface TaxonomyPropValuesGroups {
+  [taxonomyPropValuesName: string]: SensorDetailsWithTaxonomyPropValue[];
+}
+
+export interface SensorsGroupByTaxonomyPropValues {
+  taxonomyProp?: TaxonomyPropValuesGroups;
+  taxonomyPropValues?: string[];
+  Others?: SensorData[];
 }
 
 export interface SensorsGroup {
@@ -33,6 +45,10 @@ export interface SensorsGroup {
 export interface System {
   title: string;
   description: string;
+}
+
+export interface Systems {
+  [id: string]: System;
 }
 
 export interface FAQ {
@@ -67,7 +83,12 @@ export interface SensorData {
   logoSrc?: string,
   sensorImageRef: string,
   sensorImageSrc?: string,
-  systems?: System[],
+  systems?: Systems,
+  FAQ?: FAQ[],
+}
+
+export interface Sensors {
+  [id: string]: SensorData;
 }
 
 // The table names in airtable
