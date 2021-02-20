@@ -25,7 +25,7 @@ function Sensors({ classes, sensors, taxonomyPropValue }: Props) {
         {taxonomyPropValue}
       </Typography>
       {sensors.map(({ id, description, name }) => (
-        <Box className={classes.card} key={id}>
+        <Box className={classes.card} key={`${id}-${name}`}>
           <Link to={`/sensors/${id}`} style={{ textDecoration: 'none' }}>
             <Typography className={classes.sensorName}>{name.toUpperCase()}</Typography>
           </Link>
