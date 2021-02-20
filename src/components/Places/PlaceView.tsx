@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 
@@ -49,15 +50,15 @@ function PlaceView({
             <SortIcon fontSize="small" />
           </IconButton>
           {
-            taxonomySensorsSortedIds.map((value) => (
+            taxonomySensorsSortedIds.map((value, i) => (
               <TaxonomySensors
-                key={value}
+                key={`${value}-${i}`}
                 taxonomyPropValue={value}
                 sensors={taxonomySensors[value]}
               />
             ))
           }
-          { !!otherSensors?.length && <TaxonomySensors taxonomyPropValue="Others" sensors={otherSensors} /> }
+          { !!otherSensors?.length && <TaxonomySensors key="others" taxonomyPropValue="Others" sensors={otherSensors} /> }
         </div>
       </SensorTabs>
     </div>

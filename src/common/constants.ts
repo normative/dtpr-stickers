@@ -16,6 +16,7 @@ export enum sensorsGroupNames {
   DATA_PROCESS = 'dataProcess',
   ACCESS = 'access',
   STORAGE = 'storage',
+  SYSTEMS = 'systems',
 }
 /**
  * Map sensor group names to labels
@@ -28,6 +29,7 @@ export enum sensorsGroupLabels {
   dataProcess = 'Data Process',
   access = 'Access',
   storage = 'Storage',
+  systems = 'Systems',
 }
 
 export enum feedbackEmojis {

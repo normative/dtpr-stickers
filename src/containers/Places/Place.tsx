@@ -1,4 +1,6 @@
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, {
+  useContext, useEffect, useMemo, useState,
+} from 'react';
 import { useParams } from 'react-router-dom';
 
 import sensorsReducer, {
@@ -15,6 +17,8 @@ import { PlaceContext } from 'context/place';
 import { LinearProgress } from '@material-ui/core';
 import { groupSensorsByTaxonomyPropValues } from 'presenters/place';
 import { SensorsGroupByTaxonomyPropValues } from 'common/types';
+import PlaceSortBy from 'components/Places/PlaceSortBy';
+import { sensorsGroupNames } from 'common/constants';
 
 function Place() {
   const [sensors, sensorsActions] = useReducerState(
@@ -27,6 +31,7 @@ function Place() {
   const [place, placeActions] = useContext(PlaceContext);
   const airtable = useContext(AirtableContext);
   const { placeId }: { placeId: string } = useParams();
+  const [sortTaxonomy, setSortTaxonomy] = useState(sensorsGroupNames.PURPOSE);
 
   useEffect(() => {
     placeActions.onRequest(placeId);
@@ -41,8 +46,12 @@ function Place() {
 
   const groupedSensors: SensorsGroupByTaxonomyPropValues = useMemo(() => {
     if (!sensors.data) return {};
-    return groupSensorsByTaxonomyPropValues(sensors.data, 'techType');
-  }, [sensors.data]);
+    return groupSensorsByTaxonomyPropValues(sensors.data, sortTaxonomy);
+  }, [sensors.data, sortTaxonomy]);
+
+  const handleSortTaxonomyClick = (taxonomyProp: sensorsGroupNames) => {
+    setSortTaxonomy(taxonomyProp);
+  };
 
   if (!place.data
     || place.isFetching
@@ -55,12 +64,15 @@ function Place() {
   }
 
   return (
-    <PlaceView
-      place={place.data}
-      taxonomySensors={groupedSensors?.taxonomyProp}
-      taxonomySensorsSortedIds={groupedSensors?.taxonomyPropValues}
-      otherSensors={groupedSensors?.Others}
-    />
+    <>
+      <PlaceView
+        place={place.data}
+        taxonomySensors={groupedSensors?.taxonomyProp}
+        taxonomySensorsSortedIds={groupedSensors?.taxonomyPropValues}
+        otherSensors={groupedSensors?.Others}
+      />
+      <PlaceSortBy onClick={handleSortTaxonomyClick} selected={sortTaxonomy} />
+    </>
   );
 }
 
