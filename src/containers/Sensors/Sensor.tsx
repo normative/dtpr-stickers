@@ -25,7 +25,7 @@ import { FAQ, FeedbackQuestion, System } from 'common/types';
 
 const FEEDBACK_QUESTIONS: FeedbackQuestion[] = [
   {
-    text: 'How do you feel about this technology?',
+    text: 'How does this technology make you feel?',
     type: feedbackQuestionTypes.EMOJI,
   },
   {
@@ -33,12 +33,12 @@ const FEEDBACK_QUESTIONS: FeedbackQuestion[] = [
     type: feedbackQuestionTypes.EMOJI,
   },
   {
-    text: 'How did you find the process of reading the sign, scanning the QR code, and then reading the information on the phone?',
+    text: 'How easy was this information to understand?',
     type: feedbackQuestionTypes.EMOJI,
   },
   {
-    text: 'Do you have any questions or concerns?',
-    type: feedbackQuestionTypes.COMMENT,
+    text: 'Was getting to the information on this page easy?',
+    type: feedbackQuestionTypes.EMOJI,
   },
   {
     text: 'How would you rate this app?',
