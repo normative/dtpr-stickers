@@ -18,14 +18,15 @@ const tabsStyles = (theme: Theme) => createStyles({
 
 const StyledTabs = withStyles(tabsStyles)(Tabs);
 
-const StyledTab = withStyles({
+const StyledTab = withStyles((theme: Theme) => createStyles({
   root: {
     minWidth: 125,
     fontWeight: 500,
     letterSpacing: '0.75px',
     textTransform: 'uppercase',
+    color: theme.palette.primary.main,
   },
-})(Tab);
+}))(Tab);
 
 interface TabPanelProps {
   children: ReactNode;

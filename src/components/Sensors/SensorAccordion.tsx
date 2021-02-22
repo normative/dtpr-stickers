@@ -129,11 +129,11 @@ class SensorAccordion extends Component<Props, any> {
             content: classes.expansionPanelSummaryContent,
             expanded: classes.expansionPanelSummaryExpanded,
           }}
-          expandIcon={<ExpandMoreIcon />}
+          expandIcon={<ExpandMoreIcon color="secondary" />}
         >
           {icon && <img src={icon} />}
           <Typography className={classes.heading}>{title}</Typography>
-          <Typography color="textSecondary" className={classes.label}>
+          <Typography color="secondary" className={classes.label}>
             {label}
           </Typography>
         </ExpansionPanelSummary>

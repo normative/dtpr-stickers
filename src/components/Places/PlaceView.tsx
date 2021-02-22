@@ -16,6 +16,7 @@ interface Props {
   taxonomySensorsSortedIds: string[];
   otherSensors: SensorData[];
   onSortClick: () => void;
+  sortLabel: string;
 }
 
 const GOOGLE_MAPS_SEARCH = 'https://www.google.com/maps/search/?api=1';
@@ -27,11 +28,12 @@ function PlaceView({
   taxonomySensorsSortedIds,
   otherSensors,
   onSortClick,
+  sortLabel,
 }: Props) {
   return (
     <div className={classes.root}>
       <div className={classes.header}>
-        <Typography className={classes.name}>
+        <Typography className={classes.name} color="primary">
           {place.name}
         </Typography>
         <Link href={`${GOOGLE_MAPS_SEARCH}&query=${place.address}`} target="_blank" className={classes.addressLink}>
@@ -47,8 +49,9 @@ function PlaceView({
           <IconButton className={classes.sort} onClick={onSortClick}>
             <Typography className={classes.sortText}>
               SORT BY
+              {' '}
+              {sortLabel}
             </Typography>
-            {' '}
             <SortIcon fontSize="small" />
           </IconButton>
           {
@@ -118,6 +121,8 @@ const styles = (theme: Theme) => createStyles({
     fontWeight: 600,
     fontSize: '0.75rem',
     letterSpacing: '0.25px',
+    textTransform: 'uppercase',
+    marginRight: theme.spacing(0.5),
   },
 });
 

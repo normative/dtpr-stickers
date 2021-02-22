@@ -18,13 +18,18 @@ function FeedbackThanks({ classes }: Props) {
       <Typography className={classes.text}>
         Thank you for taking the time to complete the survey, we appreciate your feedback.
       </Typography>
-      <Typography className={classes.text}>
+      <Typography className={`${classes.text} ${classes.highlight}`}>
         <strong>Have more time?</strong>
       </Typography>
       <Typography className={classes.text}>
         We want to hear more from you!
         {' '}
-        <a href={process.env.REACT_APP_EXPANDED_SURVEY || '#'}>complete this extended survey</a>
+        <a
+          href={process.env.REACT_APP_EXPANDED_SURVEY || '#'}
+          className={classes.link}
+        >
+          complete this extended survey
+        </a>
         {' '}
         and receive a gift card!
       </Typography>
@@ -42,6 +47,12 @@ const styles = (theme: Theme) => createStyles({
   },
   text: {
     marginTop: theme.spacing(1),
+  },
+  highlight: {
+    color: theme.custom.highlight,
+  },
+  link: {
+    color: theme.custom.link,
   },
 });
 

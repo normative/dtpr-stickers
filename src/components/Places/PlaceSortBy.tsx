@@ -90,7 +90,7 @@ const styles = (theme: Theme) => createStyles({
     },
   },
   selected: {
-    color: '#45789C',
+    color: theme.palette.secondary.main,
   },
   options: {
     padding: theme.spacing(4),

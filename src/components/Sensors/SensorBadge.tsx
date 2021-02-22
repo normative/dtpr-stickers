@@ -18,7 +18,7 @@ function SensorBadge({ option, classes }: Props) {
         src={`/images/${option.iconShortname}.svg`}
         alt="purpose badge icon"
       />
-      <Typography variant="subtitle2">
+      <Typography variant="subtitle2" color="textSecondary">
         {option.name}
       </Typography>
     </div>

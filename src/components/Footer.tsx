@@ -15,7 +15,7 @@ function Footer({ classes }: WithStyles) {
         We may share feedback on this page with Helpful Places.
       </Typography>
       <Link to="https://dtpr.helpfulplaces.com/">
-        <Typography className={classes.link} color="primary">
+        <Typography className={classes.link}>
           LEARN MORE
         </Typography>
       </Link>
@@ -42,6 +42,7 @@ const styles = (theme: Theme) => createStyles({
     textAlign: 'center',
   },
   link: {
+    color: theme.custom.link,
     fontSize: '0.75rem',
     fontWeight: 'bold',
     letterSpacing: '0.25px',

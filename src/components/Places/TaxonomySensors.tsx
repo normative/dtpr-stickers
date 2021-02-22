@@ -10,13 +10,13 @@ interface Props {
   taxonomyPropValue: string;
 }
 
-const CardDivider = withStyles({
+const CardDivider = withStyles((theme: Theme) => createStyles({
   root: {
     backgroundColor: 'transparent',
-    border: '1px dashed #45789C',
+    border: `1px dashed ${theme.palette.secondary.main}`,
     width: '100px',
   },
-})(Divider);
+}))(Divider);
 
 function Sensors({ classes, sensors, taxonomyPropValue }: Props) {
   return (
@@ -27,7 +27,9 @@ function Sensors({ classes, sensors, taxonomyPropValue }: Props) {
       {sensors.map(({ id, description, name }) => (
         <Box className={classes.card} key={`${id}-${name}`}>
           <Link to={`/sensors/${id}`} style={{ textDecoration: 'none' }}>
-            <Typography className={classes.sensorName}>{name.toUpperCase()}</Typography>
+            <Typography color="secondary" className={classes.sensorName}>
+              {name.toUpperCase()}
+            </Typography>
           </Link>
           <CardDivider />
           <Typography className={classes.sensorDescription}>
@@ -48,7 +50,6 @@ const styles = (theme: Theme) => createStyles({
     },
   },
   taxonomyPropValue: {
-    color: '#58585B',
     fontWeight: 600,
     marginBottom: theme.spacing(1.5),
   },
@@ -59,12 +60,11 @@ const styles = (theme: Theme) => createStyles({
     padding: theme.spacing(1.5),
   },
   sensorName: {
-    color: '#45789C',
     fontSize: '0.875rem',
     marginBottom: theme.spacing(1.5),
   },
   sensorDescription: {
-    color: '#828282',
+    color: theme.palette.text.hint,
     marginTop: theme.spacing(1.5),
   },
 });

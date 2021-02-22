@@ -32,7 +32,7 @@ function SensorDetails({ description, systems, classes }: Props) {
           </Typography>
           {systems.map(({ title, description: systemDescription }) => (
             <div className={classes.system} key={title}>
-              <Typography>
+              <Typography color="secondary">
                 <strong>{title}</strong>
               </Typography>
               <Typography className={classes.systemDescription}>

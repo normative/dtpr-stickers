@@ -31,7 +31,7 @@ function SensorPlace({ classes, place }: Props) {
         <Typography className={classes.linkText} component="span">
           SEE ALL
         </Typography>
-        <ArrowForwardIcon color="secondary" />
+        <ArrowForwardIcon className={classes.highlight} />
       </Link>
     </div>
   );
@@ -39,8 +39,8 @@ function SensorPlace({ classes, place }: Props) {
 
 const styles = (theme: Theme) => createStyles({
   root: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.custom.sessions.sensor.place.background,
+    color: theme.custom.sessions.sensor.place.color,
     padding: theme.spacing(2),
     paddingBottom: theme.spacing(3),
     paddingTop: theme.spacing(4),
@@ -56,7 +56,7 @@ const styles = (theme: Theme) => createStyles({
   },
   divider: {
     height: '2px',
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.custom.sessions.sensor.place.highlight,
     marginBottom: theme.spacing(3),
     marginLeft: 0,
     marginTop: theme.spacing(),
@@ -69,10 +69,13 @@ const styles = (theme: Theme) => createStyles({
     textDecoration: 'none',
   },
   linkText: {
-    color: theme.palette.primary.contrastText,
+    color: theme.custom.sessions.sensor.place.highlight,
     fontWeight: 500,
     letterSpacing: '0.25px',
     marginRight: theme.spacing(),
+  },
+  highlight: {
+    color: theme.custom.sessions.sensor.place.highlight,
   },
 });
 

@@ -47,10 +47,13 @@ const styles = (theme: Theme) => createStyles({
     paddingRight: 0,
   },
   summaryText: {
-    fontWeight: 500,
+    fontSize: theme.custom.sessions.sensor.faq.fontSize,
+    fontWeight: theme.custom.sessions.sensor.faq.fontWeight,
+    textTransform: theme.custom.sessions.sensor.faq.textTransform,
   },
   detailsRoot: {
     padding: 0,
+    fontSize: theme.custom.sessions.sensor.faq.fontSize,
   },
   detailsText: {
     fontSize: '0.875rem',

@@ -62,6 +62,7 @@ function SensorView({
             variant="h6"
             align="center"
             style={{ wordBreak: 'break-word', fontWeight: 'bold' }}
+            color="primary"
           >
             {sensor.headline}
           </Typography>
