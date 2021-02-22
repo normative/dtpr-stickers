@@ -86,11 +86,16 @@ const styles = (theme: Theme) => createStyles({
     flex: 1,
     alignSelf: 'center',
     marginLeft: theme.spacing(),
+    ...theme.custom.fonts.secondary.m,
   },
   label: {
     alignSelf: 'center',
     marginLeft: theme.spacing(),
     marginRight: '32px',
+    ...theme.custom.fonts.secondary.m,
+  },
+  text: {
+    ...theme.custom.fonts.secondary.m,
   },
 });
 
@@ -140,7 +145,7 @@ class SensorAccordion extends Component<Props, any> {
         <ExpansionPanelDetails
           classes={{ root: classes.expansionPanelDetailsRoot }}
         >
-          <Typography dangerouslySetInnerHTML={{ __html: parsedBody }} />
+          <Typography dangerouslySetInnerHTML={{ __html: parsedBody }} className={classes.text} />
         </ExpansionPanelDetails>
       </ExpansionPanel>
     );

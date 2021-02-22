@@ -57,7 +57,7 @@ function SensorPrintView({
             <Typography className={classes.sensorLabels} gutterBottom variant="h3">
               {sensor.data?.name}
             </Typography>
-            <Typography paragraph>
+            <Typography paragraph className={classes.text}>
               Download or print the labels for use in your own signage.
             </Typography>
           </div>
@@ -201,6 +201,9 @@ const styles = (theme: Theme) => createStyles({
     '&:hover': {
       backgroundColor: theme.palette.primary.light,
     },
+  },
+  text: {
+    ...theme.custom.fonts.secondary.m,
   },
 });
 

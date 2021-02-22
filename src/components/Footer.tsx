@@ -37,9 +37,8 @@ const styles = (theme: Theme) => createStyles({
   },
   text: {
     color: '#515151',
-    fontSize: '0.75rem',
-    letterSpacing: '0.75px',
     textAlign: 'center',
+    ...theme.custom.fonts.secondary.xs,
   },
   link: {
     color: theme.custom.link,

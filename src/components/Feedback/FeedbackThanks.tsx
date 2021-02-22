@@ -47,9 +47,10 @@ const styles = (theme: Theme) => createStyles({
   },
   text: {
     marginTop: theme.spacing(1),
+    ...theme.custom.fonts.secondary.m,
   },
   highlight: {
-    color: theme.custom.highlight,
+    color: theme.palette.secondary.main,
   },
   link: {
     color: theme.custom.link,

@@ -53,8 +53,7 @@ const styles = (theme: Theme) => createStyles({
   progressText: {
     textAlign: 'center',
     marginTop: theme.spacing(3),
-    fontSize: '0.875rem',
-    letterSpacing: '0.15px',
+    ...theme.custom.fonts.secondary.s,
   },
   linearProgress: {
     backgroundColor: 'transparent',

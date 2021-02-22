@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactGA from 'react-ga';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import { common } from '@material-ui/core/colors';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {
   BrowserRouter as Router,
@@ -19,7 +18,7 @@ import Footer from 'components/Footer';
 import { AirtableProvider } from 'context/airtable';
 import { PlaceProvider } from 'context/place';
 
-import theme from 'theme';
+import theme from 'styles/theme';
 
 ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_KEY || '');
 ReactGA.set({ anonymizeIp: true });

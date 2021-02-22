@@ -18,7 +18,7 @@ function SensorBadge({ option, classes }: Props) {
         src={`/images/${option.iconShortname}.svg`}
         alt="purpose badge icon"
       />
-      <Typography variant="subtitle2" color="textSecondary">
+      <Typography color="textSecondary" className={classes.name}>
         {option.name}
       </Typography>
     </div>
@@ -35,6 +35,9 @@ const styles = (theme: Theme) => createStyles({
     marginLeft: 'auto',
     marginRight: 'auto',
     marginBottom: theme.spacing(),
+  },
+  name: {
+    ...theme.custom.fonts.secondary.xs,
   },
 });
 

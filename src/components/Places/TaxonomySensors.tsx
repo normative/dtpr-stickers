@@ -66,6 +66,7 @@ const styles = (theme: Theme) => createStyles({
   sensorDescription: {
     color: theme.palette.text.hint,
     marginTop: theme.spacing(1.5),
+    ...theme.custom.fonts.secondary.m,
   },
 });
 

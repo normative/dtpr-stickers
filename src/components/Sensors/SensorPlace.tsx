@@ -24,7 +24,7 @@ function SensorPlace({ classes, place }: Props) {
         {place?.address}
       </Typography>
       <Divider className={classes.divider} variant="inset" />
-      <Typography>
+      <Typography className={classes.text}>
         This location uses other types of technology
       </Typography>
       <Link to={`/places/${place?.id}`} className={classes.link}>
@@ -51,8 +51,12 @@ const styles = (theme: Theme) => createStyles({
     letterSpacing: '0.75px',
   },
   address: {
-    fontSize: '0.875rem',
-    letterSpacing: '0.75px',
+    fontWeight: 500,
+    ...theme.custom.fonts.secondary.s,
+  },
+  text: {
+    fontWeight: 500,
+    ...theme.custom.fonts.secondary.m,
   },
   divider: {
     height: '2px',

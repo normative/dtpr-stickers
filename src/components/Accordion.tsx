@@ -56,7 +56,7 @@ const styles = (theme: Theme) => createStyles({
     fontSize: theme.custom.sessions.sensor.faq.fontSize,
   },
   detailsText: {
-    fontSize: '0.875rem',
+    ...theme.custom.fonts.secondary.s,
   },
 });
 

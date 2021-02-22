@@ -75,6 +75,7 @@ const styles = (theme: Theme) => createStyles({
     marginLeft: 0,
     marginRight: 0,
     minHeight: '50px',
+    ...theme.custom.fonts.secondary.m,
   },
   answerContainer: {
     minHeight: '50px',
