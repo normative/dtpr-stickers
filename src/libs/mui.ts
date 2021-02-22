@@ -25,6 +25,8 @@ export { default as Accordion } from '@material-ui/core/Accordion';
 export { default as AccordionSummary } from '@material-ui/core/AccordionSummary';
 export { default as AccordionDetails } from '@material-ui/core/AccordionDetails';
 export { default as Link } from '@material-ui/core/Link/Link';
+export { default as Slide } from '@material-ui/core/Slide';
+export { default as Fade } from '@material-ui/core/Fade';
 
 // Material UI Icons
 export { default as AddIcon } from '@material-ui/icons/Add';

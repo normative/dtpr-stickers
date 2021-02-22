@@ -1,7 +1,9 @@
 import React from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 
-import { Button, Divider, Typography } from 'libs/mui';
+import {
+  Divider, Fade, Slide, Typography,
+} from 'libs/mui';
 import { sensorsGroupLabels, sensorsGroupNames } from 'common/constants';
 
 const TAXONOMY_PROPS = [
@@ -13,36 +15,44 @@ const TAXONOMY_PROPS = [
 
 interface Props {
   classes: any;
-  onClick: (taxonomyProp: string) => void;
+  onSelect: (taxonomyProp: string) => void;
   selected: string;
+  visible: boolean;
+  onHide: () => void;
 }
 
 function PlaceView({
   classes,
-  onClick,
+  onSelect,
   selected,
+  visible,
+  onHide,
 }: Props) {
   return (
-    <div className={classes.overlay}>
-      <div className={classes.root}>
-        <Typography className={classes.header}>
-          Sort by
-        </Typography>
-        <Divider variant="fullWidth" />
-        <div className={classes.options}>
-          {TAXONOMY_PROPS.map((taxonomyProp) => (
-            <Typography
-              className={`${classes.option} ${selected === taxonomyProp && classes.selected}`}
-              role="button"
-              onClick={() => { onClick(taxonomyProp); }}
-              key={taxonomyProp}
-            >
-              {sensorsGroupLabels[taxonomyProp]}
+    <Fade in={visible} timeout={300}>
+      <div className={classes.overlay} onClick={onHide} aria-hidden="true">
+        <Slide direction="up" in={visible} mountOnEnter unmountOnExit timeout={150}>
+          <div className={classes.root}>
+            <Typography className={classes.header}>
+              Sort by
             </Typography>
-          ))}
-        </div>
+            <Divider variant="fullWidth" />
+            <div className={classes.options}>
+              {TAXONOMY_PROPS.map((taxonomyProp) => (
+                <Typography
+                  className={`${classes.option} ${selected === taxonomyProp && classes.selected}`}
+                  role="button"
+                  onClick={() => { onSelect(taxonomyProp); }}
+                  key={taxonomyProp}
+                >
+                  {sensorsGroupLabels[taxonomyProp]}
+                </Typography>
+              ))}
+            </div>
+          </div>
+        </Slide>
       </div>
-    </div>
+    </Fade>
   );
 }
 

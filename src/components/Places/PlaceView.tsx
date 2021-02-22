@@ -15,6 +15,7 @@ interface Props {
   taxonomySensors: TaxonomyPropValuesGroups;
   taxonomySensorsSortedIds: string[];
   otherSensors: SensorData[];
+  onSortClick: () => void;
 }
 
 const GOOGLE_MAPS_SEARCH = 'https://www.google.com/maps/search/?api=1';
@@ -25,6 +26,7 @@ function PlaceView({
   taxonomySensors,
   taxonomySensorsSortedIds,
   otherSensors,
+  onSortClick,
 }: Props) {
   return (
     <div className={classes.root}>
@@ -42,7 +44,7 @@ function PlaceView({
       <Divider variant="fullWidth" />
       <SensorTabs tabs={['TECHNOLOGIES']}>
         <div className={classes.technologies}>
-          <IconButton className={classes.sort} onClick={() => {}}>
+          <IconButton className={classes.sort} onClick={onSortClick}>
             <Typography className={classes.sortText}>
               SORT BY
             </Typography>

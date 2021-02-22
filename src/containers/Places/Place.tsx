@@ -32,6 +32,7 @@ function Place() {
   const airtable = useContext(AirtableContext);
   const { placeId }: { placeId: string } = useParams();
   const [sortTaxonomy, setSortTaxonomy] = useState(sensorsGroupNames.PURPOSE);
+  const [sortVisible, setSortVisible] = useState(false);
 
   useEffect(() => {
     placeActions.onRequest(placeId);
@@ -53,6 +54,10 @@ function Place() {
     setSortTaxonomy(taxonomyProp);
   };
 
+  const handleSortClick = () => {
+    setSortVisible(!sortVisible);
+  };
+
   if (!place.data
     || place.isFetching
     || !sensors.data
@@ -70,8 +75,14 @@ function Place() {
         taxonomySensors={groupedSensors?.taxonomyProp}
         taxonomySensorsSortedIds={groupedSensors?.taxonomyPropValues}
         otherSensors={groupedSensors?.Others}
+        onSortClick={handleSortClick}
       />
-      <PlaceSortBy onClick={handleSortTaxonomyClick} selected={sortTaxonomy} />
+      <PlaceSortBy
+        onSelect={handleSortTaxonomyClick}
+        selected={sortTaxonomy}
+        onHide={handleSortClick}
+        visible={sortVisible}
+      />
     </>
   );
 }
