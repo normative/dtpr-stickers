@@ -60,7 +60,7 @@ function PlaceView({
               />
             ))
           }
-          { !!otherSensors?.length && <TaxonomySensors key="others" taxonomyPropValue="Others" sensors={otherSensors} /> }
+          { !!otherSensors?.length && <TaxonomySensors key="others" taxonomyPropValue="Other" sensors={otherSensors} /> }
         </div>
       </SensorTabs>
     </div>
