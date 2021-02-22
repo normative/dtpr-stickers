@@ -91,11 +91,15 @@ function SensorView({
           <SensorPlace place={place} />
         </div>
         <div className={classes.faq}>
-          {faq.map(({ question, response }, i) => (
+          {faq?.length ? faq.map(({ question, response }, i) => (
             <Accordion key={`question-${i}`} title={question}>
               {response}
             </Accordion>
-          ))}
+          )) : (
+            <Typography>
+              There are no FAQs for this sensor
+            </Typography>
+          )}
         </div>
       </SensorTabs>
     </div>
