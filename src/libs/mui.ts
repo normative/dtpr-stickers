@@ -24,6 +24,9 @@ export { default as Divider } from '@material-ui/core/Divider';
 export { default as Accordion } from '@material-ui/core/Accordion';
 export { default as AccordionSummary } from '@material-ui/core/AccordionSummary';
 export { default as AccordionDetails } from '@material-ui/core/AccordionDetails';
+export { default as Link } from '@material-ui/core/Link/Link';
+export { default as Slide } from '@material-ui/core/Slide';
+export { default as Fade } from '@material-ui/core/Fade';
 
 // Material UI Icons
 export { default as AddIcon } from '@material-ui/icons/Add';
@@ -33,3 +36,5 @@ export { default as ArrowForwardIcon } from '@material-ui/icons/ArrowForward';
 export { default as SendIcon } from '@material-ui/icons/Send';
 export { default as ExpandMoreIcon } from '@material-ui/icons/ExpandMore';
 export { default as CheckIcon } from '@material-ui/icons/Check';
+export { default as PlaceIcon } from '@material-ui/icons/Place';
+export { default as SortIcon } from '@material-ui/icons/Sort';

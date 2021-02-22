@@ -1,91 +1,68 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 
 import {
-  Card, LinearProgress, Typography, Grid, CardActionArea, CardContent,
+  Typography, Link, PlaceIcon, Divider, SortIcon, IconButton,
 } from 'libs/mui';
-import { PlaceStateType } from 'reducers/place';
-import { SensorsStateType } from 'reducers/sensors';
-import { AirtableStateType } from 'reducers/airtable';
-import { Link } from 'react-router-dom';
-import { getSensorPath } from 'common/helpers';
-import StaticMap from '../StaticMap';
+import { PlaceData, SensorData, TaxonomyPropValuesGroups } from 'common/types';
+import SensorTabs from 'components/Sensors/SensorTabs';
+import TaxonomySensors from './TaxonomySensors';
 
 interface Props {
-  place: PlaceStateType;
-  sensors: SensorsStateType;
-  airtable: AirtableStateType;
+  place: PlaceData;
   classes: any;
+  taxonomySensors: TaxonomyPropValuesGroups;
+  taxonomySensorsSortedIds: string[];
+  otherSensors: SensorData[];
+  onSortClick: () => void;
 }
 
+const GOOGLE_MAPS_SEARCH = 'https://www.google.com/maps/search/?api=1';
+
 function PlaceView({
-  classes, place, sensors, airtable,
+  classes,
+  place,
+  taxonomySensors,
+  taxonomySensorsSortedIds,
+  otherSensors,
+  onSortClick,
 }: Props) {
-  const isLoading = place.isFetching || sensors.isFetching || airtable.isFetching;
-
-  if (isLoading) return <LinearProgress color="primary" />;
-  if (!place.data) return <Typography>Hmm can`t find that place :/</Typography>;
-
-  const { name: placeName, lngLat = {}, address = '' } = place.data;
-  const markerLocation = lngLat
-    ? (Object.values(lngLat).reverse() as [number, number])
-    : undefined;
-
   return (
     <div className={classes.root}>
-      <div className={classes.headerRow}>
-        <Typography className={classes.title}>
-          {placeName}
+      <div className={classes.header}>
+        <Typography className={classes.name}>
+          {place.name}
         </Typography>
-        <Typography className={classes.subtitle}>
-          {address}
-        </Typography>
+        <Link href={`${GOOGLE_MAPS_SEARCH}&query=${place.address}`} target="_blank" className={classes.addressLink}>
+          <PlaceIcon fontSize="small" />
+          <Typography className={classes.address}>
+            {place.address}
+          </Typography>
+        </Link>
       </div>
-      {markerLocation && (
-        <div className={classes.staticMap}>
-          <StaticMap
-            markerLocation={markerLocation}
-            center={markerLocation}
-          />
-        </div>
-      )}
-      {sensors.data && (
-      <Grid container spacing={8}>
-        {Object.keys(sensors.data).map((id) => {
-          const sensor = sensors.data[id];
-          const { name, purpose } = sensor;
-          const featuredPurpose = purpose && purpose.length ? purpose[0] : undefined;
-          let icon: string | null = null;
-          if (featuredPurpose && airtable.data) {
-            const config = airtable.data.purpose.find(
-              (option) => option.name === featuredPurpose,
-            );
-            if (config) icon = `/images/${config.iconShortname}.svg`;
+      <Divider variant="fullWidth" />
+      <SensorTabs tabs={['TECHNOLOGIES']}>
+        <div className={classes.technologies}>
+          <IconButton className={classes.sort} onClick={onSortClick}>
+            <Typography className={classes.sortText}>
+              SORT BY
+            </Typography>
+            {' '}
+            <SortIcon fontSize="small" />
+          </IconButton>
+          {
+            taxonomySensorsSortedIds.map((value, i) => (
+              <TaxonomySensors
+                key={`${value}-${i}`}
+                taxonomyPropValue={value}
+                sensors={taxonomySensors[value]}
+              />
+            ))
           }
-          return (
-            <Grid key={id} item xs={4} sm={3}>
-              <Card className={classes.card} elevation={0}>
-                <Link to={getSensorPath(id)} style={{ textDecoration: 'none' }}>
-                  <CardActionArea>
-                    <CardContent className={classes.cardContent}>
-                      {icon && (
-                      <img className={classes.cardIcon} src={icon} alt="sensor img" />
-                      )}
-                      <Typography
-                        className={classes.cardIconText}
-                        align="center"
-                      >
-                        {name}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Link>
-              </Card>
-            </Grid>
-          );
-        })}
-      </Grid>
-      )}
+          { !!otherSensors?.length && <TaxonomySensors key="others" taxonomyPropValue="Other" sensors={otherSensors} /> }
+        </div>
+      </SensorTabs>
     </div>
   );
 }
@@ -94,71 +71,53 @@ const styles = (theme: Theme) => createStyles({
   root: {
     flexGrow: 1,
     margin: 'auto',
-    padding: theme.spacing(2),
+    paddingTop: theme.spacing(2),
     [theme.breakpoints.up('md')]: {
       maxWidth: theme.breakpoints.values.md,
-      paddingLeft: theme.spacing(4),
-      paddingRight: theme.spacing(4),
     },
   },
-  headerRow: {
-    margin: '8px -16px 16px -16px',
-    padding: '0 16px 16px 16px',
-    borderBottom: '0.5px solid rgba(0,0,0,0.15)',
-  },
-  adminBar: {
-    top: 'auto',
-    bottom: 0,
-  },
-  addSensorButton: {
-    position: 'absolute',
-    top: 0,
-    left: '50%',
-    transform: 'translate(-50%, -30%)',
-  },
-  addIcon: {
-    marginRight: theme.spacing(),
-  },
-  staticMap: {
-    marginBottom: theme.spacing(2),
-    width: '100%',
-    height: '100px',
-    [theme.breakpoints.up('md')]: {
-      height: '300px',
-    },
-  },
-  title: {
-    fontSize: '20px',
-    fontWeight: 'bolder',
-  },
-  subtitle: {
-    fontSize: '14px',
-    color: 'rgba(0,0,0,.6)',
-    fontWeight: 500,
-  },
-  tabBar: {
-    margin: '0 -16px',
-    borderBottom: '0.5px solid rgba(0,0,0,0.15)',
-  },
-  singleTab: {
-    textTransform: 'none',
-  },
-  cardContent: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+  header: {
     padding: theme.spacing(2),
+    textAlign: 'center',
   },
-  cardIcon: {
-    marginBottom: theme.spacing(),
-    width: '56px',
-    height: '56px',
-    opacity: 0.7,
-  },
-  cardIconText: {
-    fontSize: '12px',
-    lineHeight: '16px',
+  name: {
+    fontSize: '20px',
     fontWeight: 500,
+  },
+  addressLink: {
+    alignItems: 'center',
+    color: '#666666',
+    display: 'flex',
+    fontSize: '0.75rem',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  address: {
+    fontSize: '0.75rem',
+    textDecoration: 'underline',
+  },
+  technologies: {
+    marginTop: theme.spacing(1.5),
+    padding: theme.spacing(2),
+    position: 'relative',
+  },
+  sort: {
+    alignItems: 'center',
+    color: '#828282',
+    display: 'flex',
+    padding: theme.spacing(2),
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    '&:hover': {
+      backgroundColor: 'inherit',
+    },
+  },
+  sortText: {
+    color: '#828282',
+    fontWeight: 600,
+    fontSize: '0.75rem',
+    letterSpacing: '0.25px',
   },
 });
 

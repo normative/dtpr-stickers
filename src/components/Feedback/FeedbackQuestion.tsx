@@ -4,9 +4,8 @@ import {
   Theme,
   withStyles,
 } from '@material-ui/core/styles';
-import Fade from '@material-ui/core/Fade';
 
-import { Typography } from 'libs/mui';
+import { Typography, Fade } from 'libs/mui';
 import { feedbackQuestionTypes } from 'common/constants';
 import FeedbackEmojis from './FeedbackEmojis';
 import FeedbackComment from './FeedbackComment';

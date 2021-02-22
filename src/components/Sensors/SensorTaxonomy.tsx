@@ -2,19 +2,23 @@ import React from 'react';
 
 import { sensorsGroupLabels } from 'common/constants';
 import { Option, SensorsGroup } from 'common/types';
+import { createStyles, Theme, withStyles } from '@material-ui/core';
 import SensorAccordion from './SensorAccordion';
 
 interface Props {
   accountable?: Option;
   sensorsGroup?: SensorsGroup[];
   sensorName: string;
+  classes: any,
 }
 
-function SensorTaxonomy({ sensorName, accountable, sensorsGroup }: Props) {
+function SensorTaxonomy({
+  classes, sensorName, accountable, sensorsGroup,
+}: Props) {
   if (!accountable && !sensorsGroup?.length) <></>;
 
   return (
-    <div>
+    <div className={classes.root}>
       {/* On top accountability sensor info */}
       {accountable?.description && (
       <SensorAccordion
@@ -47,4 +51,11 @@ SensorTaxonomy.defaultProps = {
   sensorsGroup: undefined,
 };
 
-export default SensorTaxonomy;
+const styles = (theme: Theme) => createStyles({
+  root: {
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+  },
+});
+
+export default withStyles(styles)(SensorTaxonomy);

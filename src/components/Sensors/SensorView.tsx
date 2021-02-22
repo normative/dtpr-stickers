@@ -57,7 +57,7 @@ function SensorView({
   return (
     <div className={classes.root}>
       <div className={classes.header}>
-        {sensor.headline && (
+        {!!sensor.headline && (
           <Typography
             variant="h6"
             align="center"
@@ -75,7 +75,7 @@ function SensorView({
       </div>
       <Divider variant="fullWidth" />
       <SensorTabs tabs={['DETAILS', 'FAQ']}>
-        <div>
+        <div className={classes.details}>
           <SensorDetails description={sensor.description} systems={systems} />
           <SensorTaxonomy
             sensorName={sensor.name}
@@ -91,11 +91,15 @@ function SensorView({
           <SensorPlace place={place} />
         </div>
         <div className={classes.faq}>
-          {faq.map(({ question, response }, i) => (
+          {faq?.length ? faq.map(({ question, response }, i) => (
             <Accordion key={`question-${i}`} title={question}>
               {response}
             </Accordion>
-          ))}
+          )) : (
+            <Typography>
+              There are no FAQs for this sensor
+            </Typography>
+          )}
         </div>
       </SensorTabs>
     </div>
@@ -125,6 +129,9 @@ const styles = (theme: Theme) => createStyles({
     maxHeight: '300px',
     margin: 'auto',
     marginBottom: theme.spacing(2),
+  },
+  details: {
+    paddingTop: theme.spacing(1),
   },
   faq: {
     padding: theme.spacing(3),
