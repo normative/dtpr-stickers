@@ -31,7 +31,7 @@ function SensorPlace({ classes, place }: Props) {
         <Typography className={classes.linkText} component="span">
           SEE ALL
         </Typography>
-        <ArrowForwardIcon className={classes.highlight} />
+        <ArrowForwardIcon className={classes.linkIcon} />
       </Link>
     </div>
   );
@@ -74,12 +74,13 @@ const styles = (theme: Theme) => createStyles({
   },
   linkText: {
     color: theme.custom.sessions.sensor.place.highlight,
-    fontWeight: 500,
+    fontWeight: 700,
     letterSpacing: '0.25px',
     marginRight: theme.spacing(),
   },
-  highlight: {
+  linkIcon: {
     color: theme.custom.sessions.sensor.place.highlight,
+    fontWeight: 700,
   },
 });
 

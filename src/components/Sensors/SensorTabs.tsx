@@ -12,7 +12,7 @@ const tabsStyles = (theme: Theme) => createStyles({
   },
   indicator: {
     backgroundColor: theme.palette.primary.main,
-    height: '1px',
+    height: '2px',
   },
 });
 
@@ -21,7 +21,7 @@ const StyledTabs = withStyles(tabsStyles)(Tabs);
 const StyledTab = withStyles((theme: Theme) => createStyles({
   root: {
     minWidth: 125,
-    fontWeight: 500,
+    fontWeight: 700,
     letterSpacing: '0.75px',
     textTransform: 'uppercase',
     color: theme.palette.primary.main,
