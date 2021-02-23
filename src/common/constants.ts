@@ -45,3 +45,13 @@ export enum feedbackQuestionTypes {
   EMOJI = 'emoji',
   THANKS = 'thanks',
 }
+
+export const PLACEHOLDERS = {
+  [sensorsGroupNames.ACCESS]: 'access/placeholder',
+  [sensorsGroupNames.DATA_PROCESS]: 'process/placeholder',
+  [sensorsGroupNames.DATA_TYPE]: 'data/placeholder',
+  [sensorsGroupNames.PURPOSE]: 'purpose/placeholder',
+  [sensorsGroupNames.STORAGE]: 'storage/placeholder',
+  [sensorsGroupNames.SYSTEMS]: 'system/placeholder',
+  [sensorsGroupNames.TECH_TYPE]: 'tech/placeholder',
+};

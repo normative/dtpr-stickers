@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { sensorsGroupLabels } from 'common/constants';
+import { PLACEHOLDERS, sensorsGroupLabels } from 'common/constants';
 import { Option, SensorsGroup } from 'common/types';
 import { createStyles, Theme, withStyles } from '@material-ui/core';
 import SensorAccordion from './SensorAccordion';
@@ -30,11 +30,11 @@ function SensorTaxonomy({
       />
       )}
       {/* Followed by the rest of sensor groups */}
-      {sensorsGroup.map(({ label, options }) => options.map(
+      {sensorsGroup.map(({ sensorGroup, label, options }) => options.map(
         ({ name, description, iconShortname }) => (
           <SensorAccordion
             key={name}
-            icon={`/images/${iconShortname}.svg`}
+            icon={`/images/${iconShortname || PLACEHOLDERS[sensorGroup]}.svg`}
             title={name}
             label={label}
             body={description}

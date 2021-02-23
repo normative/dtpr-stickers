@@ -6,16 +6,17 @@ import { Typography } from '@material-ui/core';
 interface Props {
   option: Option | undefined;
   classes: any;
+  placeholder: string,
 }
 
-function SensorBadge({ option, classes }: Props) {
+function SensorBadge({ option, classes, placeholder }: Props) {
   if (!option) return <></>;
 
   return (
     <div className={classes.root}>
       <img
         className={classes.image}
-        src={`/images/${option.iconShortname}.svg`}
+        src={option.iconShortname ? `/images/${option.iconShortname}.svg` : placeholder}
         alt="purpose badge icon"
       />
       <Typography variant="subtitle2">

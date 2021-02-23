@@ -12,6 +12,7 @@ import {
 
 import Accordion from 'components/Accordion';
 
+import { PLACEHOLDERS } from 'common/constants';
 import SensorFeedback from './SensorFeedback';
 import SensorBadge from './SensorBadge';
 import SensorDetails from './SensorDetails';
@@ -69,9 +70,9 @@ function SensorView({
       </div>
       <Divider variant="fullWidth" />
       <div className={classes.summaryWrapper}>
-        <SensorBadge option={purpose?.options[0]} />
-        <SensorBadge option={techType?.options[0]} />
-        <SensorBadge option={accountableOption} />
+        <SensorBadge option={purpose?.options[0]} placeholder={`/images/${PLACEHOLDERS.purpose}.svg`} />
+        <SensorBadge option={techType?.options[0]} placeholder={`/images/${PLACEHOLDERS.techType}.svg`} />
+        <SensorBadge option={accountableOption} placeholder="/images/accountable/org.svg" />
       </div>
       <Divider variant="fullWidth" />
       <SensorTabs tabs={['DETAILS', 'FAQ']}>
