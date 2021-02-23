@@ -101,12 +101,13 @@ interface Props {
   label: string;
   body: string;
   name: string;
+  placeholder?: string;
 }
 
 class SensorAccordion extends Component<Props, any> {
   render() {
     const {
-      classes, icon, title, label, body, name,
+      classes, icon, title, label, body, name, placeholder,
     } = this.props;
     const parsedBody = markdownConverter.makeHtml(body);
 
@@ -131,7 +132,7 @@ class SensorAccordion extends Component<Props, any> {
           }}
           expandIcon={<ExpandMoreIcon />}
         >
-          {icon && <img src={icon} />}
+          {icon && <img src={icon} onError={(e: any) => { e.target.src = placeholder }} />}
           <Typography className={classes.heading}>{title}</Typography>
           <Typography color="textSecondary" className={classes.label}>
             {label}
