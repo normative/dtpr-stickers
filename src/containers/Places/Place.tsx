@@ -18,7 +18,7 @@ import { LinearProgress } from '@material-ui/core';
 import { groupSensorsByTaxonomyPropValues } from 'presenters/place';
 import { SensorsGroupByTaxonomyPropValues } from 'common/types';
 import PlaceSortBy from 'components/Places/PlaceSortBy';
-import { sensorsGroupNames } from 'common/constants';
+import { sensorsGroupLabels, sensorsGroupNames } from 'common/constants';
 
 function Place() {
   const [sensors, sensorsActions] = useReducerState(
@@ -76,6 +76,7 @@ function Place() {
         taxonomySensorsSortedIds={groupedSensors?.taxonomyPropValues}
         otherSensors={groupedSensors?.Others}
         onSortClick={handleSortClick}
+        sortLabel={sensorsGroupLabels[sortTaxonomy]}
       />
       <PlaceSortBy
         onSelect={handleSortTaxonomyClick}

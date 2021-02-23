@@ -94,6 +94,7 @@ const styles = (theme: Theme) => createStyles({
   },
   options: {
     padding: theme.spacing(4),
+    color: '#828282',
     '&:hover': {
       cursor: 'pointer',
     },
