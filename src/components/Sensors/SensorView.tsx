@@ -98,7 +98,15 @@ function SensorView({
             </Accordion>
           )) : (
             <Typography>
-              There are no FAQs for this sensor
+              We&#8217;re currently gathering feedback from users and
+              {' '}
+              answers to commonly asked questions will be posted here.
+              {' '}
+              We want to hear from you! Please complete the 5 questions
+              {' '}
+              in the &#8216;feedback section&#8217;
+              {' '}
+              that appears at the bottom of the screen. Thank you.
             </Typography>
           )}
         </div>
