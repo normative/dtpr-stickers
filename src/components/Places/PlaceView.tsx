@@ -85,7 +85,7 @@ const styles = (theme: Theme) => createStyles({
   },
   name: {
     fontSize: '20px',
-    fontWeight: 500,
+    fontWeight: 700,
   },
   addressLink: {
     alignItems: 'center',
