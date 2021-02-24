@@ -1,6 +1,7 @@
 /* eslint-disable react/no-danger */
 import React, { memo } from 'react';
 import { createStyles, Theme, withStyles } from '@material-ui/core/styles';
+import { showPlaceholderOnImgError } from 'common/helpers';
 import SvgText from './SvgText';
 
 const THEME = {
@@ -14,10 +15,11 @@ interface Props {
   logoUrl: string;
   classes: any;
   children: string;
+  placeholder: string;
 }
 
 function QRCodeSticker({
-  height = DEFAULT_HEIGHT, logoUrl, classes, children,
+  height = DEFAULT_HEIGHT, logoUrl, classes, children, placeholder,
 }: Props) {
   const width = height * 0.8787;
 
@@ -33,7 +35,13 @@ function QRCodeSticker({
         </g>
       </svg>
       <svg viewBox="0 0 256 256">
-        <image width="50%" height="50%" href={logoUrl} transform="translate(65.0 35.0) scale(1)" />
+        <image
+          width="50%"
+          height="50%"
+          href={logoUrl}
+          transform="translate(65.0 35.0) scale(1)"
+          onError={(e: any) => { e.target.href.baseVal = placeholder; }}
+        />
       </svg>
       <SvgText
         style={{ color: THEME.color }}

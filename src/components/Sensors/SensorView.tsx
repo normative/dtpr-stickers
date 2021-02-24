@@ -72,7 +72,14 @@ function SensorView({
       <div className={classes.summaryWrapper}>
         <SensorBadge option={purpose?.options[0]} placeholder={`/images/${PLACEHOLDERS.purpose}.svg`} />
         <SensorBadge option={techType?.options[0]} placeholder={`/images/${PLACEHOLDERS.techType}.svg`} />
-        <SensorBadge option={accountableOption} placeholder="/images/accountable/org.svg" />
+        <SensorBadge
+          option={{
+            ...accountableOption,
+            iconShortname: sensor.logoSrc || sensor.logoRef,
+          }}
+          imgSrc={sensor.logoSrc || sensor.logoRef}
+          placeholder="/images/accountable/org.svg"
+        />
       </div>
       <Divider variant="fullWidth" />
       <SensorTabs tabs={['DETAILS', 'FAQ']}>
