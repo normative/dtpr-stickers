@@ -55,3 +55,5 @@ export const PLACEHOLDERS = {
   [sensorsGroupNames.SYSTEMS]: 'system/placeholder',
   [sensorsGroupNames.TECH_TYPE]: 'tech/placeholder',
 };
+
+export const HELPFULPLACES_WEBSITE = 'https://dtpr.helpfulplaces.com/';

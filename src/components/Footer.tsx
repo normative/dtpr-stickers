@@ -5,6 +5,7 @@ import {
 } from '@material-ui/core/styles';
 
 import { Typography } from 'libs/mui';
+import { HELPFULPLACES_WEBSITE } from 'common/constants';
 
 function Footer({ classes }: WithStyles) {
   return (
@@ -14,7 +15,7 @@ function Footer({ classes }: WithStyles) {
         {' '}
         We may share feedback on this page with Helpful Places.
       </Typography>
-      <Link to="https://dtpr.helpfulplaces.com/">
+      <Link to={HELPFULPLACES_WEBSITE}>
         <Typography className={classes.link} color="primary">
           LEARN MORE
         </Typography>

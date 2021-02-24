@@ -22,6 +22,7 @@ import { feedbackQuestionTypes, sensorsGroupNames } from 'common/constants';
 import { LinearProgress } from 'libs/mui';
 import { prepareSensorsGroups } from 'presenters/sensor';
 import { FAQ, FeedbackQuestion, System } from 'common/types';
+import NotFound from 'components/NotFound';
 
 const FEEDBACK_QUESTIONS: FeedbackQuestion[] = [
   {
@@ -124,6 +125,10 @@ function Sensor() {
       label: sensor.data?.name,
     });
   };
+
+  if (sensor.didInvalidate) {
+    return <NotFound message={sensor.error.message} code={sensor.error.code} />;
+  }
 
   if (!sensor.data || sensor.isFetching || !airtable.data || airtable.isFetching) {
     return <LinearProgress color="primary" />;

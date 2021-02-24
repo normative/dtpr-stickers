@@ -10,11 +10,16 @@ export function getPlace(placeId, onSuccess, onError) {
   try {
     const placesRef = firebase.database().ref(`${refs.PLACES}/${placeId}`);
     placesRef.once('value', (snapshot) => {
-      if (!snapshot) {
-        onSuccess();
+      const place = snapshot?.val();
+      if (!place) {
+        onError({
+          code: 404,
+          status: 'Not Found',
+          message: 'Place not found',
+        });
         return;
       }
-      onSuccess({ ...snapshot?.val(), id: placeId });
+      onSuccess({ ...place, id: placeId });
     });
   } catch (e) {
     onError(e);
@@ -46,19 +51,18 @@ export async function getSensors(place: PlaceData, onSuccess, onError) {
   }
 }
 
-async function getDownloadURL(ref?: string) {
+function getDownloadURL(ref?: string) {
   if (!ref) return '';
 
-  try {
-    return firebase
-      .storage()
-      .ref()
-      .child(ref)
-      .getDownloadURL();
-  } catch (e) {
-    console.log(e);
-    return e;
-  }
+  return firebase
+    .storage()
+    .ref()
+    .child(ref)
+    .getDownloadURL()
+    .catch((e) => {
+      console.log(e);
+      return '';
+    });
 }
 
 export function getSensor(sensorId, onSuccess, onError) {
@@ -71,6 +75,15 @@ export function getSensor(sensorId, onSuccess, onError) {
       }
 
       const sensor: SensorData | null = snapshot.val();
+      if (!sensor) {
+        onError({
+          code: 404,
+          status: 'Not Found',
+          message: 'Sensor not found',
+        });
+        return;
+      }
+
       sensor.sensorImageSrc = await getDownloadURL(sensor.sensorImageRef);
       sensor.logoSrc = await getDownloadURL(sensor.logoRef);
       onSuccess(sensor);

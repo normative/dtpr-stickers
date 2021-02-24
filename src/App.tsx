@@ -13,10 +13,10 @@ import {
 import Places from 'containers/Places';
 import Sensors from 'containers/Sensors';
 
-import HomeView from 'components/HomeView';
 import Footer from 'components/Footer';
 import { AirtableProvider } from 'context/airtable';
 import { PlaceProvider } from 'context/place';
+import { HELPFULPLACES_WEBSITE } from 'common/constants';
 
 ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_KEY || '');
 ReactGA.set({ anonymizeIp: true });
@@ -49,7 +49,14 @@ function App() {
         <PlaceProvider>
           <Router>
             <Switch>
-              <Route exact path="/" component={HomeView} />
+              <Route
+                exact
+                path="/"
+                render={() => {
+                  window.location.href = HELPFULPLACES_WEBSITE;
+                  return false;
+                }}
+              />
               <Route path="/sensors" component={Sensors} />
               <Route path="/places" component={Places} />
               <Redirect to="/" />
