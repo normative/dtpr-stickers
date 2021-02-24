@@ -14,6 +14,7 @@ import Sticker from 'components/Sticker';
 import QRCodeSticker from 'components/Sticker/QRCodeSticker';
 import LogoSticker from 'components/Sticker/LogoSticker';
 import { StickerThemeVariant } from 'common/constants';
+import NotFound from 'components/NotFound';
 
 interface Props {
   sensor: SensorStateType;
@@ -39,8 +40,13 @@ function SensorPrintView({
   const isLoading = sensor.isFetching || airtable.isFetching;
 
   if (isLoading) return <LinearProgress color="primary" />;
-  if (!sensor.data) return <Typography>Hmm can`t find that sensor :/</Typography>;
 
+  if (sensor.didInvalidate) {
+    return (
+      <NotFound code={sensor.error.code} message={sensor.error.message} />
+    );
+  }
+  debugger;
   return (
     <div className={classes.root}>
       <div className={classes.navBar}>

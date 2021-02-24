@@ -21,7 +21,7 @@ export function getStickerConfig(
   if (!config) {
     return null;
   }
-  const { iconShortname } = config;
+  const { iconShortname = '' } = config;
   const iconPath = iconShortname.split('/');
   const icon = iconPath.pop();
   const context = iconPath.shift();
