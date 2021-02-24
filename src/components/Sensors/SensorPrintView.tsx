@@ -46,7 +46,7 @@ function SensorPrintView({
       <NotFound code={sensor.error.code} message={sensor.error.message} />
     );
   }
-  debugger;
+
   return (
     <div className={classes.root}>
       <div className={classes.navBar}>
@@ -71,10 +71,11 @@ function SensorPrintView({
           </div>
           {sensor.data && airtable.data && (
           <div className={classes.badgeContainer} id="test-2" data-div-as-png>
-            {sensor.data.logoSrc && sensor.data.accountable && (
+            {sensor.data.logoRef && sensor.data.accountable && (
               <LogoSticker
                 height={218}
-                logoUrl={sensor.data.logoSrc}
+                logoUrl={sensor?.data.logoSrc || sensor?.data.logoRef}
+                placeholder="/images/accountable/placeholder.svg"
               >
                 {sensor.data.accountable}
               </LogoSticker>
