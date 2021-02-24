@@ -1,3 +1,4 @@
+import { InvalidEvent } from 'react';
 import { StickerThemeVariant } from './constants';
 import { AirtableData, Option } from './types';
 
@@ -27,4 +28,8 @@ export function getStickerConfig(
   const variant = iconPath.shift() || defaultVariant;
 
   return { variant, context, icon };
+}
+
+export function showPlaceholderOnImgError(placeholderSrc: string) {
+  return (e: InvalidEvent<HTMLImageElement>) => { e.target.src = placeholderSrc; };
 }

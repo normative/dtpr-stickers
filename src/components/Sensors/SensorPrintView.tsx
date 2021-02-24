@@ -19,6 +19,7 @@ interface Props {
   sensor: SensorStateType;
   airtable: AirtableStateType;
   sensorUrl?: string;
+  placeUrl?: string;
   classes: any;
   onDownloadClick: any;
   firstPurpose: string;
@@ -30,6 +31,7 @@ function SensorPrintView({
   airtable,
   sensor,
   sensorUrl,
+  placeUrl,
   onDownloadClick,
   firstPurpose,
   dentifTechTypes,
@@ -71,10 +73,18 @@ function SensorPrintView({
                 {sensor.data.accountable}
               </LogoSticker>
             )}
+            {placeUrl && (
+              <QRCodeSticker
+                height={218}
+                url={placeUrl}
+                name="place"
+              />
+            )}
             {sensorUrl && (
               <QRCodeSticker
                 height={218}
-                sensorUrl={sensorUrl}
+                url={sensorUrl}
+                name="sensor"
               />
             )}
             {dentifTechTypes.map((techType) => (
@@ -107,6 +117,7 @@ function SensorPrintView({
 
 SensorPrintView.defaultProps = {
   sensorUrl: '',
+  placeUrl: '',
 };
 
 const styles = (theme: Theme) => createStyles({

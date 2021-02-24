@@ -18,7 +18,7 @@ import SensorPrintView from 'components/Sensors/SensorPrintView';
 import { AirtableContext } from 'context/airtable';
 import useReducerState from 'hooks/useReducerState';
 import { AirtableStateType } from 'reducers/airtable';
-import { getSensorPath } from 'common/helpers';
+import { getPlacePath, getSensorPath } from 'common/helpers';
 import exportStickerAssets from 'services/exporting';
 
 function SensorPrint() {
@@ -32,6 +32,7 @@ function SensorPrint() {
   const airtable = useContext(AirtableContext);
   const { sensorId }: { sensorId: string } = useParams();
   const sensorUrl = `${window.location.origin}${getSensorPath(sensorId)}`;
+  const placeUrl = `${window.location.origin}${getPlacePath(sensor?.data?.placeId)}`;
 
   useEffect(() => {
     sensorActions.onRequest();
@@ -49,6 +50,7 @@ function SensorPrint() {
   return (
     <SensorPrintView
       sensorUrl={sensorUrl}
+      placeUrl={placeUrl}
       airtable={airtable as AirtableStateType}
       sensor={sensor as SensorStateType}
       onDownloadClick={() => { exportStickerAssets(); }}
