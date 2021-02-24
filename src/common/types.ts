@@ -3,7 +3,7 @@ import { LngLat } from 'mapbox-gl';
 export interface ReducerStateType {
   isFetching: Boolean,
   didInvalidate: Boolean,
-  error?: Error,
+  error?: { [name: string]: any },
 }
 
 export interface PlaceData {

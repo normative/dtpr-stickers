@@ -19,6 +19,7 @@ import { groupSensorsByTaxonomyPropValues } from 'presenters/place';
 import { SensorsGroupByTaxonomyPropValues } from 'common/types';
 import PlaceSortBy from 'components/Places/PlaceSortBy';
 import { sensorsGroupLabels, sensorsGroupNames } from 'common/constants';
+import NotFound from 'components/NotFound';
 
 function Place() {
   const [sensors, sensorsActions] = useReducerState(
@@ -57,6 +58,10 @@ function Place() {
   const handleSortClick = () => {
     setSortVisible(!sortVisible);
   };
+
+  if (place.didInvalidate) {
+    return <NotFound message={place.error.message} code={place.error.code} />;
+  }
 
   if (!place.data
     || place.isFetching
