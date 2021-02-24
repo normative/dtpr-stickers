@@ -76,13 +76,15 @@ function SensorPrintView({
             {placeUrl && (
               <QRCodeSticker
                 height={218}
-                sensorUrl={placeUrl}
+                url={placeUrl}
+                name="place"
               />
             )}
             {sensorUrl && (
               <QRCodeSticker
                 height={218}
-                sensorUrl={sensorUrl}
+                url={sensorUrl}
+                name="sensor"
               />
             )}
             {dentifTechTypes.map((techType) => (
