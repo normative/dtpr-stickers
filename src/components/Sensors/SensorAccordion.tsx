@@ -8,6 +8,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import showdown from 'showdown';
 import ReactGA from 'react-ga';
+import { showPlaceholderOnImgError } from 'common/helpers';
 
 
 const paragraphTagFilter = {
@@ -132,7 +133,7 @@ class SensorAccordion extends Component<Props, any> {
           }}
           expandIcon={<ExpandMoreIcon />}
         >
-          {icon && <img src={icon} onError={(e: any) => { e.target.src = placeholder }} />}
+          {icon && <img src={icon} onError={showPlaceholderOnImgError(placeholder)} />}
           <Typography className={classes.heading}>{title}</Typography>
           <Typography color="textSecondary" className={classes.label}>
             {label}

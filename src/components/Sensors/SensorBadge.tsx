@@ -2,6 +2,7 @@ import { Option } from 'common/types';
 import React from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
+import { showPlaceholderOnImgError } from 'common/helpers';
 
 interface Props {
   option: Option | undefined;
@@ -18,6 +19,7 @@ function SensorBadge({ option, classes, placeholder }: Props) {
         className={classes.image}
         src={option.iconShortname ? `/images/${option.iconShortname}.svg` : placeholder}
         alt="purpose badge icon"
+        onError={showPlaceholderOnImgError(placeholder)}
       />
       <Typography variant="subtitle2">
         {option.name}
