@@ -1,7 +1,6 @@
 /* eslint-disable react/no-danger */
 import React, { memo } from 'react';
 import { createStyles, Theme, withStyles } from '@material-ui/core/styles';
-import { showPlaceholderOnImgError } from 'common/helpers';
 import SvgText from './SvgText';
 
 const THEME = {

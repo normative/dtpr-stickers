@@ -75,7 +75,7 @@ function SensorPrintView({
               <LogoSticker
                 height={218}
                 logoUrl={sensor?.data.logoSrc || sensor?.data.logoRef}
-                placeholder="/images/accountable/placeholder.svg"
+                placeholder={`${window.location.origin}/images/accountable/placeholder.svg`}
               >
                 {sensor.data.accountable}
               </LogoSticker>

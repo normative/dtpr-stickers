@@ -113,7 +113,7 @@ function SensorView({
               {' '}
               in the &#8216;feedback section&#8217;
               {' '}
-              that appears at the bottom of the screen. Thank you.
+              that appears at the bottom of Details tab. Thank you.
             </Typography>
           )}
         </div>
