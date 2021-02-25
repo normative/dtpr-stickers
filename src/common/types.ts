@@ -36,10 +36,18 @@ export interface SensorsGroupByTaxonomyPropValues {
   Others?: SensorData[];
 }
 
-export interface SensorsGroup {
-  sensorGroup: string;
+export interface TaxonomyDetails {
+  category: string;
+  id?: string;
+  title: string;
+  headline?: string;
+  description: string;
+  icon: string;
+}
+export interface SenorTaxonomyPropValuesDetails {
+  taxonomyProp: string;
   label: string;
-  options: Option[];
+  options: TaxonomyDetails[];
 }
 
 export interface System {
@@ -89,32 +97,6 @@ export interface SensorData {
 
 export interface Sensors {
   [id: string]: SensorData;
-}
-
-// The table names in airtable
-export type TableName =
-  'Technology Type' |
-  'Purpose' |
-  'Data Type' |
-  'Data Process' |
-  'Access' |
-  'Storage' |
-  'Accountability'
-
-export interface Option {
-  name: string;
-  iconShortname: string;
-  description: string;
-}
-
-export interface AirtableData {
-  techType: Option[];
-  purpose: Option[];
-  dataType: Option[];
-  dataProcess: Option[];
-  access: Option[];
-  storage: Option[];
-  accountable: Option[];
 }
 
 export interface IconConfig {

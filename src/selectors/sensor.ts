@@ -1,14 +1,12 @@
 /* eslint-disable import/prefer-default-export */
-import { AirtableData, Option } from 'common/types';
+import taxonomy from 'data/taxonomy.json';
 
-export function getAirtableSensorsGroupData(
-  sensorsGroupName: string, sensorId?: string, sensorsGroup?: string[], airtableData?: AirtableData,
+export function getTaxonomyPropValuesDetails(
+  taxonomyProp: string, sensorId?: string, taxonomyPropValues?: string[],
 ) {
-  if (!sensorId || !sensorsGroup || !sensorsGroup.length || !airtableData) return [];
+  if (!sensorId || !taxonomyPropValues?.length) return [];
 
-  return sensorsGroup
-    .map((name) => airtableData[sensorsGroupName]?.find(
-      (airtableOption: Option) => airtableOption.name === name,
-    ))
+  return taxonomyPropValues
+    .map((value) => taxonomy[taxonomyProp]?.[value])
     .filter((item) => item);
 }

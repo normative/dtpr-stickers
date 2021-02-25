@@ -8,17 +8,15 @@ import {
   LinearProgress,
 } from 'libs/mui';
 import { SensorStateType } from 'reducers/sensor';
-import { AirtableStateType } from 'reducers/airtable';
-import { getStickerConfig } from 'common/helpers';
+import { getPrintStickerConfig } from 'common/helpers';
 import Sticker from 'components/Sticker';
 import QRCodeSticker from 'components/Sticker/QRCodeSticker';
 import LogoSticker from 'components/Sticker/LogoSticker';
-import { StickerThemeVariant } from 'common/constants';
+import { StickerThemeVariant, taxonomyProps } from 'common/constants';
 import NotFound from 'components/NotFound';
 
 interface Props {
   sensor: SensorStateType;
-  airtable: AirtableStateType;
   sensorUrl?: string;
   placeUrl?: string;
   classes: any;
@@ -29,7 +27,6 @@ interface Props {
 
 function SensorPrintView({
   classes,
-  airtable,
   sensor,
   sensorUrl,
   placeUrl,
@@ -37,7 +34,7 @@ function SensorPrintView({
   firstPurpose,
   dentifTechTypes,
 }: Props) {
-  const isLoading = sensor.isFetching || airtable.isFetching;
+  const isLoading = sensor.isFetching;
 
   if (isLoading) return <LinearProgress color="primary" />;
 
@@ -69,7 +66,7 @@ function SensorPrintView({
               Download or print the labels for use in your own signage.
             </Typography>
           </div>
-          {sensor.data && airtable.data && (
+          {sensor.data && (
           <div className={classes.badgeContainer} id="test-2" data-div-as-png>
             {sensor.data.logoRef && sensor.data.accountable && (
               <LogoSticker
@@ -98,7 +95,7 @@ function SensorPrintView({
               <Sticker
                 key={techType}
                 height={218}
-                {...getStickerConfig(airtable.data, 'techType', techType)}
+                {...getPrintStickerConfig(taxonomyProps.TECH_TYPE, techType)}
               >
                 {techType}
               </Sticker>
@@ -106,7 +103,9 @@ function SensorPrintView({
             {firstPurpose && (
               <Sticker
                 height={218}
-                {...getStickerConfig(airtable.data, 'purpose', firstPurpose, StickerThemeVariant.BLACK)}
+                {...getPrintStickerConfig(
+                  taxonomyProps.PURPOSE, firstPurpose, StickerThemeVariant.BLACK,
+                )}
               >
                 {firstPurpose}
               </Sticker>

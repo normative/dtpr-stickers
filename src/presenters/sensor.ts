@@ -1,19 +1,19 @@
 /* eslint-disable import/prefer-default-export */
-import { sensorsGroupLabels, sensorsGroupNames } from 'common/constants';
-import { AirtableData, SensorData } from 'common/types';
-import { getAirtableSensorsGroupData } from 'selectors/sensor';
+import { taxonomyProps, taxonomyPropLabels } from 'common/constants';
+import { SensorData } from 'common/types';
+import { getTaxonomyPropValuesDetails } from 'selectors/sensor';
 
-export function prepareSensorsGroups(
-  sensorId: string, sensorData: SensorData, airtableData: AirtableData,
+export function prepareSensorTaxonomy(
+  sensorId: string, sensorData: SensorData,
 ) {
   return Object
-    .values(sensorsGroupNames)
+    .values(taxonomyProps)
     .map(
-      (sensorGroup: string) => ({
-        sensorGroup,
-        label: sensorsGroupLabels[sensorGroup],
-        options: getAirtableSensorsGroupData(
-          sensorGroup, sensorId, sensorData?.[sensorGroup], airtableData,
+      (taxonomyProp: string) => ({
+        taxonomyProp,
+        label: taxonomyPropLabels[taxonomyProp],
+        options: getTaxonomyPropValuesDetails(
+          taxonomyProp, sensorId, sensorData?.[taxonomyProp],
         ),
       }),
     );

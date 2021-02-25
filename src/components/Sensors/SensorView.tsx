@@ -7,7 +7,7 @@ import { Typography, Divider } from 'libs/mui';
 import {
   FAQ,
   FeedbackQuestion,
-  PlaceData, SensorData, SensorsGroup, System,
+  PlaceData, SenorTaxonomyPropValuesDetails, SensorData, System,
 } from 'common/types';
 
 import Accordion from 'components/Accordion';
@@ -23,9 +23,9 @@ import SensorPlace from './SensorPlace';
 interface Props {
   place: PlaceData;
   sensor: SensorData;
-  sensorsGroup: SensorsGroup[];
-  techType: SensorsGroup;
-  purpose: SensorsGroup;
+  sensorTaxonomy: SenorTaxonomyPropValuesDetails[];
+  techType: SenorTaxonomyPropValuesDetails;
+  purpose: SenorTaxonomyPropValuesDetails;
   classes: any;
   systems: System[];
   faq: FAQ[];
@@ -39,7 +39,7 @@ function SensorView({
   classes,
   place,
   sensor,
-  sensorsGroup,
+  sensorTaxonomy,
   techType,
   purpose,
   systems,
@@ -50,8 +50,9 @@ function SensorView({
   progressValue,
 }: Props) {
   const accountableOption = sensor.accountable ? {
-    name: sensor.accountable,
-    iconShortname: 'accountable/org',
+    category: 'accountable',
+    title: sensor.accountable,
+    icon: 'accountable/org',
     description: sensor.accountableDescription,
   } : null;
 
@@ -75,7 +76,7 @@ function SensorView({
         <SensorBadge
           option={{
             ...accountableOption,
-            iconShortname: sensor.logoSrc || sensor.logoRef,
+            icon: sensor.logoSrc || sensor.logoRef,
           }}
           imgSrc={sensor.logoSrc || sensor.logoRef}
           placeholder="/images/accountable/org.svg"
@@ -88,7 +89,7 @@ function SensorView({
           <SensorTaxonomy
             sensorName={sensor.name}
             accountable={accountableOption}
-            sensorsGroup={sensorsGroup}
+            sensorTaxonomy={sensorTaxonomy}
           />
           <SensorFeedback
             onClick={onResponse}

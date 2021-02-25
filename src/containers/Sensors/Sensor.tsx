@@ -14,13 +14,12 @@ import sensorReducer, {
 
 import useReducerState from 'hooks/useReducerState';
 
-import { AirtableContext } from 'context/airtable';
 import { PlaceContext } from 'context/place';
 
 import SensorView from 'components/Sensors/SensorView';
-import { feedbackQuestionTypes, sensorsGroupNames } from 'common/constants';
+import { feedbackQuestionTypes, taxonomyProps } from 'common/constants';
 import { LinearProgress } from 'libs/mui';
-import { prepareSensorsGroups } from 'presenters/sensor';
+import { prepareSensorTaxonomy } from 'presenters/sensor';
 import { FAQ, FeedbackQuestion, System } from 'common/types';
 import NotFound from 'components/NotFound';
 
@@ -76,7 +75,6 @@ function Sensor() {
     fetchSensorFailed,
   );
   const [place, placeActions] = useContext(PlaceContext);
-  const airtable = useContext(AirtableContext);
   const { sensorId }: { sensorId: string } = useParams();
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
@@ -92,18 +90,18 @@ function Sensor() {
     }
   }, [sensor.data]);
 
-  const sensorsGroup = useMemo(() => {
-    if (!sensor.data || !airtable.data) return [];
-    return prepareSensorsGroups(sensorId, sensor.data, airtable.data);
-  }, [sensorId, sensor.data, airtable.data]);
+  const sensorTaxonomy = useMemo(() => {
+    if (!sensor.data) return [];
+    return prepareSensorTaxonomy(sensorId, sensor.data);
+  }, [sensorId, sensor.data]);
 
-  const techType = useMemo(() => sensorsGroup.find(
-    ({ sensorGroup }) => sensorGroup === sensorsGroupNames.TECH_TYPE,
-  ), [sensorsGroup]);
+  const techType = useMemo(() => sensorTaxonomy.find(
+    ({ taxonomyProp }) => taxonomyProp === taxonomyProps.TECH_TYPE,
+  ), [sensorTaxonomy]);
 
-  const purpose = useMemo(() => sensorsGroup.find(
-    ({ sensorGroup }) => sensorGroup === sensorsGroupNames.PURPOSE,
-  ), [sensorsGroup]);
+  const purpose = useMemo(() => sensorTaxonomy.find(
+    ({ taxonomyProp }) => taxonomyProp === taxonomyProps.PURPOSE,
+  ), [sensorTaxonomy]);
 
   const systems = useMemo(() => {
     if (!sensor.data?.systems) return [];
@@ -130,7 +128,7 @@ function Sensor() {
     return <NotFound message={sensor.error.message} code={sensor.error.code} />;
   }
 
-  if (!sensor.data || sensor.isFetching || !airtable.data || airtable.isFetching) {
+  if (!sensor.data || sensor.isFetching) {
     return <LinearProgress color="primary" />;
   }
 
@@ -140,7 +138,7 @@ function Sensor() {
       sensor={sensor.data}
       techType={techType}
       purpose={purpose}
-      sensorsGroup={sensorsGroup}
+      sensorTaxonomy={sensorTaxonomy}
       systems={systems}
       faq={faq}
       onResponse={(answer: string) => {

@@ -14,7 +14,6 @@ import Places from 'containers/Places';
 import Sensors from 'containers/Sensors';
 
 import Footer from 'components/Footer';
-import { AirtableProvider } from 'context/airtable';
 import { PlaceProvider } from 'context/place';
 import { HELPFULPLACES_WEBSITE } from 'common/constants';
 
@@ -45,26 +44,24 @@ function App() {
   return (
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
-      <AirtableProvider>
-        <PlaceProvider>
-          <Router>
-            <Switch>
-              <Route
-                exact
-                path="/"
-                render={() => {
-                  window.location.href = HELPFULPLACES_WEBSITE;
-                  return false;
-                }}
-              />
-              <Route path="/sensors" component={Sensors} />
-              <Route path="/places" component={Places} />
-              <Redirect to="/" />
-            </Switch>
-            <Footer />
-          </Router>
-        </PlaceProvider>
-      </AirtableProvider>
+      <PlaceProvider>
+        <Router>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={() => {
+                window.location.href = HELPFULPLACES_WEBSITE;
+                return false;
+              }}
+            />
+            <Route path="/sensors" component={Sensors} />
+            <Route path="/places" component={Places} />
+            <Redirect to="/" />
+          </Switch>
+          <Footer />
+        </Router>
+      </PlaceProvider>
     </MuiThemeProvider>
   );
 }
