@@ -8,7 +8,7 @@ function composeStyle(props) {
     lineHeight: '1.1',
     margin: '8px 20px',
     textAlign: 'center',
-    wordBreak: 'break-all',
+    wordBreak: 'break-word',
     ...props,
   };
 }
