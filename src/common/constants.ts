@@ -5,11 +5,7 @@ export enum StickerThemeVariant {
   YELLOW = 'yellow',
 }
 
-export enum sessionKeys {
-  AIRTABLE = 'airtableData',
-}
-
-export enum sensorsGroupNames {
+export enum taxonomyProps {
   PURPOSE = 'purpose',
   TECH_TYPE = 'techType',
   DATA_TYPE = 'dataType',
@@ -18,10 +14,11 @@ export enum sensorsGroupNames {
   STORAGE = 'storage',
   SYSTEMS = 'systems',
 }
+
 /**
- * Map sensor group names to labels
+ * Map taxonomyProps to labels
  */
-export enum sensorsGroupLabels {
+export enum taxonomyPropLabels {
   accountability = 'Accountability',
   purpose = 'Purpose',
   techType = 'Technology Type',
@@ -47,13 +44,13 @@ export enum feedbackQuestionTypes {
 }
 
 export const PLACEHOLDERS = {
-  [sensorsGroupNames.ACCESS]: 'access/placeholder',
-  [sensorsGroupNames.DATA_PROCESS]: 'process/placeholder',
-  [sensorsGroupNames.DATA_TYPE]: 'data/placeholder',
-  [sensorsGroupNames.PURPOSE]: 'purpose/placeholder',
-  [sensorsGroupNames.STORAGE]: 'storage/placeholder',
-  [sensorsGroupNames.SYSTEMS]: 'system/placeholder',
-  [sensorsGroupNames.TECH_TYPE]: 'tech/placeholder',
+  [taxonomyProps.ACCESS]: 'access/placeholder',
+  [taxonomyProps.DATA_PROCESS]: 'process/placeholder',
+  [taxonomyProps.DATA_TYPE]: 'data/placeholder',
+  [taxonomyProps.PURPOSE]: 'purpose/placeholder',
+  [taxonomyProps.STORAGE]: 'storage/placeholder',
+  [taxonomyProps.SYSTEMS]: 'system/placeholder',
+  [taxonomyProps.TECH_TYPE]: 'tech/placeholder',
 };
 
 export const HELPFULPLACES_WEBSITE = 'https://dtpr.helpfulplaces.com/';

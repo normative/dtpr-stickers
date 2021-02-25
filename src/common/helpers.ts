@@ -1,33 +1,32 @@
 import { InvalidEvent } from 'react';
+import taxonomy from 'data/taxonomy.json';
 import { StickerThemeVariant } from './constants';
-import { AirtableData, Option } from './types';
 
 export function getSensorPath(sensorId: string) { return `/sensors/${sensorId}`; }
 export function getPlacePath(placeId: string) { return `/places/${placeId}`; }
 
-interface StickerConfig {
-  variant?: StickerThemeVariant;
+interface PrintStickerConfig {
+  variant?: StickerThemeVariant | string;
   icon: string;
-  context: string;
+  taxonomyProp: string;
 }
 
-export function getStickerConfig(
-  airtableData: AirtableData,
-  airtableKey: string,
+export function getPrintStickerConfig(
+  taxonomyProp: string,
   badgeName: string,
   defaultVariant: StickerThemeVariant = StickerThemeVariant.WHITE,
-): StickerConfig | null {
-  const config = airtableData[airtableKey].find((option: Option) => option.name === badgeName);
+): PrintStickerConfig | null {
+  const config = taxonomy[taxonomyProp]?.[badgeName];
   if (!config) {
     return null;
   }
-  const { iconShortname = '' } = config;
-  const iconPath = iconShortname.split('/');
-  const icon = iconPath.pop();
-  const context = iconPath.shift();
+  const { icon = '' } = config;
+  const iconPath: string[] = icon.split('/');
+  const svg = iconPath.pop();
+  const taxonomyPropName = iconPath.shift();
   const variant = iconPath.shift() || defaultVariant;
 
-  return { variant, context, icon };
+  return { variant, taxonomyProp: taxonomyPropName, icon: svg };
 }
 
 export function showPlaceholderOnImgError(placeholderSrc: string) {

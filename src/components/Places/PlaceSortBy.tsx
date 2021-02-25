@@ -4,13 +4,13 @@ import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import {
   Divider, Fade, Slide, Typography,
 } from 'libs/mui';
-import { sensorsGroupLabels, sensorsGroupNames } from 'common/constants';
+import { taxonomyPropLabels, taxonomyProps } from 'common/constants';
 
 const TAXONOMY_PROPS = [
-  sensorsGroupNames.DATA_TYPE,
-  sensorsGroupNames.PURPOSE,
-  sensorsGroupNames.SYSTEMS,
-  sensorsGroupNames.TECH_TYPE,
+  taxonomyProps.DATA_TYPE,
+  taxonomyProps.PURPOSE,
+  taxonomyProps.SYSTEMS,
+  taxonomyProps.TECH_TYPE,
 ];
 
 interface Props {
@@ -45,7 +45,7 @@ function PlaceView({
                   onClick={() => { onSelect(taxonomyProp); }}
                   key={taxonomyProp}
                 >
-                  {sensorsGroupLabels[taxonomyProp]}
+                  {taxonomyPropLabels[taxonomyProp]}
                 </Typography>
               ))}
             </div>

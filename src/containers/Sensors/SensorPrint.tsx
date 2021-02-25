@@ -1,5 +1,4 @@
 import React, {
-  useContext,
   useEffect,
   useMemo,
 } from 'react';
@@ -15,9 +14,7 @@ import sensorReducer, {
 import { getSensor } from 'sideEffects/firebase';
 
 import SensorPrintView from 'components/Sensors/SensorPrintView';
-import { AirtableContext } from 'context/airtable';
 import useReducerState from 'hooks/useReducerState';
-import { AirtableStateType } from 'reducers/airtable';
 import { getPlacePath, getSensorPath } from 'common/helpers';
 import exportStickerAssets from 'services/exporting';
 
@@ -29,7 +26,6 @@ function SensorPrint() {
     fetchSensorSuccessed,
     fetchSensorFailed,
   );
-  const airtable = useContext(AirtableContext);
   const { sensorId }: { sensorId: string } = useParams();
   const sensorUrl = `${window.location.origin}${getSensorPath(sensorId)}`;
   const placeUrl = `${window.location.origin}${getPlacePath(sensor?.data?.placeId)}`;
@@ -51,7 +47,6 @@ function SensorPrint() {
     <SensorPrintView
       sensorUrl={sensorUrl}
       placeUrl={placeUrl}
-      airtable={airtable as AirtableStateType}
       sensor={sensor as SensorStateType}
       onDownloadClick={() => { exportStickerAssets(); }}
       dentifTechTypes={dentifTechTypes}
