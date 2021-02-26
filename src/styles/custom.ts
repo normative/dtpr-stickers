@@ -50,25 +50,25 @@ const custom = {
     primary: {
       l: {
         fontSize: '1.25rem',
-        fontFamily: '"Roboto", sans-serif',
+        fontFamily: '"Montserrat", sans-serif',
         letterSpacing: '0.15px',
         lineHeight: '1.5rem',
       },
       m: {
         fontSize: '1rem',
-        fontFamily: '"Roboto", sans-serif',
+        fontFamily: '"Montserrat", sans-serif',
         letterSpacing: '0.15px',
         lineHeight: '1.2rem',
       },
       s: {
         fontSize: '0.875rem',
-        fontFamily: '"Roboto", sans-serif',
+        fontFamily: '"Montserrat", sans-serif',
         letterSpacing: '0.15px',
         lineHeight: '1.05rem',
       },
       xs: {
         fontSize: '0.75rem',
-        fontFamily: '"Roboto", sans-serif',
+        fontFamily: '"Montserrat", sans-serif',
         letterSpacing: '0.15px',
         lineHeight: '0.9rem',
       },
@@ -76,19 +76,19 @@ const custom = {
     secondary: {
       m: {
         fontSize: '1rem',
-        fontFamily: '"Roboto", sans-serif',
+        fontFamily: '"Lora", serif',
         letterSpacing: '0.15px',
         lineHeight: '1.2rem',
       },
       s: {
         fontSize: '0.875rem',
-        fontFamily: '"Roboto", sans-serif',
+        fontFamily: '"Lora", serif',
         letterSpacing: '0.15px',
         lineHeight: '1.05rem',
       },
       xs: {
         fontSize: '0.75rem',
-        fontFamily: '"Roboto", sans-serif',
+        fontFamily: '"Lora", serif',
         letterSpacing: '0.15px',
         lineHeight: '0.9rem',
       },
