@@ -48,7 +48,7 @@ const styles = (theme: Theme) => createStyles({
   },
   summaryText: {
     fontWeight: 500,
-    color: theme.custom.palette.text.secondary,
+    color: theme.custom.palette.text.main,
     ...theme.custom.fonts.secondary.m,
   },
   detailsRoot: {
