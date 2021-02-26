@@ -45,7 +45,6 @@ const custom = {
   },
   footer: {
     paragraph: '#4C4C4C',
-    link: '#2A73C9',
   },
   fonts: {
     primary: {
