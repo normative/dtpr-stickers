@@ -87,18 +87,18 @@ const styles = (theme: Theme) => createStyles({
     flex: 1,
     alignSelf: 'center',
     marginLeft: theme.spacing(),
-    color: theme.custom.palette.text.main,
+    color: theme.custom.sensor.taxonomy.value,
     ...theme.custom.fonts.secondary.m,
   },
   label: {
     alignSelf: 'center',
     marginLeft: theme.spacing(),
     marginRight: '32px',
-    color: theme.custom.palette.text.primary,
+    color: theme.custom.sensor.taxonomy.prop,
     ...theme.custom.fonts.secondary.m,
   },
   paragraph: {
-    color: theme.custom.palette.paragraph.main,
+    color: theme.custom.sensor.taxonomy.details,
     ...theme.custom.fonts.secondary.m,
   }
 });

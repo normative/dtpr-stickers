@@ -1,42 +1,52 @@
 declare module '@material-ui/core/styles/createMuiTheme' {
   interface Theme {
     custom: {
-      palette: {
-        header: {
-          light: string,
-          main: string,
-          dark: string,
-        },
-        paragraph: {
-          light: string,
-          main: string,
-          dark: string,
-        },
-        background: {
-          light: string,
-          main: string,
-          primary: string,
-          secondary: string,
-        },
-        text: {
-          primary: string,
-          secondary: string,
-          contrast: string,
-          dark: string,
-          main: string,
-          light: string,
-        },
-      },
-      contrast: {
-        header: string,
+      link: string,
+      tab: string,
+      header: string,
+      sensor: {
+        badge: string,
         paragraph: string,
-        background: string,
-        text: string,
-        link: string,
+        taxonomy: {
+          value: string,
+          prop: string,
+          details: string,
+        },
+        feedback: {
+          progressBar: string,
+          header: string,
+          paragraph: string,
+          background: string,
+          divider: string,
+          counter: string,
+        },
+        place: {
+          backgroundColor: string,
+          paragraph: string,
+          divider: string,
+          link: string,
+        },
+        faq: {
+          question: string,
+          response: string,
+        },
       },
-      elements: {
-        divider: string,
-        cardStroke: string,
+      place: {
+        address: string,
+        taxonomy: {
+          title: string,
+          description: string,
+          border: string,
+        },
+        sort: {
+          header: string,
+          selected: string,
+          option: string,
+          button: string,
+        },
+      },
+      footer: {
+        paragraph: string,
         link: string,
       },
       fonts: {
@@ -92,42 +102,52 @@ declare module '@material-ui/core/styles/createMuiTheme' {
 
   interface ThemeOptions {
     custom?: {
-      palette: {
-        header: {
-          light: string,
-          main: string,
-          dark: string,
-        },
-        paragraph: {
-          light: string,
-          main: string,
-          dark: string,
-        },
-        background: {
-          light: string,
-          main: string,
-          primary: string,
-          secondary: string,
-        },
-        text: {
-          primary: string,
-          secondary: string,
-          contrast: string,
-          dark: string,
-          main: string,
-          light: string,
-        },
-      },
-      contrast: {
-        header: string,
+      link: string,
+      tab: string,
+      header: string,
+      sensor: {
+        badge: string,
         paragraph: string,
-        background: string,
-        text: string,
-        link: string,
+        taxonomy: {
+          value: string,
+          prop: string,
+          details: string,
+        },
+        feedback: {
+          progressBar: string,
+          header: string,
+          paragraph: string,
+          background: string,
+          divider: string,
+          counter: string,
+        },
+        place: {
+          backgroundColor: string,
+          paragraph: string,
+          divider: string,
+          link: string,
+        },
+        faq: {
+          question: string,
+          response: string,
+        },
       },
-      elements: {
-        divider: string,
-        cardStroke: string,
+      place: {
+        address: string,
+        taxonomy: {
+          title: string,
+          description: string,
+          border: string,
+        },
+        sort: {
+          header: string,
+          selected: string,
+          option: string,
+          button: string,
+        },
+      },
+      footer: {
+        paragraph: string,
         link: string,
       },
       fonts: {

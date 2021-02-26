@@ -39,8 +39,8 @@ function Feedback({
 
 const styles = (theme: Theme) => createStyles({
   container: {
-    backgroundColor: theme.custom.palette.background.primary,
-    borderTop: `1px solid ${theme.custom.elements.divider}`,
+    backgroundColor: theme.custom.sensor.feedback.background,
+    borderTop: `1px solid ${theme.custom.sensor.feedback.divider}`,
     padding: theme.spacing(2),
     paddingTop: theme.spacing(2.5),
     paddingBottom: theme.spacing(2.5),
@@ -49,13 +49,13 @@ const styles = (theme: Theme) => createStyles({
   title: {
     fontWeight: 700,
     ...theme.custom.fonts.primary.m,
-    color: theme.custom.palette.header.light,
+    color: theme.custom.sensor.feedback.header,
   },
   progressText: {
     textAlign: 'center',
     marginTop: theme.spacing(3),
     ...theme.custom.fonts.secondary.s,
-    color: theme.custom.palette.text.dark,
+    color: theme.custom.sensor.feedback.counter,
   },
   linearProgress: {
     backgroundColor: 'transparent',
@@ -66,7 +66,7 @@ const styles = (theme: Theme) => createStyles({
     top: 0,
   },
   barColorPrimary: {
-    backgroundColor: theme.custom.palette.background.secondary,
+    backgroundColor: theme.custom.sensor.feedback.progressBar,
   },
 });
 

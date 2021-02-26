@@ -39,25 +39,23 @@ function SensorPlace({ classes, place }: Props) {
 
 const styles = (theme: Theme) => createStyles({
   root: {
-    backgroundColor: theme.custom.contrast.background,
-    color: theme.custom.contrast.text,
+    backgroundColor: theme.custom.sensor.place.backgroundColor,
+    color: theme.custom.sensor.place.paragraph,
     padding: theme.spacing(2),
     paddingBottom: theme.spacing(3),
     paddingTop: theme.spacing(4),
   },
   name: {
     fontWeight: 500,
-    color: theme.custom.contrast.header,
     ...theme.custom.fonts.primary.l,
   },
   address: {
     ...theme.custom.fonts.secondary.s,
-    color: theme.custom.contrast.paragraph,
     marginTop: theme.spacing(),
   },
   divider: {
     height: '2px',
-    backgroundColor: theme.custom.contrast.link,
+    backgroundColor: theme.custom.sensor.place.divider,
     marginBottom: theme.spacing(3),
     marginLeft: 0,
     marginTop: theme.spacing(),
@@ -65,7 +63,6 @@ const styles = (theme: Theme) => createStyles({
   },
   paragraph: {
     ...theme.custom.fonts.secondary.m,
-    color: theme.custom.contrast.paragraph,
   },
   link: {
     alignItems: 'center',
@@ -74,13 +71,13 @@ const styles = (theme: Theme) => createStyles({
     textDecoration: 'none',
   },
   linkText: {
-    color: theme.custom.contrast.link,
+    color: theme.custom.sensor.place.link,
     fontWeight: 700,
     letterSpacing: '0.25px',
     marginRight: theme.spacing(),
   },
   linkIcon: {
-    color: theme.custom.contrast.link,
+    color: theme.custom.sensor.place.link,
     fontWeight: 700,
   },
 });

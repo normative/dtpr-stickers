@@ -42,11 +42,11 @@ const styles = (theme: Theme) => createStyles({
   },
   text: {
     marginTop: theme.spacing(1),
-    color: theme.custom.palette.paragraph.dark,
+    color: theme.custom.sensor.feedback.paragraph,
     ...theme.custom.fonts.secondary.m,
   },
   link: {
-    color: theme.custom.elements.link,
+    color: theme.custom.link,
   },
 });
 

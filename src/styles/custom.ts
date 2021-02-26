@@ -1,40 +1,50 @@
 const custom = {
-  palette: {
-    header: {
-      light: '#000000',
-      main: '#000000',
-      dark: '#000000',
+  link: '#2A73C9',
+  tab: '#001B31',
+  header: '#000000',
+  sensor: {
+    badge: '#000000',
+    paragraph: '#000000',
+    taxonomy: {
+      value: '#000000',
+      prop: '#4C4C4C',
+      details: '#000000',
     },
-    paragraph: {
-      light: '#828282',
-      main: '#000000',
-      dark: '#4C4C4C',
+    feedback: {
+      progressBar: '#001B31',
+      header: '#000000',
+      paragraph: '#4C4C4C',
+      background: '#F9F9F9',
+      divider: '#B4B4B4',
+      counter: '#4C4C4C',
     },
-    background: {
-      light: '#ffffff',
-      main: '#ffffff',
-      primary: '#ffffff',
-      secondary: '#091F2F',
+    place: {
+      backgroundColor: '#001B31',
+      paragraph: 'white',
+      divider: 'white',
+      link: 'white',
     },
-    text: {
-      primary: '#4C4C4C',
-      secondary: '#2A73C9',
-      contrast: '#091F2F',
-      dark: '#4C4C4C',
-      main: '#000000',
-      light: '#828282',
+    faq: {
+      question: '#000000',
+      response: '#000000',
     },
   },
-  contrast: {
-    header: '#ffffff',
-    paragraph: '#ffffff',
-    background: '#091F2F',
-    text: '#ffffff',
-    link: '#ffffff',
+  place: {
+    address: '#4C4C4C',
+    taxonomy: {
+      title: '#4C4C4C',
+      description: '#4C4C4C',
+      border: '#EEEEEE',
+    },
+    sort: {
+      header: '#4C4C4C',
+      selected: '#2A73C9',
+      option: '#828282',
+      button: '#828282',
+    },
   },
-  elements: {
-    divider: '#B4B4B4',
-    cardStroke: '#EEEEEE',
+  footer: {
+    paragraph: '#4C4C4C',
     link: '#2A73C9',
   },
   fonts: {

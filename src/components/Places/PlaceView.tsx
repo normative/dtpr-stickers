@@ -85,12 +85,12 @@ const styles = (theme: Theme) => createStyles({
   },
   name: {
     fontWeight: 700,
-    color: theme.custom.palette.header.main,
+    color: theme.custom.header,
     ...theme.custom.fonts.primary.l,
   },
   addressLink: {
     alignItems: 'center',
-    color: '#666666',
+    color: theme.custom.place.address,
     display: 'flex',
     justifyContent: 'center',
     width: '100%',
@@ -106,7 +106,7 @@ const styles = (theme: Theme) => createStyles({
   },
   sort: {
     alignItems: 'center',
-    color: theme.custom.palette.text.light,
+    color: theme.custom.place.sort.button,
     display: 'flex',
     padding: theme.spacing(2),
     position: 'absolute',
@@ -118,7 +118,7 @@ const styles = (theme: Theme) => createStyles({
   },
   sortText: {
     ...theme.custom.fonts.primary.xs,
-    color: theme.custom.palette.text.light,
+    color: theme.custom.place.sort.button,
     fontWeight: 600,
     letterSpacing: '0.25px',
     textTransform: 'uppercase',

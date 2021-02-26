@@ -44,7 +44,7 @@ const styles = (theme: Theme) => createStyles({
   },
   name: {
     ...theme.custom.fonts.secondary.xs,
-    color: theme.custom.palette.text.dark,
+    color: theme.custom.sensor.badge,
   },
 });
 

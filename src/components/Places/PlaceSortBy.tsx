@@ -80,11 +80,11 @@ const styles = (theme: Theme) => createStyles({
     paddingLeft: theme.spacing(4),
     paddingRight: theme.spacing(4),
     fontWeight: 'bold',
-    color: theme.custom.palette.text.main,
+    color: theme.custom.place.sort.header,
     ...theme.custom.fonts.primary.m,
   },
   option: {
-    color: theme.custom.palette.text.light,
+    color: theme.custom.place.sort.option,
     paddingBottom: theme.spacing(),
     justifyContent: 'flex-start',
     ...theme.custom.fonts.primary.m,
@@ -93,7 +93,7 @@ const styles = (theme: Theme) => createStyles({
     },
   },
   selected: {
-    color: theme.custom.palette.text.secondary,
+    color: theme.custom.place.sort.selected,
     fontWeight: 600,
   },
   options: {

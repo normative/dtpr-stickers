@@ -67,7 +67,7 @@ const styles = (theme: Theme) => createStyles({
   },
   paragraph: {
     ...theme.custom.fonts.secondary.m,
-    color: theme.custom.palette.paragraph.main,
+    color: theme.custom.sensor.paragraph,
   },
 });
 

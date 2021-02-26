@@ -11,7 +11,7 @@ const tabsStyles = (theme: Theme) => createStyles({
     borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
   },
   indicator: {
-    backgroundColor: theme.custom.palette.background.secondary,
+    backgroundColor: theme.custom.tab,
     height: '2px',
   },
 });
@@ -21,7 +21,7 @@ const StyledTabs = withStyles(tabsStyles)(Tabs);
 const StyledTab = withStyles((theme: Theme) => createStyles({
   root: {
     ...theme.custom.fonts.primary.m,
-    color: theme.custom.palette.text.contrast,
+    color: theme.custom.tab,
     fontWeight: 'bold',
     letterSpacing: '0.75px',
     minWidth: 125,
@@ -94,7 +94,6 @@ function SensorTabs({ classes, children, tabs }: Props) {
 const styles = (theme: Theme) => createStyles({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.custom.palette.background.main,
     marginTop: theme.spacing(),
   },
 });

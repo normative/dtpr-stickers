@@ -48,14 +48,14 @@ const styles = (theme: Theme) => createStyles({
   },
   summaryText: {
     fontWeight: 500,
-    color: theme.custom.palette.text.main,
+    color: theme.custom.sensor.faq.question,
     ...theme.custom.fonts.secondary.m,
   },
   detailsRoot: {
     padding: 0,
   },
   detailsText: {
-    color: theme.custom.palette.text.main,
+    color: theme.custom.sensor.faq.response,
     ...theme.custom.fonts.secondary.s,
   },
 });
