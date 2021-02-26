@@ -49,7 +49,7 @@ const styles = (theme: Theme) => createStyles({
   title: {
     fontWeight: 700,
     ...theme.custom.fonts.primary.m,
-    color: theme.custom.palette.text.dark,
+    color: theme.custom.palette.header.light,
   },
   progressText: {
     textAlign: 'center',
