@@ -26,7 +26,7 @@ function Footer({ classes }: WithStyles) {
 
 const styles = (theme: Theme) => createStyles({
   root: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.custom.palette.background.main,
     marginTop: theme.spacing(2),
     padding: theme.spacing(2),
     display: 'flex',
@@ -49,7 +49,7 @@ const styles = (theme: Theme) => createStyles({
     marginTop: theme.spacing(1.25),
     textAlign: 'center',
     textDecorationLine: 'underline',
-    color: theme.custom.text.link,
+    color: theme.custom.elements.link,
   },
 });
 

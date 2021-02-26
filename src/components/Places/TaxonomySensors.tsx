@@ -13,7 +13,7 @@ interface Props {
 const CardDivider = withStyles((theme: Theme) => createStyles({
   root: {
     backgroundColor: 'transparent',
-    border: `1px dashed ${theme.custom.text.light}`,
+    border: `1px dashed ${theme.custom.palette.text.secondary}`,
     width: '100px',
   },
 }))(Divider);
@@ -48,7 +48,7 @@ const styles = (theme: Theme) => createStyles({
     },
   },
   taxonomyPropValue: {
-    color: theme.custom.text.secondary,
+    color: theme.custom.palette.text.dark,
     fontWeight: 600,
     marginBottom: theme.spacing(1.5),
     ...theme.custom.fonts.primary.m,
@@ -60,13 +60,14 @@ const styles = (theme: Theme) => createStyles({
     padding: theme.spacing(1.5),
   },
   sensorName: {
-    color: theme.custom.text.light,
+    color: theme.custom.palette.text.secondary,
     marginBottom: theme.spacing(1.5),
     ...theme.custom.fonts.primary.s,
   },
   sensorDescription: {
-    color: theme.custom.text.hint,
+    color: theme.custom.palette.text.light,
     marginTop: theme.spacing(1.5),
+    ...theme.custom.fonts.secondary.m,
   },
 });
 

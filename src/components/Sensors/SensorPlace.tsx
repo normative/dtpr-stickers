@@ -24,7 +24,7 @@ function SensorPlace({ classes, place }: Props) {
         {place?.address}
       </Typography>
       <Divider className={classes.divider} variant="inset" />
-      <Typography>
+      <Typography className={classes.paragraph}>
         This location uses other types of technology
       </Typography>
       <Link to={`/places/${place?.id}`} className={classes.link}>
@@ -39,28 +39,33 @@ function SensorPlace({ classes, place }: Props) {
 
 const styles = (theme: Theme) => createStyles({
   root: {
-    backgroundColor: theme.custom.background.inverted,
-    color: theme.custom.text.inverted,
+    backgroundColor: theme.custom.contrast.background,
+    color: theme.custom.contrast.text,
     padding: theme.spacing(2),
     paddingBottom: theme.spacing(3),
     paddingTop: theme.spacing(4),
   },
   name: {
-    fontSize: '1.125rem',
     fontWeight: 500,
-    letterSpacing: '0.75px',
+    color: theme.custom.contrast.header,
+    ...theme.custom.fonts.primary.l,
   },
   address: {
-    fontSize: '0.875rem',
-    letterSpacing: '0.75px',
+    ...theme.custom.fonts.secondary.s,
+    color: theme.custom.contrast.paragraph,
+    marginTop: theme.spacing(),
   },
   divider: {
     height: '2px',
-    backgroundColor: theme.custom.background.highlight,
+    backgroundColor: theme.custom.contrast.link,
     marginBottom: theme.spacing(3),
     marginLeft: 0,
     marginTop: theme.spacing(),
     width: theme.spacing(5),
+  },
+  paragraph: {
+    ...theme.custom.fonts.secondary.m,
+    color: theme.custom.contrast.paragraph,
   },
   link: {
     alignItems: 'center',
@@ -69,13 +74,13 @@ const styles = (theme: Theme) => createStyles({
     textDecoration: 'none',
   },
   linkText: {
-    color: theme.custom.text.highlight,
+    color: theme.custom.contrast.link,
     fontWeight: 700,
     letterSpacing: '0.25px',
     marginRight: theme.spacing(),
   },
   linkIcon: {
-    color: theme.custom.text.highlight,
+    color: theme.custom.contrast.link,
     fontWeight: 700,
   },
 });

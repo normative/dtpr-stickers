@@ -1,33 +1,43 @@
 declare module '@material-ui/core/styles/createMuiTheme' {
   interface Theme {
     custom: {
-      text: {
-        link: string,
-        main: string,
-        dark: string,
-        light: string,
-        contrast: string,
-        primary: string,
-        secondary: string,
-        hint: string,
-        inverted: string,
-        highlight: string,
+      palette: {
+        header: {
+          light: string,
+          main: string,
+          dark: string,
+        },
+        paragraph: {
+          light: string,
+          main: string,
+          dark: string,
+        },
+        background: {
+          light: string,
+          main: string,
+          primary: string,
+          secondary: string,
+        },
+        text: {
+          primary: string,
+          secondary: string,
+          contrast: string,
+          dark: string,
+          main: string,
+          light: string,
+        },
       },
-      background: {
+      contrast: {
+        header: string,
+        paragraph: string,
+        background: string,
+        text: string,
         link: string,
-        main: string,
-        dark: string,
-        light: string,
-        contrast: string,
-        primary: string,
-        secondary: string,
-        hint: string,
-        inverted: string,
-        highlight: string,
       },
       elements: {
-        divider: string;
-        cardStroke: string;
+        divider: string,
+        cardStroke: string,
+        link: string,
       },
       fonts: {
         primary: {
@@ -82,33 +92,43 @@ declare module '@material-ui/core/styles/createMuiTheme' {
 
   interface ThemeOptions {
     custom?: {
-      text: {
-        link: string,
-        main: string,
-        dark: string,
-        light: string,
-        contrast: string,
-        primary: string,
-        secondary: string,
-        hint: string,
-        inverted: string,
-        highlight: string,
+      palette: {
+        header: {
+          light: string,
+          main: string,
+          dark: string,
+        },
+        paragraph: {
+          light: string,
+          main: string,
+          dark: string,
+        },
+        background: {
+          light: string,
+          main: string,
+          primary: string,
+          secondary: string,
+        },
+        text: {
+          primary: string,
+          secondary: string,
+          contrast: string,
+          dark: string,
+          main: string,
+          light: string,
+        },
       },
-      background: {
+      contrast: {
+        header: string,
+        paragraph: string,
+        background: string,
+        text: string,
         link: string,
-        main: string,
-        dark: string,
-        light: string,
-        contrast: string,
-        primary: string,
-        secondary: string,
-        hint: string,
-        inverted: string,
-        highlight: string,
       },
       elements: {
-        divider: string;
-        cardStroke: string;
+        divider: string,
+        cardStroke: string,
+        link: string,
       },
       fonts: {
         primary: {

@@ -18,7 +18,7 @@ function SensorDetails({ description, systems, classes }: Props) {
     <div className={classes.root}>
       {!!description && (
         <div>
-          <Typography>
+          <Typography className={classes.paragraph}>
             <strong>Purpose:</strong>
             {' '}
             {description}
@@ -27,15 +27,15 @@ function SensorDetails({ description, systems, classes }: Props) {
       )}
       {!!systems?.length && (
         <div>
-          <Typography>
+          <Typography className={classes.paragraph}>
             <strong>This sensor is part of the following systems:</strong>
           </Typography>
           {systems.map(({ title, description: systemDescription }) => (
             <div className={classes.system} key={title}>
-              <Typography>
+              <Typography className={classes.paragraph}>
                 <strong>{title}</strong>
               </Typography>
-              <Typography className={classes.systemDescription}>
+              <Typography className={`${classes.systemDescription} ${classes.paragraph}`}>
                 {systemDescription}
               </Typography>
             </div>
@@ -64,6 +64,10 @@ const styles = (theme: Theme) => createStyles({
   },
   systemDescription: {
     paddingLeft: theme.spacing(),
+  },
+  paragraph: {
+    ...theme.custom.fonts.secondary.m,
+    color: theme.custom.palette.paragraph.main,
   },
 });
 

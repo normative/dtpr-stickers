@@ -17,14 +17,14 @@ const theme = createMuiTheme({
       default: common.white,
     },
     text: {
-      primary: common.black,
-      secondary: '#4C4C4C',
+      primary: custom.palette.text.main,
+      secondary: custom.palette.text.primary,
       // disabled: string;
-      hint: '#828282',
+      hint: custom.palette.text.light,
     },
   },
   typography: {
-    fontFamily: ['Roboto', 'sans-serif'].join(','),
+    fontFamily: custom.fonts.primary.m.fontFamily,
   },
   custom,
 });
