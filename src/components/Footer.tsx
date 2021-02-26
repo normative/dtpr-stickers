@@ -16,7 +16,7 @@ function Footer({ classes }: WithStyles) {
         We may share feedback on this page with Helpful Places.
       </Typography>
       <Link to={HELPFULPLACES_WEBSITE}>
-        <Typography className={classes.link} color="primary">
+        <Typography className={classes.link}>
           LEARN MORE
         </Typography>
       </Link>
@@ -49,6 +49,7 @@ const styles = (theme: Theme) => createStyles({
     marginTop: theme.spacing(1.25),
     textAlign: 'center',
     textDecorationLine: 'underline',
+    color: theme.custom.text.link,
   },
 });
 

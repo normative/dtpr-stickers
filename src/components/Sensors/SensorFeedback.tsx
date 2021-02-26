@@ -26,6 +26,7 @@ function Feedback({
         className={classes.linearProgress}
         variant="determinate"
         value={progressValue}
+        classes={{ barColorPrimary: classes.barColorPrimary }}
       />
       <Typography className={classes.title}>Feedback</Typography>
       <FeedbackQuestion onClick={onClick} text={question.text} type={question.type} />
@@ -38,8 +39,8 @@ function Feedback({
 
 const styles = (theme: Theme) => createStyles({
   container: {
-    backgroundColor: '#F7F7F7',
-    borderTop: '1px solid #B4B4B4',
+    backgroundColor: theme.custom.background.dark,
+    borderTop: `1px solid ${theme.custom.elements.divider}`,
     padding: theme.spacing(2),
     paddingTop: theme.spacing(2.5),
     paddingBottom: theme.spacing(2.5),
@@ -61,6 +62,9 @@ const styles = (theme: Theme) => createStyles({
     position: 'absolute',
     right: 0,
     top: 0,
+  },
+  barColorPrimary: {
+    backgroundColor: theme.custom.background.inverted,
   },
 });
 

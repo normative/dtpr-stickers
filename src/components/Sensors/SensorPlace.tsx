@@ -39,8 +39,8 @@ function SensorPlace({ classes, place }: Props) {
 
 const styles = (theme: Theme) => createStyles({
   root: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.custom.background.inverted,
+    color: theme.custom.text.inverted,
     padding: theme.spacing(2),
     paddingBottom: theme.spacing(3),
     paddingTop: theme.spacing(4),
@@ -56,7 +56,7 @@ const styles = (theme: Theme) => createStyles({
   },
   divider: {
     height: '2px',
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.custom.background.highlight,
     marginBottom: theme.spacing(3),
     marginLeft: 0,
     marginTop: theme.spacing(),
@@ -69,13 +69,13 @@ const styles = (theme: Theme) => createStyles({
     textDecoration: 'none',
   },
   linkText: {
-    color: theme.palette.primary.contrastText,
+    color: theme.custom.text.highlight,
     fontWeight: 700,
     letterSpacing: '0.25px',
     marginRight: theme.spacing(),
   },
   linkIcon: {
-    color: theme.palette.primary.contrastText,
+    color: theme.custom.text.highlight,
     fontWeight: 700,
   },
 });

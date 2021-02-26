@@ -11,21 +11,23 @@ const tabsStyles = (theme: Theme) => createStyles({
     borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
   },
   indicator: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.custom.background.inverted,
     height: '2px',
   },
 });
 
 const StyledTabs = withStyles(tabsStyles)(Tabs);
 
-const StyledTab = withStyles({
+const StyledTab = withStyles((theme: Theme) => createStyles({
   root: {
-    minWidth: 125,
-    fontWeight: 700,
+    ...theme.custom.fonts.primary.m,
+    color: theme.custom.text.contrast,
+    fontWeight: 'bold',
     letterSpacing: '0.75px',
+    minWidth: 125,
     textTransform: 'uppercase',
   },
-})(Tab);
+}))(Tab);
 
 interface TabPanelProps {
   children: ReactNode;

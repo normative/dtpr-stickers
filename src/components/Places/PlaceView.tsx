@@ -84,8 +84,8 @@ const styles = (theme: Theme) => createStyles({
     textAlign: 'center',
   },
   name: {
-    fontSize: '20px',
     fontWeight: 700,
+    ...theme.custom.fonts.primary.l,
   },
   addressLink: {
     alignItems: 'center',
@@ -96,8 +96,8 @@ const styles = (theme: Theme) => createStyles({
     width: '100%',
   },
   address: {
-    fontSize: '0.75rem',
     textDecoration: 'underline',
+    ...theme.custom.fonts.secondary.xs,
   },
   technologies: {
     marginTop: theme.spacing(1.5),
@@ -106,7 +106,7 @@ const styles = (theme: Theme) => createStyles({
   },
   sort: {
     alignItems: 'center',
-    color: '#828282',
+    color: theme.custom.text.hint,
     display: 'flex',
     padding: theme.spacing(2),
     position: 'absolute',
@@ -117,11 +117,12 @@ const styles = (theme: Theme) => createStyles({
     },
   },
   sortText: {
-    color: '#828282',
+    ...theme.custom.fonts.primary.xs,
+    color: theme.custom.text.hint,
     fontWeight: 600,
-    fontSize: '0.75rem',
     letterSpacing: '0.25px',
     textTransform: 'uppercase',
+
     marginRight: theme.spacing(0.5),
   },
 });
