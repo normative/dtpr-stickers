@@ -134,12 +134,11 @@ const styles = (theme: Theme) => createStyles({
   header: {
     padding: theme.spacing(2),
     textAlign: 'center',
-    backgroundColor: theme.custom.palette.background.main,
   },
   headerText: {
     wordBreak: 'break-word',
     fontWeight: 'bold',
-    color: theme.custom.palette.header.main,
+    color: theme.custom.header,
     ...theme.custom.fonts.primary.l,
   },
   headerText: {
