@@ -99,7 +99,7 @@ const styles = (theme: Theme) => createStyles({
   },
   paragraph: {
     color: theme.custom.palette.paragraph.main,
-    ...theme.custom.fonts.secondary.s,
+    ...theme.custom.fonts.secondary.m,
   }
 });
 
