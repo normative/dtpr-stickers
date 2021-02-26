@@ -1,7 +1,7 @@
 const custom = {
   palette: {
     header: {
-      light: '#45789C',
+      light: '#000000',
       main: '#000000',
       dark: '#000000',
     },
