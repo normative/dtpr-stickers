@@ -47,7 +47,6 @@ declare module '@material-ui/core/styles/createMuiTheme' {
       },
       footer: {
         paragraph: string,
-        link: string,
       },
       fonts: {
         primary: {
@@ -148,7 +147,6 @@ declare module '@material-ui/core/styles/createMuiTheme' {
       },
       footer: {
         paragraph: string,
-        link: string,
       },
       fonts: {
         primary: {
