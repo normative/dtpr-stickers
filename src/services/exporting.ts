@@ -2,7 +2,7 @@ import JsZip from 'jszip';
 import { saveAs } from 'file-saver';
 
 const PREFACE = '<?xml version="1.0" standalone="no"?>\r\n';
-const FONT_STYLE = '<style type="text/css">@import url(https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:bold|Google+Sans:medium|Google+Sans:mediumItalic|Google+Sans:bolditalic|Google+Sans:italic);</style>';
+const FONT_STYLE = `<style type="text/css">@import url(${process.env.REACT_APP_GOOGLE_FONTS_LINK});</style>`;
 
 function includeDesignElements(el: HTMLElement) {
   const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');

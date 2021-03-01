@@ -24,7 +24,7 @@ function SensorBadge({
         alt="purpose badge icon"
         onError={showPlaceholderOnImgError(placeholder)}
       />
-      <Typography variant="subtitle2">
+      <Typography variant="subtitle2" className={classes.name}>
         {option.title}
       </Typography>
     </div>

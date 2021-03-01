@@ -6,6 +6,7 @@ export enum StickerThemeVariant {
 }
 
 export enum taxonomyProps {
+  ACCOUNTABLE = 'accountable',
   PURPOSE = 'purpose',
   TECH_TYPE = 'techType',
   DATA_TYPE = 'dataType',
@@ -19,7 +20,7 @@ export enum taxonomyProps {
  * Map taxonomyProps to labels
  */
 export enum taxonomyPropLabels {
-  accountability = 'Accountability',
+  accountable = 'Accountability',
   purpose = 'Purpose',
   techType = 'Technology Type',
   dataType = 'Data Type',
@@ -49,7 +50,6 @@ export const PLACEHOLDERS = {
   [taxonomyProps.DATA_TYPE]: 'data/placeholder',
   [taxonomyProps.PURPOSE]: 'purpose/placeholder',
   [taxonomyProps.STORAGE]: 'storage/placeholder',
-  [taxonomyProps.SYSTEMS]: 'system/placeholder',
   [taxonomyProps.TECH_TYPE]: 'tech/placeholder',
 };
 

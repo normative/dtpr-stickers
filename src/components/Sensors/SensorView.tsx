@@ -23,9 +23,9 @@ import SensorPlace from './SensorPlace';
 interface Props {
   place: PlaceData;
   sensor: SensorData;
-  sensorTaxonomy: SenorTaxonomyPropValuesDetails[];
-  techType: SenorTaxonomyPropValuesDetails;
-  purpose: SenorTaxonomyPropValuesDetails;
+  sensorTaxonomy: {
+    [name: string]: SenorTaxonomyPropValuesDetails;
+  };
   classes: any;
   systems: System[];
   faq: FAQ[];
@@ -40,8 +40,6 @@ function SensorView({
   place,
   sensor,
   sensorTaxonomy,
-  techType,
-  purpose,
   systems,
   faq,
   onResponse,
@@ -49,13 +47,6 @@ function SensorView({
   progressText,
   progressValue,
 }: Props) {
-  const accountableOption = sensor.accountable ? {
-    category: 'accountable',
-    title: sensor.accountable,
-    icon: 'accountable/org',
-    description: sensor.accountableDescription,
-  } : null;
-
   return (
     <div className={classes.root}>
       <div className={classes.header}>
@@ -71,14 +62,11 @@ function SensorView({
       </div>
       <Divider variant="fullWidth" />
       <div className={classes.summaryWrapper}>
-        <SensorBadge option={purpose?.options[0]} placeholder={`/images/${PLACEHOLDERS.purpose}.svg`} />
-        <SensorBadge option={techType?.options[0]} placeholder={`/images/${PLACEHOLDERS.techType}.svg`} />
+        <SensorBadge option={sensorTaxonomy?.purpose?.options[0]} placeholder={`/images/${PLACEHOLDERS.purpose}.svg`} />
+        <SensorBadge option={sensorTaxonomy?.techType?.options[0]} placeholder={`/images/${PLACEHOLDERS.techType}.svg`} />
         <SensorBadge
-          option={{
-            ...accountableOption,
-            icon: sensor.logoSrc || sensor.logoRef,
-          }}
-          imgSrc={sensor.logoSrc || sensor.logoRef}
+          option={sensorTaxonomy?.accountable?.options[0]}
+          imgSrc={sensor.accountableLogo}
           placeholder="/images/accountable/org.svg"
         />
       </div>
@@ -88,8 +76,7 @@ function SensorView({
           <SensorDetails description={sensor.description} systems={systems} />
           <SensorTaxonomy
             sensorName={sensor.name}
-            accountable={accountableOption}
-            sensorTaxonomy={sensorTaxonomy}
+            sensorTaxonomy={Object.values(sensorTaxonomy)}
           />
           <SensorFeedback
             onClick={onResponse}

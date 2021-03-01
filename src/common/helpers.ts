@@ -1,5 +1,4 @@
 import { InvalidEvent } from 'react';
-import taxonomy from 'data/taxonomy.json';
 import { StickerThemeVariant } from './constants';
 
 export function getSensorPath(sensorId: string) { return `/sensors/${sensorId}`; }
@@ -12,15 +11,9 @@ interface PrintStickerConfig {
 }
 
 export function getPrintStickerConfig(
-  taxonomyProp: string,
-  badgeName: string,
+  icon: string,
   defaultVariant: StickerThemeVariant = StickerThemeVariant.WHITE,
 ): PrintStickerConfig | null {
-  const config = taxonomy[taxonomyProp]?.[badgeName];
-  if (!config) {
-    return null;
-  }
-  const { icon = '' } = config;
   const iconPath: string[] = icon.split('/');
   const svg = iconPath.pop();
   const taxonomyPropName = iconPath.shift();

@@ -37,12 +37,13 @@ export interface SensorsGroupByTaxonomyPropValues {
 }
 
 export interface TaxonomyDetails {
-  category: string;
   id?: string;
-  title: string;
-  headline?: string;
+  additionalDescription: string;
+  category: string;
   description: string;
   icon: string;
+  priority: number;
+  title: string;
 }
 export interface SenorTaxonomyPropValuesDetails {
   taxonomyProp: string;
@@ -77,6 +78,7 @@ export interface SensorData {
   description: string
   accountable: string,
   accountableDescription: string,
+  accountableLogo: string,
   purpose: string[],
   techType: string[],
   dataType: string[],
@@ -93,6 +95,15 @@ export interface SensorData {
   sensorImageSrc?: string,
   systems?: Systems,
   FAQ?: FAQ[],
+  datachain?: {
+    accountable?: TaxonomyDetails[],
+    purpose?: TaxonomyDetails[],
+    techType?: TaxonomyDetails[],
+    dataType?: TaxonomyDetails[],
+    dataProcess?: TaxonomyDetails[],
+    access?: TaxonomyDetails[],
+    storage?: TaxonomyDetails[],
+  },
 }
 
 export interface Sensors {

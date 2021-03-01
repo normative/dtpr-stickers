@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 import React, { memo } from 'react';
+import { FONT_FAMILY } from 'styles/theme';
 
 function composeStyle(props) {
   return {
-    fontFamily: 'Google Sans,Roboto,-apple-system',
+    fontFamily: FONT_FAMILY,
     fontWeight: 500,
     lineHeight: '1.1',
     margin: '8px 20px',
@@ -33,7 +34,7 @@ function SvgText({
       <foreignObject
         width="100%"
         height="35%"
-        fontFamily="Google Sans,Roboto,-apple-system"
+        fontFamily={FONT_FAMILY}
         fontWeight={500}
         y={y}
       >

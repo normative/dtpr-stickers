@@ -95,6 +95,7 @@ const styles = (theme: Theme) => createStyles({
     marginLeft: theme.spacing(),
     marginRight: '32px',
     color: theme.custom.sensor.taxonomy.prop,
+    textAlign: 'end',
     ...theme.custom.fonts.secondary.m,
   },
   paragraph: {

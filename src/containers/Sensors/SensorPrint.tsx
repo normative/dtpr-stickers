@@ -36,12 +36,9 @@ function SensorPrint() {
   }, [sensorId]);
 
   // Make a badge for anything identifiable or de-identified
-  const dentifTechTypes = useMemo(() => ((sensor.data && sensor.data.techType)
-    ? sensor.data.techType.filter((type: string) => type.includes('dentif'))
-    : []), [sensor.data]);
-
-  // Make a badge for only the first purpose
-  const firstPurpose = sensor.data ? sensor.data.purpose[0] : undefined;
+  const dentifTechTypes = useMemo(() => (
+    sensor.data?.datachain?.techType.filter(({ title }) => title.includes('dentif')) || []
+  ), [sensor.data]);
 
   return (
     <SensorPrintView
@@ -50,7 +47,7 @@ function SensorPrint() {
       sensor={sensor as SensorStateType}
       onDownloadClick={() => { exportStickerAssets(); }}
       dentifTechTypes={dentifTechTypes}
-      firstPurpose={firstPurpose}
+      firstPurpose={sensor.data?.datachain?.purpose[0]}
     />
   );
 }

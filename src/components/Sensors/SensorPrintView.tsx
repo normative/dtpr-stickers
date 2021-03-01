@@ -12,8 +12,9 @@ import { getPrintStickerConfig } from 'common/helpers';
 import Sticker from 'components/Sticker';
 import QRCodeSticker from 'components/Sticker/QRCodeSticker';
 import LogoSticker from 'components/Sticker/LogoSticker';
-import { StickerThemeVariant, taxonomyProps } from 'common/constants';
+import { HELPFULPLACES_WEBSITE, StickerThemeVariant } from 'common/constants';
 import NotFound from 'components/NotFound';
+import { TaxonomyDetails } from 'common/types';
 
 interface Props {
   sensor: SensorStateType;
@@ -21,8 +22,8 @@ interface Props {
   placeUrl?: string;
   classes: any;
   onDownloadClick: any;
-  firstPurpose: string;
-  dentifTechTypes: string[];
+  firstPurpose: TaxonomyDetails;
+  dentifTechTypes: TaxonomyDetails[];
 }
 
 function SensorPrintView({
@@ -34,20 +35,19 @@ function SensorPrintView({
   firstPurpose,
   dentifTechTypes,
 }: Props) {
-  const isLoading = sensor.isFetching;
-
-  if (isLoading) return <LinearProgress color="primary" />;
-
   if (sensor.didInvalidate) {
     return (
       <NotFound code={sensor.error.code} message={sensor.error.message} />
     );
   }
 
+  const isLoading = sensor.isFetching;
+  if (!sensor.data || isLoading) return <LinearProgress color="primary" />;
+
   return (
     <div className={classes.root}>
       <div className={classes.navBar}>
-        <a href="https://dtpr.helpfulplaces.com/" className={classes.navBarLink}>
+        <a href={HELPFULPLACES_WEBSITE} className={classes.navBarLink}>
           <Typography className={classes.navBarTypography}>
             DTPR
           </Typography>
@@ -91,23 +91,23 @@ function SensorPrintView({
                 name="sensor"
               />
             )}
-            {dentifTechTypes.map((techType) => (
+            {dentifTechTypes.map(({ title, icon }) => (
               <Sticker
-                key={techType}
+                key={title}
                 height={218}
-                {...getPrintStickerConfig(taxonomyProps.TECH_TYPE, techType)}
+                {...getPrintStickerConfig(icon)}
               >
-                {techType}
+                {title}
               </Sticker>
             ))}
             {firstPurpose && (
               <Sticker
                 height={218}
                 {...getPrintStickerConfig(
-                  taxonomyProps.PURPOSE, firstPurpose, StickerThemeVariant.BLACK,
+                  firstPurpose.icon, StickerThemeVariant.BLACK,
                 )}
               >
-                {firstPurpose}
+                {firstPurpose.title}
               </Sticker>
             )}
           </div>

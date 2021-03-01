@@ -91,17 +91,9 @@ function Sensor() {
   }, [sensor.data]);
 
   const sensorTaxonomy = useMemo(() => {
-    if (!sensor.data) return [];
-    return prepareSensorTaxonomy(sensorId, sensor.data);
+    if (!sensor.data) return {};
+    return prepareSensorTaxonomy(sensor.data?.datachain);
   }, [sensorId, sensor.data]);
-
-  const techType = useMemo(() => sensorTaxonomy.find(
-    ({ taxonomyProp }) => taxonomyProp === taxonomyProps.TECH_TYPE,
-  ), [sensorTaxonomy]);
-
-  const purpose = useMemo(() => sensorTaxonomy.find(
-    ({ taxonomyProp }) => taxonomyProp === taxonomyProps.PURPOSE,
-  ), [sensorTaxonomy]);
 
   const systems = useMemo(() => {
     if (!sensor.data?.systems) return [];
@@ -136,8 +128,6 @@ function Sensor() {
     <SensorView
       place={place.data}
       sensor={sensor.data}
-      techType={techType}
-      purpose={purpose}
       sensorTaxonomy={sensorTaxonomy}
       systems={systems}
       faq={faq}

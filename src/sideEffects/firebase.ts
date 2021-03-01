@@ -1,3 +1,5 @@
+import groupBy from 'lodash.groupby';
+import sortBy from 'lodash.sortby';
 import firebase from '../libs/firebase';
 import { PlaceData, SensorData } from '../common/types';
 
@@ -51,21 +53,9 @@ export async function getSensors(place: PlaceData, onSuccess, onError) {
   }
 }
 
-function getDownloadURL(ref?: string) {
-  if (!ref) return '';
-
-  return firebase
-    .storage()
-    .ref()
-    .child(ref)
-    .getDownloadURL()
-    .catch((e) => {
-      console.log(e);
-      return '';
-    });
-}
-
-export function getSensor(sensorId, onSuccess, onError) {
+export function getSensor(
+  sensorId: string, onSuccess: (param?: SensorData) => void, onError: (e: any) => void,
+) {
   try {
     const sensorRef = firebase.database().ref(`sensors/${sensorId}`);
     sensorRef.on('value', async (snapshot) => {
@@ -84,8 +74,10 @@ export function getSensor(sensorId, onSuccess, onError) {
         return;
       }
 
-      sensor.sensorImageSrc = await getDownloadURL(sensor.sensorImageRef);
-      sensor.logoSrc = await getDownloadURL(sensor.logoRef);
+      sensor.datachain = groupBy(
+        sortBy(sensor.datachain, ({ priority }) => priority),
+        ({ category }) => category,
+      );
       onSuccess(sensor);
     });
   } catch (e) {
