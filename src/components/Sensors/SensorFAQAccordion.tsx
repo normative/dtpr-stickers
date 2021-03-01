@@ -14,7 +14,7 @@ interface Props {
   classes: any;
 }
 
-function Accordion({ classes, title, children }: Props) {
+function SensorFAQAccordion({ classes, title, children }: Props) {
   return (
     <MuiAccordion className={classes.root}>
       <AccordionSummary
@@ -60,4 +60,4 @@ const styles = (theme: Theme) => createStyles({
   },
 });
 
-export default withStyles(styles)(Accordion);
+export default withStyles(styles)(SensorFAQAccordion);

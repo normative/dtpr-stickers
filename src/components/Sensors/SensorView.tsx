@@ -9,16 +9,15 @@ import {
   FeedbackQuestion,
   PlaceData, SenorTaxonomyPropValuesDetails, SensorData, System,
 } from 'common/types';
-
-import Accordion from 'components/Accordion';
-
 import { PLACEHOLDERS } from 'common/constants';
+
 import SensorFeedback from './SensorFeedback';
 import SensorBadge from './SensorBadge';
 import SensorDetails from './SensorDetails';
 import SensorTaxonomy from './SensorTaxonomy';
 import SensorTabs from './SensorTabs';
 import SensorPlace from './SensorPlace';
+import SensorFAQAccordion from './SensorFAQAccordion';
 
 interface Props {
   place: PlaceData;
@@ -88,9 +87,9 @@ function SensorView({
         </div>
         <div className={classes.faq}>
           {faq?.length ? faq.map(({ question, response }, i) => (
-            <Accordion key={`question-${i}`} title={question}>
+            <SensorFAQAccordion key={`question-${i}`} title={question}>
               {response}
-            </Accordion>
+            </SensorFAQAccordion>
           )) : (
             <Typography>
               We&#8217;re currently gathering feedback from users and
