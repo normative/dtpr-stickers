@@ -54,16 +54,18 @@ function PlaceView({
             </Typography>
             <SortIcon fontSize="small" />
           </IconButton>
-          {
-            taxonomySensorsSortedIds.map((value, i) => (
-              <TaxonomySensors
-                key={`${value}-${i}`}
-                taxonomyPropValue={value}
-                sensors={taxonomySensors[value]}
-              />
-            ))
-          }
-          { !!otherSensors?.length && <TaxonomySensors key="others" taxonomyPropValue="Other" sensors={otherSensors} /> }
+          <div className={classes.taxonomy}>
+            {
+              taxonomySensorsSortedIds.map((value, i) => (
+                <TaxonomySensors
+                  key={`${value}-${i}`}
+                  taxonomyPropValue={value}
+                  sensors={taxonomySensors[value]}
+                />
+              ))
+            }
+            { !!otherSensors?.length && <TaxonomySensors key="others" taxonomyPropValue="Other" sensors={otherSensors} /> }
+          </div>
         </div>
       </SensorTabs>
     </div>
@@ -100,9 +102,12 @@ const styles = (theme: Theme) => createStyles({
     ...theme.custom.fonts.secondary.xs,
   },
   technologies: {
-    marginTop: theme.spacing(1.5),
+    marginTop: theme.spacing(2),
     padding: theme.spacing(2),
     position: 'relative',
+  },
+  taxonomy: {
+    paddingTop: theme.spacing(),
   },
   sort: {
     alignItems: 'center',
@@ -112,6 +117,7 @@ const styles = (theme: Theme) => createStyles({
     position: 'absolute',
     right: 0,
     top: 0,
+    paddingTop: 0,
     '&:hover': {
       backgroundColor: 'inherit',
     },
