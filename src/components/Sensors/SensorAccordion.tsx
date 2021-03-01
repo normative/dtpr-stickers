@@ -1,14 +1,13 @@
 /* eslint-disable */
 import React, { Component } from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import showdown from 'showdown';
 import ReactGA from 'react-ga';
 import { showPlaceholderOnImgError } from 'common/helpers';
+import { Accordion, Typography, ExpandMoreIcon, AccordionSummary, AccordionDetails } from 'libs/mui';
 
 
 const paragraphTagFilter = {
@@ -82,6 +81,9 @@ const styles = (theme: Theme) => createStyles({
     paddingTop: 0,
     paddingRight: theme.spacing(3),
     paddingBottom: theme.spacing(2),
+    '& a': {
+      color: theme.custom.link,
+    }
   },
   heading: {
     flex: 1,
@@ -122,7 +124,7 @@ class SensorAccordion extends Component<Props, any> {
     const parsedBody = markdownConverter.makeHtml(body);
 
     return (
-      <ExpansionPanel
+      <Accordion
         classes={{
           root: classes.expansionPanelRoot,
           expanded: classes.expansionPanelExpanded,
@@ -134,7 +136,7 @@ class SensorAccordion extends Component<Props, any> {
           });
         }}
       >
-        <ExpansionPanelSummary
+        <AccordionSummary
           classes={{
             root: classes.expansionPanelSummaryRoot,
             content: classes.expansionPanelSummaryContent,
@@ -147,13 +149,13 @@ class SensorAccordion extends Component<Props, any> {
           <Typography className={classes.label}>
             {label}
           </Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails
+        </AccordionSummary>
+        <AccordionDetails
           classes={{ root: classes.expansionPanelDetailsRoot }}
         >
           <Typography dangerouslySetInnerHTML={{ __html: parsedBody }} className={classes.paragraph} />
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
+        </AccordionDetails>
+      </Accordion>
     );
   }
 }
