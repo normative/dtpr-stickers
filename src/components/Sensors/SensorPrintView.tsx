@@ -22,8 +22,8 @@ interface Props {
   placeUrl?: string;
   classes: any;
   onDownloadClick: any;
-  firstPurpose: TaxonomyDetails;
-  dentifTechTypes: TaxonomyDetails[];
+  priorityPurpose: TaxonomyDetails;
+  priorityTechType: TaxonomyDetails;
 }
 
 function SensorPrintView({
@@ -32,8 +32,8 @@ function SensorPrintView({
   sensorUrl,
   placeUrl,
   onDownloadClick,
-  firstPurpose,
-  dentifTechTypes,
+  priorityPurpose,
+  priorityTechType,
 }: Props) {
   if (sensor.didInvalidate) {
     return (
@@ -91,23 +91,23 @@ function SensorPrintView({
                 name="sensor"
               />
             )}
-            {dentifTechTypes.map(({ title, icon }) => (
+            {priorityTechType && (
               <Sticker
-                key={title}
+                key={priorityTechType.title}
                 height={218}
-                {...getPrintStickerConfig(icon)}
+                {...getPrintStickerConfig(priorityTechType.icon)}
               >
-                {title}
+                {priorityTechType.title}
               </Sticker>
-            ))}
-            {firstPurpose && (
+            )}
+            {priorityPurpose && (
               <Sticker
                 height={218}
                 {...getPrintStickerConfig(
-                  firstPurpose.icon, StickerThemeVariant.BLACK,
+                  priorityPurpose.icon, StickerThemeVariant.BLACK,
                 )}
               >
-                {firstPurpose.title}
+                {priorityPurpose.title}
               </Sticker>
             )}
           </div>

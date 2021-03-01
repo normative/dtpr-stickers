@@ -1,7 +1,4 @@
-import React, {
-  useEffect,
-  useMemo,
-} from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import sensorReducer, {
@@ -17,6 +14,12 @@ import SensorPrintView from 'components/Sensors/SensorPrintView';
 import useReducerState from 'hooks/useReducerState';
 import { getPlacePath, getSensorPath } from 'common/helpers';
 import exportStickerAssets from 'services/exporting';
+import { TaxonomyDetails } from 'common/types';
+
+function getPrintableTaxonomyProp(taxonomy: TaxonomyDetails) {
+  if (!taxonomy || taxonomy.priority) return null;
+  return taxonomy;
+}
 
 function SensorPrint() {
   const [sensor, sensorActions] = useReducerState(
@@ -35,19 +38,17 @@ function SensorPrint() {
     getSensor(sensorId, sensorActions.onSuccess, sensorActions.onError);
   }, [sensorId]);
 
-  // Make a badge for anything identifiable or de-identified
-  const dentifTechTypes = useMemo(() => (
-    sensor.data?.datachain?.techType.filter(({ title }) => title.includes('dentif')) || []
-  ), [sensor.data]);
-
+  // Make printable badge for tech type and purpose with PRIORITY 0
+  const priorityTechType = getPrintableTaxonomyProp(sensor.data?.datachain?.techType[0]);
+  const priorityPurpose = getPrintableTaxonomyProp(sensor.data?.datachain?.purpose[0]);
   return (
     <SensorPrintView
       sensorUrl={sensorUrl}
       placeUrl={placeUrl}
       sensor={sensor as SensorStateType}
       onDownloadClick={() => { exportStickerAssets(); }}
-      dentifTechTypes={dentifTechTypes}
-      firstPurpose={sensor.data?.datachain?.purpose[0]}
+      priorityTechType={priorityTechType}
+      priorityPurpose={priorityPurpose}
     />
   );
 }
