@@ -17,7 +17,7 @@ import useReducerState from 'hooks/useReducerState';
 import { PlaceContext } from 'context/place';
 
 import SensorView from 'components/Sensors/SensorView';
-import { feedbackQuestionTypes, taxonomyProps } from 'common/constants';
+import { feedbackQuestionTypes } from 'common/constants';
 import { LinearProgress } from 'libs/mui';
 import { prepareSensorTaxonomy } from 'presenters/sensor';
 import { FAQ, FeedbackQuestion, System } from 'common/types';
