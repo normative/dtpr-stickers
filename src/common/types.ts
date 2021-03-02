@@ -71,30 +71,9 @@ export interface FeedbackQuestion {
 }
 
 export interface SensorData {
-  id: string,
-  placeId: string,
-  name: string,
-  headline: string,
-  description: string
   accountable: string,
   accountableDescription: string,
   accountableLogo: string,
-  purpose: string[],
-  techType: string[],
-  dataType: string[],
-  dataProcess: string[],
-  access: string[],
-  storage: string[],
-  phone: string,
-  chat: string,
-  email: string,
-  onsiteStaff: boolean,
-  logoRef: string,
-  logoSrc?: string,
-  sensorImageRef: string,
-  sensorImageSrc?: string,
-  systems?: Systems,
-  FAQ?: FAQ[],
   datachain?: {
     accountable?: TaxonomyDetails[],
     purpose?: TaxonomyDetails[],
@@ -104,6 +83,15 @@ export interface SensorData {
     access?: TaxonomyDetails[],
     storage?: TaxonomyDetails[],
   },
+  description: string,
+  email: string,
+  FAQ?: FAQ[],
+  headline: string,
+  id: string,
+  name: string,
+  phone: string,
+  placeId: string,
+  systems?: Systems,
 }
 
 export interface Sensors {

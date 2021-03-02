@@ -74,6 +74,7 @@ export function getSensor(
         return;
       }
 
+      sensor.id = sensorId;
       sensor.datachain = groupBy(
         sortBy(sensor.datachain, ({ priority }) => priority),
         ({ category }) => category,

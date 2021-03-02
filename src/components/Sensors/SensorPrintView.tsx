@@ -68,10 +68,10 @@ function SensorPrintView({
           </div>
           {sensor.data && (
           <div className={classes.badgeContainer} id="test-2" data-div-as-png>
-            {sensor.data.logoRef && sensor.data.accountable && (
+            {sensor.data.accountableLogo && sensor.data.accountable && (
               <LogoSticker
                 height={218}
-                logoUrl={sensor?.data.logoSrc || sensor?.data.logoRef}
+                logoUrl={sensor?.data.accountableLogo}
                 placeholder={`${window.location.origin}/images/accountable/placeholder.svg`}
               >
                 {sensor.data.accountable}
