@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 
 import {
-  Divider, Fade, Slide, Typography,
+  Divider, Slide, Typography,
 } from 'libs/mui';
 import { taxonomyPropLabels, taxonomyProps } from 'common/constants';
+import Fade from 'components/Fade';
 
 const TAXONOMY_PROPS = [
   taxonomyProps.DATA_TYPE,
@@ -28,9 +29,10 @@ function PlaceView({
   visible,
   onHide,
 }: Props) {
+  const overlayRef = useRef(null);
   return (
-    <Fade in={visible} timeout={300}>
-      <div className={classes.overlay} onClick={onHide} aria-hidden="true">
+    <Fade in={visible} timeout={300} innerRef={overlayRef}>
+      <div className={classes.overlay} onClick={onHide} aria-hidden="true" ref={overlayRef}>
         <Slide direction="up" in={visible} mountOnEnter unmountOnExit timeout={150}>
           <div className={classes.root}>
             <Typography className={classes.header}>

@@ -1,11 +1,11 @@
-/* eslint-disable */
-import React, { Component } from 'react';
+import React from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import showdown from 'showdown';
 import ReactGA from 'react-ga';
 import { showPlaceholderOnImgError } from 'common/helpers';
-import { Accordion, Typography, ExpandMoreIcon, AccordionSummary, AccordionDetails } from 'libs/mui';
-
+import {
+  Accordion, Typography, ExpandMoreIcon, AccordionSummary, AccordionDetails,
+} from 'libs/mui';
 
 const paragraphTagFilter = {
   type: 'output',
@@ -80,7 +80,7 @@ const styles = (theme: Theme) => createStyles({
     paddingBottom: theme.spacing(2),
     '& a': {
       color: theme.custom.link,
-    }
+    },
   },
   heading: {
     flex: 1,
@@ -100,7 +100,7 @@ const styles = (theme: Theme) => createStyles({
   paragraph: {
     color: theme.custom.sensor.taxonomy.details,
     ...theme.custom.fonts.secondary.m,
-  }
+  },
 });
 
 interface Props {
@@ -113,48 +113,55 @@ interface Props {
   placeholder?: string;
 }
 
-class SensorAccordion extends Component<Props, any> {
-  render() {
-    const {
-      classes, icon, title, label, body, name, placeholder,
-    } = this.props;
-    const parsedBody = markdownConverter.makeHtml(body);
+function SensorAccordion({
+  classes, icon, title, label, body, name, placeholder,
+}: Props) {
+  const parsedBody = markdownConverter.makeHtml(body);
 
-    return (
-      <Accordion
+  return (
+    <Accordion
+      classes={{
+        root: classes.expansionPanelRoot,
+        expanded: classes.expansionPanelExpanded,
+      }}
+      onChange={() => {
+        ReactGA.event({
+          category: 'User',
+          action: `Tapped Accordion of ${name}: ${title} - ${label}`,
+        });
+      }}
+    >
+      <AccordionSummary
         classes={{
-          root: classes.expansionPanelRoot,
-          expanded: classes.expansionPanelExpanded,
+          root: classes.expansionPanelSummaryRoot,
+          content: classes.expansionPanelSummaryContent,
+          expanded: classes.expansionPanelSummaryExpanded,
         }}
-        onChange={(event, expanded) => {
-          ReactGA.event({
-            category: 'User',
-            action: `Tapped Accordion of ${name}: ${title} - ${label}`,
-          });
-        }}
+        expandIcon={<ExpandMoreIcon />}
       >
-        <AccordionSummary
-          classes={{
-            root: classes.expansionPanelSummaryRoot,
-            content: classes.expansionPanelSummaryContent,
-            expanded: classes.expansionPanelSummaryExpanded,
-          }}
-          expandIcon={<ExpandMoreIcon />}
-        >
-          {icon && <img src={icon} onError={showPlaceholderOnImgError(placeholder)} />}
-          <Typography className={classes.heading}>{title}</Typography>
-          <Typography className={classes.label}>
-            {label}
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails
-          classes={{ root: classes.expansionPanelDetailsRoot }}
-        >
-          <Typography dangerouslySetInnerHTML={{ __html: parsedBody }} className={classes.paragraph} />
-        </AccordionDetails>
-      </Accordion>
-    );
-  }
+        {icon && (
+          <img src={icon} onError={showPlaceholderOnImgError(placeholder)} alt="" />
+        )}
+        <Typography className={classes.heading}>{title}</Typography>
+        <Typography className={classes.label}>
+          {label}
+        </Typography>
+      </AccordionSummary>
+      <AccordionDetails
+        classes={{ root: classes.expansionPanelDetailsRoot }}
+      >
+        <Typography
+          dangerouslySetInnerHTML={{ __html: parsedBody }}
+          className={classes.paragraph}
+        />
+      </AccordionDetails>
+    </Accordion>
+  );
 }
+
+SensorAccordion.defaultProps = {
+  icon: '',
+  placeholder: '',
+};
 
 export default withStyles(styles)(SensorAccordion);

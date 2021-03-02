@@ -64,7 +64,7 @@ export function getSensor(
         return;
       }
 
-      const sensor: SensorData | null = snapshot.val();
+      const sensor = snapshot.val();
       if (!sensor) {
         onError({
           code: 404,
@@ -78,6 +78,7 @@ export function getSensor(
         sortBy(sensor.datachain, ({ priority }) => priority),
         ({ category }) => category,
       );
+      sensor.FAQ = sensor.faq || sensor.FAQ;
       onSuccess(sensor);
     });
   } catch (e) {
