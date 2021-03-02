@@ -64,7 +64,10 @@ function SensorView({
         <SensorBadge option={sensorTaxonomy?.purpose?.options[0]} placeholder={`/images/${PLACEHOLDERS.purpose}.svg`} />
         <SensorBadge option={sensorTaxonomy?.techType?.options[0]} placeholder={`/images/${PLACEHOLDERS.techType}.svg`} />
         <SensorBadge
-          option={sensorTaxonomy?.accountable?.options[0]}
+          option={{
+            ...sensorTaxonomy?.accountable?.options[0],
+            title: sensor.accountable,
+          }}
           imgSrc={sensor.accountableLogo}
           placeholder="/images/accountable/org.svg"
         />
