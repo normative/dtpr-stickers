@@ -38,7 +38,4 @@ describe('group sensors by taxonomy', () => {
 
     expect(groupSensorsByTaxonomyPropValues(sensorsData, 'notFound')).toEqual(sensorsGroupedByNotFound);
   });
-
-  console.log('>>>>>>>>>', JSON.stringify(flattenDeep(Object.values(sensorsData['20'].datachain))));
-  console.log('>>>>>>>>>', JSON.stringify(flattenDeep(Object.values(sensorsData['30'].datachain))));
 })
