@@ -5,7 +5,7 @@ import { TaxonomyDetails } from 'common/types';
 export function prepareSensorTaxonomy(datachain?: { [name: string]: TaxonomyDetails }) {
   if (!datachain) return {};
 
-  const a = Object
+  return Object
     .values(taxonomyProps)
     .reduce((res, taxonomyProp) => {
       if (datachain[taxonomyProp]) {
@@ -17,6 +17,4 @@ export function prepareSensorTaxonomy(datachain?: { [name: string]: TaxonomyDeta
       }
       return res;
     }, {});
-
-  return a;
 }
