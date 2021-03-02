@@ -7,7 +7,6 @@ import {
 
 import { Typography } from 'libs/mui';
 import { feedbackQuestionTypes } from 'common/constants';
-// import Fade from 'components/Fade';
 import Fade from 'components/Fade';
 import FeedbackEmojis from './FeedbackEmojis';
 import FeedbackComment from './FeedbackComment';
