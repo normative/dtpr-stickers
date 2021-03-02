@@ -106,7 +106,7 @@ const styles = (theme: Theme) => createStyles({
   additionalInfoLabel: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(0.5),
-    fontWeight: 600,
+    fontWeight: 500,
     ...theme.custom.fonts.secondary.m,
   },
 });
