@@ -1,10 +1,23 @@
+import groupBy from 'lodash.groupby';
+import sortBy from 'lodash.sortby';
 import firebase from '../libs/firebase';
-import { PlaceData, SensorData } from '../common/types';
+import { PlaceData, SensorData, SensorSnapshot } from '../common/types';
 
 const refs = {
   SENSORS: '/sensors',
   PLACES: '/places',
 };
+
+function transformSnapshotIntoSensorData(id: string, sensor: SensorSnapshot): SensorData {
+  return {
+    ...sensor,
+    id,
+    datachain: groupBy(
+      sortBy(sensor.datachain, ({ priority }) => priority),
+      ({ category }) => category,
+    ),
+  };
+}
 
 export function getPlace(placeId, onSuccess, onError) {
   try {
@@ -26,7 +39,11 @@ export function getPlace(placeId, onSuccess, onError) {
   }
 }
 
-export async function getSensors(place: PlaceData, onSuccess, onError) {
+export async function getSensors(
+  place: PlaceData,
+  onSuccess: (param: { [sensorId: string]: SensorData }) => void,
+  onError: (e: any) => void,
+) {
   try {
     const sensorIds = Object.keys(place.sensors);
     const promises = sensorIds.map((sensorId) => firebase
@@ -39,9 +56,9 @@ export async function getSensors(place: PlaceData, onSuccess, onError) {
 
     results.forEach((result) => {
       const id = result.key;
-      const sensor: SensorData | null = result.val();
+      const sensor: SensorSnapshot | null = result.val();
       if (id && sensor) {
-        sensors[id] = sensor;
+        sensors[id] = transformSnapshotIntoSensorData(id, sensor);
       }
     });
 
@@ -51,21 +68,9 @@ export async function getSensors(place: PlaceData, onSuccess, onError) {
   }
 }
 
-function getDownloadURL(ref?: string) {
-  if (!ref) return '';
-
-  return firebase
-    .storage()
-    .ref()
-    .child(ref)
-    .getDownloadURL()
-    .catch((e) => {
-      console.log(e);
-      return '';
-    });
-}
-
-export function getSensor(sensorId, onSuccess, onError) {
+export function getSensor(
+  sensorId: string, onSuccess: (param?: SensorData) => void, onError: (e: any) => void,
+) {
   try {
     const sensorRef = firebase.database().ref(`sensors/${sensorId}`);
     sensorRef.on('value', async (snapshot) => {
@@ -74,7 +79,7 @@ export function getSensor(sensorId, onSuccess, onError) {
         return;
       }
 
-      const sensor: SensorData | null = snapshot.val();
+      const sensor: SensorSnapshot | null = snapshot.val();
       if (!sensor) {
         onError({
           code: 404,
@@ -84,9 +89,8 @@ export function getSensor(sensorId, onSuccess, onError) {
         return;
       }
 
-      sensor.sensorImageSrc = await getDownloadURL(sensor.sensorImageRef);
-      sensor.logoSrc = await getDownloadURL(sensor.logoRef);
-      onSuccess(sensor);
+      const sensorData = transformSnapshotIntoSensorData(sensorId, sensor);
+      onSuccess(sensorData);
     });
   } catch (e) {
     onError(e);

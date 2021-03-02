@@ -7,25 +7,24 @@ import { Typography, Divider } from 'libs/mui';
 import {
   FAQ,
   FeedbackQuestion,
-  PlaceData, SensorData, SensorsGroup, System,
+  PlaceData, SenorTaxonomyPropValuesDetails, SensorData, System,
 } from 'common/types';
-
-import Accordion from 'components/Accordion';
-
 import { PLACEHOLDERS } from 'common/constants';
+
 import SensorFeedback from './SensorFeedback';
 import SensorBadge from './SensorBadge';
 import SensorDetails from './SensorDetails';
 import SensorTaxonomy from './SensorTaxonomy';
 import SensorTabs from './SensorTabs';
 import SensorPlace from './SensorPlace';
+import SensorFAQAccordion from './SensorFAQAccordion';
 
 interface Props {
   place: PlaceData;
   sensor: SensorData;
-  sensorsGroup: SensorsGroup[];
-  techType: SensorsGroup;
-  purpose: SensorsGroup;
+  sensorTaxonomy: {
+    [name: string]: SenorTaxonomyPropValuesDetails;
+  };
   classes: any;
   systems: System[];
   faq: FAQ[];
@@ -39,9 +38,7 @@ function SensorView({
   classes,
   place,
   sensor,
-  sensorsGroup,
-  techType,
-  purpose,
+  sensorTaxonomy,
   systems,
   faq,
   onResponse,
@@ -49,12 +46,6 @@ function SensorView({
   progressText,
   progressValue,
 }: Props) {
-  const accountableOption = sensor.accountable ? {
-    name: sensor.accountable,
-    iconShortname: 'accountable/org',
-    description: sensor.accountableDescription,
-  } : null;
-
   return (
     <div className={classes.root}>
       <div className={classes.header}>
@@ -70,14 +61,14 @@ function SensorView({
       </div>
       <Divider variant="fullWidth" />
       <div className={classes.summaryWrapper}>
-        <SensorBadge option={purpose?.options[0]} placeholder={`/images/${PLACEHOLDERS.purpose}.svg`} />
-        <SensorBadge option={techType?.options[0]} placeholder={`/images/${PLACEHOLDERS.techType}.svg`} />
+        <SensorBadge option={sensorTaxonomy?.purpose?.options[0]} placeholder={`/images/${PLACEHOLDERS.purpose}.svg`} />
+        <SensorBadge option={sensorTaxonomy?.techType?.options[0]} placeholder={`/images/${PLACEHOLDERS.techType}.svg`} />
         <SensorBadge
           option={{
-            ...accountableOption,
-            iconShortname: sensor.logoSrc || sensor.logoRef,
+            ...sensorTaxonomy?.accountable?.options[0],
+            title: sensor.accountable,
           }}
-          imgSrc={sensor.logoSrc || sensor.logoRef}
+          imgSrc={sensor.accountableLogo}
           placeholder="/images/accountable/org.svg"
         />
       </div>
@@ -87,8 +78,7 @@ function SensorView({
           <SensorDetails description={sensor.description} systems={systems} />
           <SensorTaxonomy
             sensorName={sensor.name}
-            accountable={accountableOption}
-            sensorsGroup={sensorsGroup}
+            sensorTaxonomy={Object.values(sensorTaxonomy)}
           />
           <SensorFeedback
             onClick={onResponse}
@@ -100,9 +90,9 @@ function SensorView({
         </div>
         <div className={classes.faq}>
           {faq?.length ? faq.map(({ question, response }, i) => (
-            <Accordion key={`question-${i}`} title={question}>
+            <SensorFAQAccordion key={`question-${i}`} title={question}>
               {response}
-            </Accordion>
+            </SensorFAQAccordion>
           )) : (
             <Typography>
               We&#8217;re currently gathering feedback from users and

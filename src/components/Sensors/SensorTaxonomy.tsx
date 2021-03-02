@@ -1,44 +1,35 @@
 import React from 'react';
 
-import { PLACEHOLDERS, sensorsGroupLabels } from 'common/constants';
-import { Option, SensorsGroup } from 'common/types';
+import { PLACEHOLDERS } from 'common/constants';
+import { SenorTaxonomyPropValuesDetails } from 'common/types';
 import { createStyles, Theme, withStyles } from '@material-ui/core';
 import SensorAccordion from './SensorAccordion';
 
 interface Props {
-  accountable?: Option;
-  sensorsGroup?: SensorsGroup[];
+  sensorTaxonomy?: SenorTaxonomyPropValuesDetails[];
   sensorName: string;
   classes: any,
 }
 
 function SensorTaxonomy({
-  classes, sensorName, accountable, sensorsGroup,
+  classes, sensorName, sensorTaxonomy,
 }: Props) {
-  if (!accountable && !sensorsGroup?.length) <></>;
+  if (!Object.keys(sensorTaxonomy).length) <></>;
 
   return (
     <div className={classes.root}>
-      {/* On top accountability sensor info */}
-      {accountable?.description && (
-      <SensorAccordion
-        icon="/images/accountable/org.svg"
-        title={accountable.name}
-        label={sensorsGroupLabels.accountability}
-        body={accountable.description}
-        name={sensorName}
-      />
-      )}
-      {/* Followed by the rest of sensor groups */}
-      {sensorsGroup.map(({ sensorGroup, label, options }) => options.map(
-        ({ name, description, iconShortname }) => (
+      {sensorTaxonomy.map(({ taxonomyProp, label, options }) => options.map(
+        ({
+          title, description, icon, additionalDescription,
+        }) => (
           <SensorAccordion
-            key={name}
-            icon={`/images/${iconShortname}.svg`}
-            placeholder={`/images/${PLACEHOLDERS[sensorGroup]}.svg`}
-            title={name}
+            key={title}
+            icon={`/images/${icon}.svg`}
+            placeholder={`/images/${PLACEHOLDERS[taxonomyProp]}.svg`}
+            title={title}
             label={label}
             body={description}
+            additionalInfo={additionalDescription}
             name={sensorName}
           />
         ),
@@ -48,8 +39,7 @@ function SensorTaxonomy({
 }
 
 SensorTaxonomy.defaultProps = {
-  accountable: undefined,
-  sensorsGroup: undefined,
+  sensorTaxonomy: undefined,
 };
 
 const styles = (theme: Theme) => createStyles({

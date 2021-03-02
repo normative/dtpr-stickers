@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   createStyles,
   Theme,
   withStyles,
 } from '@material-ui/core/styles';
 
-import { Typography, Fade } from 'libs/mui';
+import { Typography } from 'libs/mui';
 import { feedbackQuestionTypes } from 'common/constants';
+import Fade from 'components/Fade';
 import FeedbackEmojis from './FeedbackEmojis';
 import FeedbackComment from './FeedbackComment';
 import FeedbackThanks from './FeedbackThanks';
@@ -22,6 +23,7 @@ function FeedbackQuestion({
   classes, onClick, text, type,
 }: Props) {
   const [fade, setFade] = useState(false);
+  const elRef = useRef(null);
 
   useEffect(() => {
     setFade(true);
@@ -35,8 +37,8 @@ function FeedbackQuestion({
   };
 
   return (
-    <Fade in={fade} timeout={30}>
-      <div className={classes.container}>
+    <Fade in={fade} timeout={30} innerRef={elRef}>
+      <div className={classes.container} ref={elRef}>
         {
           type === feedbackQuestionTypes.THANKS ? (
             <FeedbackThanks />

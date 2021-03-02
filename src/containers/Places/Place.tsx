@@ -11,14 +11,13 @@ import sensorsReducer, {
 } from 'reducers/sensors';
 import { getSensors } from 'sideEffects/firebase';
 import PlaceView from 'components/Places/PlaceView';
-import { AirtableContext } from 'context/airtable';
 import useReducerState from 'hooks/useReducerState';
 import { PlaceContext } from 'context/place';
 import { LinearProgress } from '@material-ui/core';
 import { groupSensorsByTaxonomyPropValues } from 'presenters/place';
 import { SensorsGroupByTaxonomyPropValues } from 'common/types';
 import PlaceSortBy from 'components/Places/PlaceSortBy';
-import { sensorsGroupLabels, sensorsGroupNames } from 'common/constants';
+import { taxonomyPropLabels, taxonomyProps } from 'common/constants';
 import NotFound from 'components/NotFound';
 
 function Place() {
@@ -30,9 +29,8 @@ function Place() {
     fetchSensorsFailed,
   );
   const [place, placeActions] = useContext(PlaceContext);
-  const airtable = useContext(AirtableContext);
   const { placeId }: { placeId: string } = useParams();
-  const [sortTaxonomy, setSortTaxonomy] = useState(sensorsGroupNames.PURPOSE);
+  const [sortTaxonomy, setSortTaxonomy] = useState(taxonomyProps.PURPOSE);
   const [sortVisible, setSortVisible] = useState(false);
 
   useEffect(() => {
@@ -51,7 +49,7 @@ function Place() {
     return groupSensorsByTaxonomyPropValues(sensors.data, sortTaxonomy);
   }, [sensors.data, sortTaxonomy]);
 
-  const handleSortTaxonomyClick = (taxonomyProp: sensorsGroupNames) => {
+  const handleSortTaxonomyClick = (taxonomyProp: taxonomyProps) => {
     setSortTaxonomy(taxonomyProp);
   };
 
@@ -67,8 +65,6 @@ function Place() {
     || place.isFetching
     || !sensors.data
     || sensors.isFetching
-    || !airtable.data
-    || airtable.isFetching
   ) {
     return <LinearProgress color="primary" />;
   }
@@ -79,9 +75,9 @@ function Place() {
         place={place.data}
         taxonomySensors={groupedSensors?.taxonomyProp}
         taxonomySensorsSortedIds={groupedSensors?.taxonomyPropValues}
-        otherSensors={groupedSensors?.Others}
+        otherSensors={groupedSensors?.other}
         onSortClick={handleSortClick}
-        sortLabel={sensorsGroupLabels[sortTaxonomy]}
+        sortLabel={taxonomyPropLabels[sortTaxonomy]}
       />
       <PlaceSortBy
         onSelect={handleSortTaxonomyClick}

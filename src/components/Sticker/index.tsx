@@ -85,24 +85,24 @@ const ICONS = {
 interface Props {
   height?: number;
   variant?: string;
-  context: string;
+  taxonomyProp: string;
   icon: string;
   children: string;
   classes: any;
 }
 
 function Sticker({
-  height, variant, context, icon, children, classes,
+  height, variant, taxonomyProp, icon, children, classes,
 }: Props) {
-  if (!context
+  if (!taxonomyProp
     || !icon
-    || Object.keys(ICONS).indexOf(context) < 0
-    || Object.keys(ICONS[context]).indexOf(icon) < 0
+    || Object.keys(ICONS).indexOf(taxonomyProp) < 0
+    || Object.keys(ICONS[taxonomyProp]).indexOf(icon) < 0
   ) {
     return <></>;
   }
 
-  const Icon = ICONS[context][icon];
+  const Icon = ICONS[taxonomyProp][icon];
   const width = height * 0.8787;
   const textPosition = { y: '62%' };
 

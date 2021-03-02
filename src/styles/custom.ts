@@ -49,7 +49,7 @@ const custom = {
   fonts: {
     primary: {
       l: {
-        fontSize: '1.25rem',
+        fontSize: '1.5rem',
         fontFamily: '"Roboto", sans-serif',
         letterSpacing: '0.15px',
         lineHeight: '1.5rem',
@@ -58,19 +58,19 @@ const custom = {
         fontSize: '1rem',
         fontFamily: '"Roboto", sans-serif',
         letterSpacing: '0.15px',
-        lineHeight: '1.2rem',
+        lineHeight: '1.5rem',
       },
       s: {
         fontSize: '0.875rem',
         fontFamily: '"Roboto", sans-serif',
         letterSpacing: '0.15px',
-        lineHeight: '1.05rem',
+        lineHeight: '1.25rem',
       },
       xs: {
         fontSize: '0.75rem',
         fontFamily: '"Roboto", sans-serif',
         letterSpacing: '0.15px',
-        lineHeight: '0.9rem',
+        lineHeight: '1rem',
       },
     },
     secondary: {
@@ -78,19 +78,19 @@ const custom = {
         fontSize: '1rem',
         fontFamily: '"Roboto", sans-serif',
         letterSpacing: '0.15px',
-        lineHeight: '1.2rem',
+        lineHeight: '1.5rem',
       },
       s: {
         fontSize: '0.875rem',
         fontFamily: '"Roboto", sans-serif',
         letterSpacing: '0.15px',
-        lineHeight: '1.05rem',
+        lineHeight: '1.25rem',
       },
       xs: {
         fontSize: '0.75rem',
         fontFamily: '"Roboto", sans-serif',
         letterSpacing: '0.15px',
-        lineHeight: '0.9rem',
+        lineHeight: '1rem',
       },
     },
   },

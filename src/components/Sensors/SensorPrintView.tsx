@@ -8,49 +8,46 @@ import {
   LinearProgress,
 } from 'libs/mui';
 import { SensorStateType } from 'reducers/sensor';
-import { AirtableStateType } from 'reducers/airtable';
-import { getStickerConfig } from 'common/helpers';
+import { getPrintStickerConfig } from 'common/helpers';
 import Sticker from 'components/Sticker';
 import QRCodeSticker from 'components/Sticker/QRCodeSticker';
 import LogoSticker from 'components/Sticker/LogoSticker';
-import { StickerThemeVariant } from 'common/constants';
+import { HELPFULPLACES_WEBSITE, StickerThemeVariant } from 'common/constants';
 import NotFound from 'components/NotFound';
+import { TaxonomyDetails } from 'common/types';
 
 interface Props {
   sensor: SensorStateType;
-  airtable: AirtableStateType;
   sensorUrl?: string;
   placeUrl?: string;
   classes: any;
   onDownloadClick: any;
-  firstPurpose: string;
-  dentifTechTypes: string[];
+  priorityPurpose: TaxonomyDetails;
+  priorityTechType: TaxonomyDetails;
 }
 
 function SensorPrintView({
   classes,
-  airtable,
   sensor,
   sensorUrl,
   placeUrl,
   onDownloadClick,
-  firstPurpose,
-  dentifTechTypes,
+  priorityPurpose,
+  priorityTechType,
 }: Props) {
-  const isLoading = sensor.isFetching || airtable.isFetching;
-
-  if (isLoading) return <LinearProgress color="primary" />;
-
   if (sensor.didInvalidate) {
     return (
       <NotFound code={sensor.error.code} message={sensor.error.message} />
     );
   }
 
+  const isLoading = sensor.isFetching;
+  if (!sensor.data || isLoading) return <LinearProgress color="primary" />;
+
   return (
     <div className={classes.root}>
       <div className={classes.navBar}>
-        <a href="https://dtpr.helpfulplaces.com/" className={classes.navBarLink}>
+        <a href={HELPFULPLACES_WEBSITE} className={classes.navBarLink}>
           <Typography className={classes.navBarTypography}>
             DTPR
           </Typography>
@@ -69,12 +66,12 @@ function SensorPrintView({
               Download or print the labels for use in your own signage.
             </Typography>
           </div>
-          {sensor.data && airtable.data && (
+          {sensor.data && (
           <div className={classes.badgeContainer} id="test-2" data-div-as-png>
-            {sensor.data.logoRef && sensor.data.accountable && (
+            {sensor.data.accountableLogo && sensor.data.accountable && (
               <LogoSticker
                 height={218}
-                logoUrl={sensor?.data.logoSrc || sensor?.data.logoRef}
+                logoUrl={sensor?.data.accountableLogo}
                 placeholder={`${window.location.origin}/images/accountable/placeholder.svg`}
               >
                 {sensor.data.accountable}
@@ -94,21 +91,23 @@ function SensorPrintView({
                 name="sensor"
               />
             )}
-            {dentifTechTypes.map((techType) => (
+            {priorityTechType && (
               <Sticker
-                key={techType}
+                key={priorityTechType.title}
                 height={218}
-                {...getStickerConfig(airtable.data, 'techType', techType)}
+                {...getPrintStickerConfig(priorityTechType.icon)}
               >
-                {techType}
+                {priorityTechType.title}
               </Sticker>
-            ))}
-            {firstPurpose && (
+            )}
+            {priorityPurpose && (
               <Sticker
                 height={218}
-                {...getStickerConfig(airtable.data, 'purpose', firstPurpose, StickerThemeVariant.BLACK)}
+                {...getPrintStickerConfig(
+                  priorityPurpose.icon, StickerThemeVariant.BLACK,
+                )}
               >
-                {firstPurpose}
+                {priorityPurpose.title}
               </Sticker>
             )}
           </div>

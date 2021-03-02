@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 
 import {
-  Divider, Fade, Slide, Typography,
+  Divider, Slide, Typography,
 } from 'libs/mui';
-import { sensorsGroupLabels, sensorsGroupNames } from 'common/constants';
+import { taxonomyPropLabels, taxonomyProps } from 'common/constants';
+import Fade from 'components/Fade';
 
 const TAXONOMY_PROPS = [
-  sensorsGroupNames.DATA_TYPE,
-  sensorsGroupNames.PURPOSE,
-  sensorsGroupNames.SYSTEMS,
-  sensorsGroupNames.TECH_TYPE,
+  taxonomyProps.DATA_TYPE,
+  taxonomyProps.PURPOSE,
+  taxonomyProps.SYSTEMS,
+  taxonomyProps.TECH_TYPE,
 ];
 
 interface Props {
@@ -28,9 +29,10 @@ function PlaceView({
   visible,
   onHide,
 }: Props) {
+  const overlayRef = useRef(null);
   return (
-    <Fade in={visible} timeout={300}>
-      <div className={classes.overlay} onClick={onHide} aria-hidden="true">
+    <Fade in={visible} timeout={300} innerRef={overlayRef}>
+      <div className={classes.overlay} onClick={onHide} aria-hidden="true" ref={overlayRef}>
         <Slide direction="up" in={visible} mountOnEnter unmountOnExit timeout={150}>
           <div className={classes.root}>
             <Typography className={classes.header}>
@@ -45,7 +47,7 @@ function PlaceView({
                   onClick={() => { onSelect(taxonomyProp); }}
                   key={taxonomyProp}
                 >
-                  {sensorsGroupLabels[taxonomyProp]}
+                  {taxonomyPropLabels[taxonomyProp]}
                 </Typography>
               ))}
             </div>
@@ -94,7 +96,6 @@ const styles = (theme: Theme) => createStyles({
   },
   selected: {
     color: theme.custom.place.sort.selected,
-    fontWeight: 600,
   },
   options: {
     padding: theme.spacing(4),

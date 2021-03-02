@@ -15,10 +15,6 @@ export interface PlaceData {
   admins: { [uid: string]: boolean },
 }
 
-export interface SensorDataWithId extends SensorData {
-  id: string;
-}
-
 export interface SensorDetailsWithTaxonomyPropValue {
   taxonomyPropValue: string;
   name: string;
@@ -33,13 +29,22 @@ export interface TaxonomyPropValuesGroups {
 export interface SensorsGroupByTaxonomyPropValues {
   taxonomyProp?: TaxonomyPropValuesGroups;
   taxonomyPropValues?: string[];
-  Others?: SensorData[];
+  other?: SensorData[];
 }
 
-export interface SensorsGroup {
-  sensorGroup: string;
+export interface TaxonomyDetails {
+  id?: string;
+  additionalDescription: string;
+  category: string;
+  description: string;
+  icon: string;
+  priority: number;
+  title: string;
+}
+export interface SenorTaxonomyPropValuesDetails {
+  taxonomyProp: string;
   label: string;
-  options: Option[];
+  options: TaxonomyDetails[];
 }
 
 export interface System {
@@ -62,59 +67,47 @@ export interface FeedbackQuestion {
 }
 
 export interface SensorData {
-  id: string,
-  placeId: string,
-  name: string,
-  headline: string,
-  description: string
   accountable: string,
   accountableDescription: string,
-  purpose: string[],
-  techType: string[],
-  dataType: string[],
-  dataProcess: string[],
-  access: string[],
-  storage: string[],
-  phone: string,
-  chat: string,
+  accountableLogo: string,
+  datachain?: {
+    accountable?: TaxonomyDetails[],
+    purpose?: TaxonomyDetails[],
+    techType?: TaxonomyDetails[],
+    dataType?: TaxonomyDetails[],
+    dataProcess?: TaxonomyDetails[],
+    access?: TaxonomyDetails[],
+    storage?: TaxonomyDetails[],
+  },
+  description: string,
   email: string,
-  onsiteStaff: boolean,
-  logoRef: string,
-  logoSrc?: string,
-  sensorImageRef: string,
-  sensorImageSrc?: string,
-  systems?: Systems,
   FAQ?: FAQ[],
+  headline: string,
+  id: string,
+  name: string,
+  phone: string,
+  placeId: string,
+  systems?: Systems,
+}
+
+export interface SensorSnapshot {
+  accountable: string,
+  accountableDescription: string,
+  accountableLogo: string,
+  datachain?: TaxonomyDetails[],
+  description: string,
+  email: string,
+  FAQ?: FAQ[],
+  headline: string,
+  id: string,
+  name: string,
+  phone: string,
+  placeId: string,
+  systems?: Systems,
 }
 
 export interface Sensors {
   [id: string]: SensorData;
-}
-
-// The table names in airtable
-export type TableName =
-  'Technology Type' |
-  'Purpose' |
-  'Data Type' |
-  'Data Process' |
-  'Access' |
-  'Storage' |
-  'Accountability'
-
-export interface Option {
-  name: string;
-  iconShortname: string;
-  description: string;
-}
-
-export interface AirtableData {
-  techType: Option[];
-  purpose: Option[];
-  dataType: Option[];
-  dataProcess: Option[];
-  access: Option[];
-  storage: Option[];
-  accountable: Option[];
 }
 
 export interface IconConfig {

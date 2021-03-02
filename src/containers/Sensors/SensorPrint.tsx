@@ -1,8 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  useMemo,
-} from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import sensorReducer, {
@@ -15,11 +11,15 @@ import sensorReducer, {
 import { getSensor } from 'sideEffects/firebase';
 
 import SensorPrintView from 'components/Sensors/SensorPrintView';
-import { AirtableContext } from 'context/airtable';
 import useReducerState from 'hooks/useReducerState';
-import { AirtableStateType } from 'reducers/airtable';
 import { getPlacePath, getSensorPath } from 'common/helpers';
 import exportStickerAssets from 'services/exporting';
+import { TaxonomyDetails } from 'common/types';
+
+function getPrintableTaxonomyProp(taxonomy: TaxonomyDetails) {
+  if (!taxonomy || taxonomy.priority) return null;
+  return taxonomy;
+}
 
 function SensorPrint() {
   const [sensor, sensorActions] = useReducerState(
@@ -29,7 +29,6 @@ function SensorPrint() {
     fetchSensorSuccessed,
     fetchSensorFailed,
   );
-  const airtable = useContext(AirtableContext);
   const { sensorId }: { sensorId: string } = useParams();
   const sensorUrl = `${window.location.origin}${getSensorPath(sensorId)}`;
   const placeUrl = `${window.location.origin}${getPlacePath(sensor?.data?.placeId)}`;
@@ -39,23 +38,17 @@ function SensorPrint() {
     getSensor(sensorId, sensorActions.onSuccess, sensorActions.onError);
   }, [sensorId]);
 
-  // Make a badge for anything identifiable or de-identified
-  const dentifTechTypes = useMemo(() => ((sensor.data && sensor.data.techType)
-    ? sensor.data.techType.filter((type: string) => type.includes('dentif'))
-    : []), [sensor.data]);
-
-  // Make a badge for only the first purpose
-  const firstPurpose = sensor.data ? sensor.data.purpose[0] : undefined;
-
+  // Make printable badge for tech type and purpose with PRIORITY 0
+  const priorityTechType = getPrintableTaxonomyProp(sensor.data?.datachain?.techType[0]);
+  const priorityPurpose = getPrintableTaxonomyProp(sensor.data?.datachain?.purpose[0]);
   return (
     <SensorPrintView
       sensorUrl={sensorUrl}
       placeUrl={placeUrl}
-      airtable={airtable as AirtableStateType}
       sensor={sensor as SensorStateType}
       onDownloadClick={() => { exportStickerAssets(); }}
-      dentifTechTypes={dentifTechTypes}
-      firstPurpose={firstPurpose}
+      priorityTechType={priorityTechType}
+      priorityPurpose={priorityPurpose}
     />
   );
 }
