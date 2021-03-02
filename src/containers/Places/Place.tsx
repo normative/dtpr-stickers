@@ -75,7 +75,7 @@ function Place() {
         place={place.data}
         taxonomySensors={groupedSensors?.taxonomyProp}
         taxonomySensorsSortedIds={groupedSensors?.taxonomyPropValues}
-        otherSensors={groupedSensors?.Others}
+        otherSensors={groupedSensors?.other}
         onSortClick={handleSortClick}
         sortLabel={taxonomyPropLabels[sortTaxonomy]}
       />

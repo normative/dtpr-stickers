@@ -1,5 +1,5 @@
 import {
-  SensorData, SensorDataWithId, SensorDetailsWithTaxonomyPropValue, Sensors, Systems,
+  SensorData, SensorDetailsWithTaxonomyPropValue, Sensors, Systems,
 } from 'common/types';
 import flattenDeep from 'lodash.flattendeep';
 import groupBy from 'lodash.groupby';
@@ -12,13 +12,8 @@ export interface SensorDetails {
 }
 
 interface SplitSensorsWithTaxonomyPropFromOthers {
-  [taxonomyProp: string]: SensorDataWithId[];
-  Others?: SensorDataWithId[];
-}
-
-export function prepareSystemsTaxonomy(taxonomy: Systems): string[] {
-  if (!taxonomy || !Object.keys(taxonomy).length) return [];
-  return Object.values(taxonomy).map(({ title }) => title);
+  taxonomyProp: SensorData[];
+  other: SensorData[];
 }
 
 export function mapSensorToTaxonomyPropValue(
@@ -40,46 +35,46 @@ export function splitSensorsWithTaxonomyPropFromOthers(
   const sensorIds = Object.keys(sensors);
 
   const groupIds: { [taxonomyProp: string]: string[]; Others: string[] } = groupBy(
-    sensorIds, (id: string) => {
-      if (!sensors[id]
-        || !sensors[id][taxonomyProp]
-        || !Object.values(sensors[id][taxonomyProp]).length
-      ) {
-        return 'Others';
+    sensorIds,
+    (id: string) => {
+      const composedData = { systems: sensors[id].systems, ...sensors[id].datachain };
+      const taxonomyData = composedData[taxonomyProp];
+      if (!taxonomyData || !Object.values(taxonomyData).length) {
+        return 'other';
       }
-      return taxonomyProp;
+      return 'taxonomyProp';
     },
   );
 
   return Object.keys(groupIds).reduce((res, group) => {
     res[group] = groupIds[group].map((id: string) => ({ id, ...sensors[id] }));
     return res;
-  }, { [taxonomyProp]: [], Others: [] });
+  }, { taxonomyProp: [], other: [] });
 }
 
 export function mapSensorsIntoTaxonomyPropValues(
-  sensors: SensorDataWithId[], taxonomyProp: string,
+  sensors: SensorData[], taxonomyProp: string,
 ) {
   return sensors.map((sensor) => {
-    let taxonomy = sensor[taxonomyProp];
-    if (taxonomyProp === 'systems') taxonomy = prepareSystemsTaxonomy(taxonomy);
-    return mapSensorToTaxonomyPropValue(sensor, taxonomy);
+    const taxonomy = sensor.datachain[taxonomyProp] || sensor[taxonomyProp] || [];
+    const titles = Object.values(taxonomy).map(({ title }) => title);
+    return mapSensorToTaxonomyPropValue(sensor, titles);
   });
 }
 
 export function groupSensorsByTaxonomyPropValues(sensors: Sensors, taxonomyProp: string) {
   const sensorsWithTaxonomy = splitSensorsWithTaxonomyPropFromOthers(sensors, taxonomyProp);
   const taxonomyWithSensorDetails = mapSensorsIntoTaxonomyPropValues(
-    sensorsWithTaxonomy?.[taxonomyProp], taxonomyProp,
+    sensorsWithTaxonomy?.taxonomyProp, taxonomyProp,
   );
   const flattenList = sortBy(
     flattenDeep(taxonomyWithSensorDetails), (s: SensorDetailsWithTaxonomyPropValue) => s.name,
   );
   const taxonomyGroup = groupBy(flattenList, ({ taxonomyPropValue }) => taxonomyPropValue);
-  const otherSensorsWithName = sensorsWithTaxonomy?.Others.filter((s: SensorData) => s.name);
+  const otherSensorsWithName = sensorsWithTaxonomy?.other.filter((s: SensorData) => s.name);
   return {
     taxonomyPropValues: Object.keys(taxonomyGroup).sort(),
     taxonomyProp: taxonomyGroup,
-    Others: sortBy(otherSensorsWithName, (s: SensorData) => s.name),
+    other: sortBy(otherSensorsWithName, (s: SensorData) => s.name),
   };
 }

@@ -15,10 +15,6 @@ export interface PlaceData {
   admins: { [uid: string]: boolean },
 }
 
-export interface SensorDataWithId extends SensorData {
-  id: string;
-}
-
 export interface SensorDetailsWithTaxonomyPropValue {
   taxonomyPropValue: string;
   name: string;
@@ -33,7 +29,7 @@ export interface TaxonomyPropValuesGroups {
 export interface SensorsGroupByTaxonomyPropValues {
   taxonomyProp?: TaxonomyPropValuesGroups;
   taxonomyPropValues?: string[];
-  Others?: SensorData[];
+  other?: SensorData[];
 }
 
 export interface TaxonomyDetails {
@@ -83,6 +79,22 @@ export interface SensorData {
     access?: TaxonomyDetails[],
     storage?: TaxonomyDetails[],
   },
+  description: string,
+  email: string,
+  FAQ?: FAQ[],
+  headline: string,
+  id: string,
+  name: string,
+  phone: string,
+  placeId: string,
+  systems?: Systems,
+}
+
+export interface SensorSnapshot {
+  accountable: string,
+  accountableDescription: string,
+  accountableLogo: string,
+  datachain?: TaxonomyDetails[],
   description: string,
   email: string,
   FAQ?: FAQ[],
