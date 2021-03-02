@@ -96,7 +96,6 @@ const styles = (theme: Theme) => createStyles({
   },
   selected: {
     color: theme.custom.place.sort.selected,
-    fontWeight: 500,
   },
   options: {
     padding: theme.spacing(4),

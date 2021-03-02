@@ -128,12 +128,6 @@ const styles = (theme: Theme) => createStyles({
     color: theme.custom.header,
     ...theme.custom.fonts.primary.l,
   },
-  headerText: {
-    wordBreak: 'break-word',
-    fontWeight: 'bold',
-    color: theme.custom.header,
-    ...theme.custom.fonts.primary.l,
-  },
   summaryWrapper: {
     display: 'flex',
     padding: theme.spacing(2),
