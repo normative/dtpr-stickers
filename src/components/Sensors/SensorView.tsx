@@ -62,7 +62,7 @@ function SensorView({
           <Typography
             variant="h6"
             align="center"
-            style={{ wordBreak: 'break-word', fontWeight: 'bold' }}
+            className={classes.headerText}
           >
             {sensor.headline}
           </Typography>
@@ -134,6 +134,12 @@ const styles = (theme: Theme) => createStyles({
   header: {
     padding: theme.spacing(2),
     textAlign: 'center',
+  },
+  headerText: {
+    wordBreak: 'break-word',
+    fontWeight: 'bold',
+    color: theme.custom.header,
+    ...theme.custom.fonts.primary.l,
   },
   summaryWrapper: {
     display: 'flex',

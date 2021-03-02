@@ -80,21 +80,24 @@ const styles = (theme: Theme) => createStyles({
     paddingLeft: theme.spacing(4),
     paddingRight: theme.spacing(4),
     fontWeight: 'bold',
-    fontSize: '1.25rem',
+    color: theme.custom.place.sort.header,
+    ...theme.custom.fonts.primary.m,
   },
   option: {
+    color: theme.custom.place.sort.option,
     paddingBottom: theme.spacing(),
     justifyContent: 'flex-start',
+    ...theme.custom.fonts.primary.m,
     '&:last-child': {
       paddingBottom: 0,
     },
   },
   selected: {
-    color: '#45789C',
+    color: theme.custom.place.sort.selected,
+    fontWeight: 600,
   },
   options: {
     padding: theme.spacing(4),
-    color: '#828282',
     '&:hover': {
       cursor: 'pointer',
     },

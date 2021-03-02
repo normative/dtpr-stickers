@@ -87,12 +87,20 @@ const styles = (theme: Theme) => createStyles({
     flex: 1,
     alignSelf: 'center',
     marginLeft: theme.spacing(),
+    color: theme.custom.sensor.taxonomy.value,
+    ...theme.custom.fonts.secondary.m,
   },
   label: {
     alignSelf: 'center',
     marginLeft: theme.spacing(),
     marginRight: '32px',
+    color: theme.custom.sensor.taxonomy.prop,
+    ...theme.custom.fonts.secondary.m,
   },
+  paragraph: {
+    color: theme.custom.sensor.taxonomy.details,
+    ...theme.custom.fonts.secondary.m,
+  }
 });
 
 interface Props {
@@ -135,14 +143,14 @@ class SensorAccordion extends Component<Props, any> {
         >
           {icon && <img src={icon} onError={showPlaceholderOnImgError(placeholder)} />}
           <Typography className={classes.heading}>{title}</Typography>
-          <Typography color="textSecondary" className={classes.label}>
+          <Typography className={classes.label}>
             {label}
           </Typography>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails
           classes={{ root: classes.expansionPanelDetailsRoot }}
         >
-          <Typography dangerouslySetInnerHTML={{ __html: parsedBody }} />
+          <Typography dangerouslySetInnerHTML={{ __html: parsedBody }} className={classes.paragraph} />
         </ExpansionPanelDetails>
       </ExpansionPanel>
     );

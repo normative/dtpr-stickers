@@ -48,12 +48,15 @@ const styles = (theme: Theme) => createStyles({
   },
   summaryText: {
     fontWeight: 500,
+    color: theme.custom.sensor.faq.question,
+    ...theme.custom.fonts.secondary.m,
   },
   detailsRoot: {
     padding: 0,
   },
   detailsText: {
-    fontSize: '0.875rem',
+    color: theme.custom.sensor.faq.response,
+    ...theme.custom.fonts.secondary.s,
   },
 });
 

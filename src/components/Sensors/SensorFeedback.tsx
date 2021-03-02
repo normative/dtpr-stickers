@@ -26,6 +26,7 @@ function Feedback({
         className={classes.linearProgress}
         variant="determinate"
         value={progressValue}
+        classes={{ barColorPrimary: classes.barColorPrimary }}
       />
       <Typography className={classes.title}>Feedback</Typography>
       <FeedbackQuestion onClick={onClick} text={question.text} type={question.type} />
@@ -38,8 +39,8 @@ function Feedback({
 
 const styles = (theme: Theme) => createStyles({
   container: {
-    backgroundColor: '#F7F7F7',
-    borderTop: '1px solid #B4B4B4',
+    backgroundColor: theme.custom.sensor.feedback.background,
+    borderTop: `1px solid ${theme.custom.sensor.feedback.divider}`,
     padding: theme.spacing(2),
     paddingTop: theme.spacing(2.5),
     paddingBottom: theme.spacing(2.5),
@@ -47,12 +48,14 @@ const styles = (theme: Theme) => createStyles({
   },
   title: {
     fontWeight: 700,
+    ...theme.custom.fonts.primary.m,
+    color: theme.custom.sensor.feedback.header,
   },
   progressText: {
     textAlign: 'center',
     marginTop: theme.spacing(3),
-    fontSize: '0.875rem',
-    letterSpacing: '0.15px',
+    ...theme.custom.fonts.secondary.s,
+    color: theme.custom.sensor.feedback.counter,
   },
   linearProgress: {
     backgroundColor: 'transparent',
@@ -61,6 +64,9 @@ const styles = (theme: Theme) => createStyles({
     position: 'absolute',
     right: 0,
     top: 0,
+  },
+  barColorPrimary: {
+    backgroundColor: theme.custom.sensor.feedback.progressBar,
   },
 });
 

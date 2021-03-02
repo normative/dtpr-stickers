@@ -10,13 +10,13 @@ interface Props {
   taxonomyPropValue: string;
 }
 
-const CardDivider = withStyles({
+const CardDivider = withStyles((theme: Theme) => createStyles({
   root: {
     backgroundColor: 'transparent',
-    border: '1px dashed #45789C',
+    border: `1px dashed ${theme.custom.link}`,
     width: '100px',
   },
-})(Divider);
+}))(Divider);
 
 function Sensors({ classes, sensors, taxonomyPropValue }: Props) {
   return (
@@ -48,24 +48,26 @@ const styles = (theme: Theme) => createStyles({
     },
   },
   taxonomyPropValue: {
-    color: '#58585B',
+    color: theme.custom.place.taxonomy.title,
     fontWeight: 600,
     marginBottom: theme.spacing(1.5),
+    ...theme.custom.fonts.primary.m,
   },
   card: {
-    border: '1px solid #d4d4d4',
+    border: `1px solid ${theme.custom.place.taxonomy.border}`,
     borderRadius: '4px',
     marginBottom: theme.spacing(1.5),
     padding: theme.spacing(1.5),
   },
   sensorName: {
-    color: '#45789C',
-    fontSize: '0.875rem',
+    color: theme.custom.link,
     marginBottom: theme.spacing(1.5),
+    ...theme.custom.fonts.primary.s,
   },
   sensorDescription: {
-    color: '#828282',
+    color: theme.custom.place.taxonomy.description,
     marginTop: theme.spacing(1.5),
+    ...theme.custom.fonts.secondary.m,
   },
 });
 

@@ -24,7 +24,7 @@ function SensorBadge({
         alt="purpose badge icon"
         onError={showPlaceholderOnImgError(placeholder)}
       />
-      <Typography variant="subtitle2">
+      <Typography variant="subtitle2" className={classes.name}>
         {option.name}
       </Typography>
     </div>
@@ -41,6 +41,10 @@ const styles = (theme: Theme) => createStyles({
     marginLeft: 'auto',
     marginRight: 'auto',
     marginBottom: theme.spacing(),
+  },
+  name: {
+    ...theme.custom.fonts.secondary.xs,
+    color: theme.custom.sensor.badge,
   },
 });
 

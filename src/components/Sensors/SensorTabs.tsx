@@ -11,21 +11,23 @@ const tabsStyles = (theme: Theme) => createStyles({
     borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
   },
   indicator: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.custom.tab,
     height: '2px',
   },
 });
 
 const StyledTabs = withStyles(tabsStyles)(Tabs);
 
-const StyledTab = withStyles({
+const StyledTab = withStyles((theme: Theme) => createStyles({
   root: {
-    minWidth: 125,
-    fontWeight: 700,
+    ...theme.custom.fonts.primary.m,
+    color: theme.custom.tab,
+    fontWeight: 'bold',
     letterSpacing: '0.75px',
+    minWidth: 125,
     textTransform: 'uppercase',
   },
-})(Tab);
+}))(Tab);
 
 interface TabPanelProps {
   children: ReactNode;
@@ -92,7 +94,6 @@ function SensorTabs({ classes, children, tabs }: Props) {
 const styles = (theme: Theme) => createStyles({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
     marginTop: theme.spacing(),
   },
 });
