@@ -72,7 +72,9 @@ const styles = (theme: Theme) => createStyles({
     // needed for nested reference
   },
   expansionPanelDetailsRoot: {
-    borderLeft: '2px dashed #000',
+    display: 'flex',
+    flexDirection: 'column',
+    borderLeft: '2px dashed #020202',
     marginLeft: theme.spacing(4.125),
     paddingLeft: theme.spacing(3),
     paddingTop: 0,
@@ -101,6 +103,12 @@ const styles = (theme: Theme) => createStyles({
     color: theme.custom.sensor.taxonomy.details,
     ...theme.custom.fonts.secondary.m,
   },
+  additionalInfoLabel: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(0.5),
+    fontWeight: 600,
+    ...theme.custom.fonts.secondary.m,
+  },
 });
 
 interface Props {
@@ -111,12 +119,14 @@ interface Props {
   body: string;
   name: string;
   placeholder?: string;
+  additionalInfo?: string;
 }
 
 function SensorAccordion({
-  classes, icon, title, label, body, name, placeholder,
+  classes, icon, title, label, body, name, placeholder, additionalInfo,
 }: Props) {
   const parsedBody = markdownConverter.makeHtml(body);
+  const parsedInfo = markdownConverter.makeHtml(additionalInfo);
 
   return (
     <Accordion
@@ -154,6 +164,17 @@ function SensorAccordion({
           dangerouslySetInnerHTML={{ __html: parsedBody }}
           className={classes.paragraph}
         />
+        {!!additionalInfo && (
+          <>
+            <Typography className={classes.additionalInfoLabel}>
+              Additional Description
+            </Typography>
+            <Typography
+              dangerouslySetInnerHTML={{ __html: parsedInfo }}
+              className={classes.paragraph}
+            />
+          </>
+        )}
       </AccordionDetails>
     </Accordion>
   );
@@ -162,6 +183,7 @@ function SensorAccordion({
 SensorAccordion.defaultProps = {
   icon: '',
   placeholder: '',
+  additionalInfo: '',
 };
 
 export default withStyles(styles)(SensorAccordion);

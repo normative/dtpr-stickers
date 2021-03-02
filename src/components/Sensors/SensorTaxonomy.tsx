@@ -19,7 +19,9 @@ function SensorTaxonomy({
   return (
     <div className={classes.root}>
       {sensorTaxonomy.map(({ taxonomyProp, label, options }) => options.map(
-        ({ title, description, icon }) => (
+        ({
+          title, description, icon, additionalDescription,
+        }) => (
           <SensorAccordion
             key={title}
             icon={`/images/${icon}.svg`}
@@ -27,6 +29,7 @@ function SensorTaxonomy({
             title={title}
             label={label}
             body={description}
+            additionalInfo={additionalDescription}
             name={sensorName}
           />
         ),
