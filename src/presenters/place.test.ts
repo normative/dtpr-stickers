@@ -1,6 +1,6 @@
 
 import { sensorMappedIntoDataTypeValues, sensorsData, sensorsGroupedByDataType, sensorsGroupedByNotFound, sensorsGroupedByPurpose, sensorsGroupedBySystems, sensorsMappedIntoSystemValues, splitSensorsByDataType, splitSensorsBySystems } from '__mockData__/presenterPlace';
-import { groupSensorsByTaxonomyPropValues, mapSensorsIntoTaxonomyPropValues, mapSensorToTaxonomyPropValue, prepareSystemsTaxonomy, splitSensorsWithTaxonomyPropFromOthers } from './place';
+import { groupSensorsByTaxonomyPropValues, mapSensorsIntoTaxonomyPropValues, mapSensorToTaxonomyPropValue, splitSensorsWithTaxonomyPropFromOthers } from './place';
 import { SensorData, Sensors } from 'common/types';
 import { taxonomyProps } from 'common/constants';
 import flattenDeep from 'lodash.flattendeep';
