@@ -167,7 +167,7 @@ function SensorAccordion({
         {!!additionalInfo && (
           <>
             <Typography className={classes.additionalInfoLabel}>
-              Additional Description
+              Additional Information
             </Typography>
             <Typography
               dangerouslySetInnerHTML={{ __html: parsedInfo }}
