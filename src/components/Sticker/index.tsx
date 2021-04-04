@@ -64,8 +64,9 @@ function Sticker({
       <svg
         data-export-icon-text={`icon-text-${exportName}`}
         xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 232 264"
       >
-        <image href={iconHref} transform="translate(44 32) scale(6)" />
+        <image href={iconHref} transform="translate(50 40) scale(5.5)" />
         <SvgText
           style={{
             color: THEME[variant].color,

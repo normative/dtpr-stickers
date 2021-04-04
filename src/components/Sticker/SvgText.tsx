@@ -4,8 +4,6 @@ import { FONT_FAMILY } from 'styles/theme';
 
 function composeStyle(props) {
   return {
-    fontFamily: FONT_FAMILY,
-    fontWeight: 500,
     lineHeight: '1.1',
     margin: '8px 20px',
     textAlign: 'center',
@@ -35,7 +33,7 @@ function SvgText({
         width="100%"
         height="35%"
         fontFamily={FONT_FAMILY}
-        fontWeight={500}
+        fontWeight={400}
         fontSize="1rem"
         y={y}
       >
