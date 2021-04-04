@@ -36,6 +36,7 @@ function SvgText({
         height="35%"
         fontFamily={FONT_FAMILY}
         fontWeight={500}
+        fontSize="1rem"
         y={y}
       >
         <p style={composeStyle(style)}>

@@ -13,7 +13,10 @@ function transformSnapshotIntoSensorData(id: string, sensor: SensorSnapshot): Se
     ...sensor,
     id,
     datachain: groupBy(
-      sortBy(sensor.datachain, ({ priority }) => priority),
+      sortBy(
+        sensor.datachain,
+        ({ priority }) => (Number.isInteger(priority) ? Number(priority) : null),
+      ),
       ({ category }) => category,
     ),
   };
