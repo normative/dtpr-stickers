@@ -38,7 +38,7 @@ export interface TaxonomyDetails {
   category: string;
   description: string;
   icon: string;
-  priority: number;
+  priority: number | string;
   title: string;
 }
 export interface SenorTaxonomyPropValuesDetails {

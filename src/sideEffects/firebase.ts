@@ -15,7 +15,11 @@ function transformSnapshotIntoSensorData(id: string, sensor: SensorSnapshot): Se
     datachain: groupBy(
       sortBy(
         sensor.datachain,
-        ({ priority }) => (Number.isInteger(priority) ? Number(priority) : null),
+        ({ priority }) => {
+          const number = Number.parseInt(priority, 10);
+          if (Number.isNaN(number)) return null;
+          return number;
+        },
       ),
       ({ category }) => category,
     ),
