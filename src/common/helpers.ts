@@ -25,3 +25,14 @@ export function getPrintStickerConfig(
 export function showPlaceholderOnImgError(placeholderSrc: string) {
   return (e: InvalidEvent<HTMLImageElement>) => { e.target.src = placeholderSrc; };
 }
+
+export function getIconUrl(icon: string) {
+  return `${process.env.REACT_APP_ICONS_BASE_URL}/${icon}.svg`;
+}
+
+export function getIconPlaceholder(icon: string) {
+  if (process.env.REACT_APP_ICONS_PLACEHOLDER_BASE_URL) {
+    return `${process.env.REACT_APP_ICONS_PLACEHOLDER_BASE_URL}/${icon}.svg`;
+  }
+  return `/images/${icon}.svg`;
+}

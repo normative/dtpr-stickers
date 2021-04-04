@@ -24,7 +24,7 @@ function SensorTaxonomy({
         }) => (
           <SensorAccordion
             key={title}
-            icon={`/images/${icon}.svg`}
+            icon={icon}
             placeholder={`/images/${PLACEHOLDERS[taxonomyProp]}.svg`}
             title={title}
             label={label}

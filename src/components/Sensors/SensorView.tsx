@@ -11,6 +11,7 @@ import {
 } from 'common/types';
 import { PLACEHOLDERS } from 'common/constants';
 
+import { getIconPlaceholder, getIconUrl } from 'common/helpers';
 import SensorFeedback from './SensorFeedback';
 import SensorBadge from './SensorBadge';
 import SensorDetails from './SensorDetails';
@@ -61,15 +62,21 @@ function SensorView({
       </div>
       <Divider variant="fullWidth" />
       <div className={classes.summaryWrapper}>
-        <SensorBadge option={sensorTaxonomy?.purpose?.options[0]} placeholder={`/images/${PLACEHOLDERS.purpose}.svg`} />
-        <SensorBadge option={sensorTaxonomy?.techType?.options[0]} placeholder={`/images/${PLACEHOLDERS.techType}.svg`} />
+        <SensorBadge
+          option={sensorTaxonomy?.purpose?.options[0]}
+          placeholder={PLACEHOLDERS.purpose}
+        />
+        <SensorBadge
+          option={sensorTaxonomy?.techType?.options[0]}
+          placeholder={PLACEHOLDERS.techType}
+        />
         <SensorBadge
           option={{
             ...sensorTaxonomy?.accountable?.options[0],
             title: sensor.accountable,
           }}
           imgSrc={sensor.accountableLogo}
-          placeholder="/images/accountable/org.svg"
+          placeholder={PLACEHOLDERS.accountable}
         />
       </div>
       <Divider variant="fullWidth" />
