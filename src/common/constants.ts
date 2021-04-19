@@ -45,12 +45,13 @@ export enum feedbackQuestionTypes {
 }
 
 export const PLACEHOLDERS = {
-  [taxonomyProps.ACCESS]: 'access/placeholder',
-  [taxonomyProps.DATA_PROCESS]: 'process/placeholder',
-  [taxonomyProps.DATA_TYPE]: 'data/placeholder',
-  [taxonomyProps.PURPOSE]: 'purpose/placeholder',
-  [taxonomyProps.STORAGE]: 'storage/placeholder',
-  [taxonomyProps.TECH_TYPE]: 'tech/placeholder',
+  [taxonomyProps.ACCOUNTABLE]: 'placeholders/accountable',
+  [taxonomyProps.ACCESS]: 'placeholders/access',
+  [taxonomyProps.DATA_PROCESS]: 'placeholders/process',
+  [taxonomyProps.DATA_TYPE]: 'placeholders/data',
+  [taxonomyProps.PURPOSE]: 'placeholders/purpose',
+  [taxonomyProps.STORAGE]: 'placeholders/storage',
+  [taxonomyProps.TECH_TYPE]: 'placeholders/tech',
 };
 
 export const HELPFULPLACES_WEBSITE = 'https://dtpr.helpfulplaces.com/';

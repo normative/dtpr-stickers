@@ -2,7 +2,7 @@ import React from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import showdown from 'showdown';
 import ReactGA from 'react-ga';
-import { showPlaceholderOnImgError } from 'common/helpers';
+import { getIconUrl, showPlaceholderOnImgError } from 'common/helpers';
 import {
   Accordion, Typography, ExpandMoreIcon, AccordionSummary, AccordionDetails,
 } from 'libs/mui';
@@ -128,6 +128,7 @@ function SensorAccordion({
   const parsedBody = markdownConverter.makeHtml(body);
   const parsedInfo = markdownConverter.makeHtml(additionalInfo);
 
+  const iconSrc = icon && getIconUrl(icon);
   return (
     <Accordion
       classes={{
@@ -150,7 +151,7 @@ function SensorAccordion({
         expandIcon={<ExpandMoreIcon />}
       >
         {icon && (
-          <img src={icon} onError={showPlaceholderOnImgError(placeholder)} alt="" />
+          <img src={iconSrc} onError={showPlaceholderOnImgError(placeholder)} alt="" />
         )}
         <Typography className={classes.heading}>{title}</Typography>
         <Typography className={classes.label}>

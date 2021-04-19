@@ -23,7 +23,7 @@ function QRCodeSticker({
   const width = height * 0.8787;
 
   const textPosition = {
-    y: '60%',
+    y: '62%',
   };
 
   return (

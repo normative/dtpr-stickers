@@ -13,7 +13,14 @@ function transformSnapshotIntoSensorData(id: string, sensor: SensorSnapshot): Se
     ...sensor,
     id,
     datachain: groupBy(
-      sortBy(sensor.datachain, ({ priority }) => priority),
+      sortBy(
+        sensor.datachain,
+        ({ priority }) => {
+          const number = Number.parseInt(priority, 10);
+          if (Number.isNaN(number)) return null;
+          return number;
+        },
+      ),
       ({ category }) => category,
     ),
   };

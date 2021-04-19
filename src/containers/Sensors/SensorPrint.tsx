@@ -17,7 +17,7 @@ import exportStickerAssets from 'services/exporting';
 import { TaxonomyDetails } from 'common/types';
 
 function getPrintableTaxonomyProp(taxonomy: TaxonomyDetails) {
-  if (!taxonomy || taxonomy.priority) return null;
+  if (!taxonomy || Number.parseInt(taxonomy.priority as string, 10) !== 0) return null;
   return taxonomy;
 }
 

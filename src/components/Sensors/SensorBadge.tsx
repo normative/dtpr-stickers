@@ -2,7 +2,7 @@ import { TaxonomyDetails } from 'common/types';
 import React from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
-import { showPlaceholderOnImgError } from 'common/helpers';
+import { getIconPlaceholder, getIconUrl, showPlaceholderOnImgError } from 'common/helpers';
 
 interface Props {
   option: TaxonomyDetails | undefined;
@@ -16,13 +16,14 @@ function SensorBadge({
 }: Props) {
   if (!option) return <></>;
 
+  const placeholderIcon = getIconPlaceholder(placeholder);
   return (
     <div className={classes.root}>
       <img
         className={classes.image}
-        src={imgSrc || (option.icon && `/images/${option.icon}.svg`) || placeholder}
+        src={imgSrc || (option.icon && getIconUrl(option.icon)) || placeholderIcon}
         alt="purpose badge icon"
-        onError={showPlaceholderOnImgError(placeholder)}
+        onError={showPlaceholderOnImgError(placeholderIcon)}
       />
       <Typography variant="subtitle2" className={classes.name}>
         {option.title}
