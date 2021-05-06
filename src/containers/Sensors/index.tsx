@@ -1,3 +1,4 @@
+import { useGAPageView } from 'libs/ga';
 import React from 'react';
 import {
   Redirect, Route, Switch, useRouteMatch,
@@ -8,7 +9,7 @@ import SensorPrint from './SensorPrint';
 
 function Sensors() {
   const match = useRouteMatch();
-
+  useGAPageView();
   return (
     <Switch>
       <Route exact path={`${match.path}/:sensorId/print`} component={SensorPrint} />
