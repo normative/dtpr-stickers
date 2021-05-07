@@ -1,11 +1,11 @@
 import React from 'react';
 import { createStyles, withStyles, Theme } from '@material-ui/core/styles';
 import showdown from 'showdown';
-import ReactGA from 'react-ga';
 import { getIconUrl, showPlaceholderOnImgError } from 'common/helpers';
 import {
   Accordion, Typography, ExpandMoreIcon, AccordionSummary, AccordionDetails,
 } from 'libs/mui';
+import { trackEvent } from 'libs/ga';
 
 const paragraphTagFilter = {
   type: 'output',
@@ -136,9 +136,10 @@ function SensorAccordion({
         expanded: classes.expansionPanelExpanded,
       }}
       onChange={() => {
-        ReactGA.event({
-          category: 'User',
-          action: `Tapped Accordion of ${name}: ${title} - ${label}`,
+        trackEvent({
+          eventCategory: 'Sensors Taxonomy',
+          eventAction: 'Tapped',
+          eventLabel: `Accordion of ${name}: ${title} - ${label}`,
         });
       }}
     >

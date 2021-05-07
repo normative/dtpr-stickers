@@ -11,7 +11,6 @@ import {
 } from 'common/types';
 import { PLACEHOLDERS } from 'common/constants';
 
-import { getIconPlaceholder, getIconUrl } from 'common/helpers';
 import SensorFeedback from './SensorFeedback';
 import SensorBadge from './SensorBadge';
 import SensorDetails from './SensorDetails';

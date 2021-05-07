@@ -2,7 +2,6 @@ import React, {
   useContext, useEffect, useMemo, useState,
 } from 'react';
 import { useParams } from 'react-router-dom';
-import ReactGA from 'react-ga';
 
 import { getSensor } from 'sideEffects/firebase';
 import sensorReducer, {
@@ -22,6 +21,7 @@ import { LinearProgress } from 'libs/mui';
 import { prepareSensorTaxonomy } from 'presenters/sensor';
 import { FAQ, FeedbackQuestion, System } from 'common/types';
 import NotFound from 'components/NotFound';
+import { trackEvent } from 'libs/ga';
 
 const FEEDBACK_QUESTIONS: FeedbackQuestion[] = [
   {
@@ -53,8 +53,8 @@ const FEEDBACK_QUESTIONS: FeedbackQuestion[] = [
 const FEEDBACK_QUESTIONS_LENGTH = FEEDBACK_QUESTIONS.length - 1;
 
 const ACTIONS = {
-  [feedbackQuestionTypes.EMOJI]: 'Clicked',
-  [feedbackQuestionTypes.COMMENT]: 'Commented',
+  [feedbackQuestionTypes.EMOJI]: 'Tap',
+  [feedbackQuestionTypes.COMMENT]: 'Comment',
 };
 
 function calcFeedbackProgress(questionIndex: number) {
@@ -109,10 +109,10 @@ function Sensor() {
     setQuestionIndex(questionIndex + 1);
     setAnswers(answers.concat(answer));
 
-    ReactGA.event({
-      category: 'User',
-      action: `${ACTIONS[type]} Feedback for question "${FEEDBACK_QUESTIONS[questionIndex]}": \n"${answer}"`,
-      label: sensor.data?.name,
+    trackEvent({
+      eventCategory: `Feedback for ${sensor.data?.name} sensor`,
+      eventAction: ACTIONS[type],
+      eventLabel: `"${FEEDBACK_QUESTIONS[questionIndex]?.text}" => "${answer}"`,
     });
   };
 

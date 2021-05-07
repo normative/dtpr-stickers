@@ -1,5 +1,5 @@
 import {
-  SensorData, SensorDetailsWithTaxonomyPropValue, Sensors, Systems,
+  SensorData, SensorDetailsWithTaxonomyPropValue, Sensors,
 } from 'common/types';
 import flattenDeep from 'lodash.flattendeep';
 import groupBy from 'lodash.groupby';
