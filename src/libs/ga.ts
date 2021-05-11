@@ -7,20 +7,26 @@ declare global {
 }
 
 interface Event {
-  eventCategory?: string
-  eventAction?: string
-  eventLabel?: string,
+  category?: string
+  action?: string
+  label?: string,
+  value?: string,
 }
 
-export function trackEvent(event: Event) {
-  window.gtag('send', {
-    hitType: 'event',
-    ...event,
+export function trackEvent({
+  category, action, label, value,
+}: Event) {
+  window.gtag('event', action, {
+    event_category: category,
+    event_label: label,
+    value,
   });
 }
 
 export function trackPageview() {
-  window.gtag('send', 'pageview', window.location.pathname + window.location.search);
+  window.gtag('event', 'page_view', {
+    page_location: window.location.pathname + window.location.search,
+  });
 }
 
 export function useGAPageView() {

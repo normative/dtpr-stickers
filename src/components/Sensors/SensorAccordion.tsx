@@ -137,9 +137,10 @@ function SensorAccordion({
       }}
       onChange={() => {
         trackEvent({
-          eventCategory: 'Sensors Taxonomy',
-          eventAction: 'Tapped',
-          eventLabel: `Accordion of ${name}: ${title} - ${label}`,
+          category: name,
+          action: 'tap_accordion',
+          label,
+          value: title,
         });
       }}
     >

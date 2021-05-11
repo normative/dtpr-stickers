@@ -53,8 +53,8 @@ const FEEDBACK_QUESTIONS: FeedbackQuestion[] = [
 const FEEDBACK_QUESTIONS_LENGTH = FEEDBACK_QUESTIONS.length - 1;
 
 const ACTIONS = {
-  [feedbackQuestionTypes.EMOJI]: 'Tap',
-  [feedbackQuestionTypes.COMMENT]: 'Comment',
+  [feedbackQuestionTypes.EMOJI]: 'tap_feedback_emoji',
+  [feedbackQuestionTypes.COMMENT]: 'comment_feedback',
 };
 
 function calcFeedbackProgress(questionIndex: number) {
@@ -110,9 +110,10 @@ function Sensor() {
     setAnswers(answers.concat(answer));
 
     trackEvent({
-      eventCategory: `Feedback for ${sensor.data?.name} sensor`,
-      eventAction: ACTIONS[type],
-      eventLabel: `"${FEEDBACK_QUESTIONS[questionIndex]?.text}" => "${answer}"`,
+      category: `Feedback for ${sensor.data?.name} sensor`,
+      action: ACTIONS[type],
+      label: FEEDBACK_QUESTIONS[questionIndex]?.text,
+      value: answer,
     });
   };
 
