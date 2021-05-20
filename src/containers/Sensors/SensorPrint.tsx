@@ -39,8 +39,8 @@ function SensorPrint() {
   }, [sensorId]);
 
   // Make printable badge for tech type and purpose with PRIORITY 0
-  const priorityTechType = getPrintableTaxonomyProp(sensor.data?.datachain?.techType[0]);
-  const priorityPurpose = getPrintableTaxonomyProp(sensor.data?.datachain?.purpose[0]);
+  const priorityTechType = getPrintableTaxonomyProp(sensor.data?.datachain?.techType?.[0]);
+  const priorityPurpose = getPrintableTaxonomyProp(sensor.data?.datachain?.purpose?.[0]);
   return (
     <SensorPrintView
       sensorUrl={sensorUrl}
